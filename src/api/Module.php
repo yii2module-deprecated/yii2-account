@@ -2,13 +2,14 @@
 
 namespace yii2module\account\api;
 
+use yii\base\Module as YiiModule;
+
 /**
- * Class Module
- * 
- * @package yii2module\account\api
+ * user module definition class
  */
-class Module extends \yii\base\Module {
-
-	//public static $langDir = 'yii2module/account/domain/messages';
-
+class Module extends YiiModule
+{
+ 
+ 
+	
 }

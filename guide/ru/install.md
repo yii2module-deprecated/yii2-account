@@ -7,10 +7,18 @@
 composer require yii2module/yii2-account
 ```
 
-Создаем полномочие:
+Объявляем API модуль:
 
-```
-oExamlpe
+```php
+return [
+	'modules' => [
+		// ...
+		'account' => [
+			'class' => 'yii2module\account\api\Module',
+		],
+		// ...
+	],
+];
 ```
 
 Объявляем frontend модуль:
@@ -19,7 +27,9 @@ oExamlpe
 return [
 	'modules' => [
 		// ...
-		'account' => 'yii2module\account\frontend\Module',
+		'user' => [
+			'class' => 'yii2module\account\module\Module',
+		],
 		// ...
 	],
 ];
@@ -31,40 +41,15 @@ return [
 return [
 	'modules' => [
 		// ...
-		'account' => 'yii2module\account\backend\Module',
-		// ...
-	],
-];
-```
-
-Объявляем api модуль:
-
-```php
-return [
-	'modules' => [
-		// ...
-		'account' => 'yii2module\account\api\Module',
-		// ...
-		'components' => [
-            'urlManager' => [
-                'rules' => [
-                    ...
-                   ['class' => 'yii\rest\UrlRule', 'controller' => ['{apiVersion}/account' => 'account/default']],
-                    ...
-                ],
-            ],
-        ],
-	],
-];
-```
-
-Объявляем консольный модуль:
-
-```php
-return [
-	'modules' => [
-		// ...
-		'account' => 'yii2module\account\console\Module',
+		'user' => [
+			'class' => 'yii2module\account\module\Module',
+			'controllerMap' => [
+				'auth' => [
+					'class' => 'yii2module\account\module\controllers\AuthController',
+					'layout' => '@yii2lab/misc/backend/views/layouts/singleForm.php',
+				],
+			],
+		],
 		// ...
 	],
 ];
@@ -76,7 +61,44 @@ return [
 return [
 	'components' => [
 		// ...
-		'account' => 'yii2module\account\domain\Domain',
+		'account' => [
+			'class' => 'yii2lab\domain\Domain',
+			'path' => 'yii2module\account\domain',
+			'repositories' => [
+				'auth' => Driver::remote(),
+				'login' => Driver::remote(),
+				'registration' => Driver::remote(),
+				'temp' => Driver::ACTIVE_RECORD,
+				'restorePassword' => Driver::remote(),
+				'security' => Driver::remote(),
+				'test' => Driver::DISC,
+				'balance' => Driver::remote(),
+				'rbac' => Driver::MEMORY,
+				'confirm' => Driver::ACTIVE_RECORD,
+				'assignment' => Driver::remote(),
+			],
+			'services' => [
+				'auth',
+				'login' => [
+					'relations' => [
+						'profile' => 'profile.profile',
+						'address' => 'profile.address',
+					],
+					'prefixList' => ['B', 'BS', 'R', 'QRS'],
+					'defaultRole' => RoleEnum::UNKNOWN_USER,
+					'defaultStatus' => 1,
+				],
+				'registration' => $remoteServiceDriver,
+				'temp',
+				'restorePassword' => $remoteServiceDriver,
+				'security',
+				'test',
+				'balance',
+				'rbac',
+				'confirm',
+				'assignment',
+			],
+		],
 		// ...
 	],
 ];
