@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\unit\enums;
+namespace tests\functional\enums;
 
 use PHPUnit\Framework\Constraint\IsType;
 use yii2lab\misc\enums\BaseEnum;

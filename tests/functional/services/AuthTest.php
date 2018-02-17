@@ -3,7 +3,7 @@
 namespace tests\unit\services;
 
 use Codeception\Test\Unit;
-use tests\unit\enums\LoginEnum;
+use tests\functional\enums\LoginEnum;
 use UnitTester;
 use Yii;
 use yii\web\UnauthorizedHttpException;

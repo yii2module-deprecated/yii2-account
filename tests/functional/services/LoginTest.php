@@ -9,7 +9,7 @@ use yii\web\NotFoundHttpException;
 use yii2lab\domain\BaseEntity;
 use yii2lab\domain\data\Query;
 use yii2module\account\domain\entities\LoginEntity;
-use tests\unit\enums\LoginEnum;
+use tests\functional\enums\LoginEnum;
 
 /**
  * Class LoginTest
