@@ -15,9 +15,9 @@
  *
  * @SuppressWarnings(PHPMD)
 */
-class FunctionalTester extends \yii2lab\test\base\_support\UnitTester
+class FunctionalTester extends \yii2lab\test\base\_support\FunctionalTester
 {
-    use _generated\UnitTesterActions;
+    use _generated\FunctionalTesterActions;
 
    /**
     * Define custom actions here
