@@ -58,7 +58,7 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 	}
 	
 	public function getAvatar() {
-		$avatar = param('url.frontend') . '/images/avatars/_default.jpg';
+		$avatar = env('url.frontend') . '/images/avatars/_default.jpg';
 		return $avatar;
 	}
 	

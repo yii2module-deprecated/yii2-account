@@ -22,7 +22,7 @@ $loginForm = $this->render('helpers/_loginForm.php', [
 		</div>
 		<div class="login-box-body">
 			<?= $loginForm ?>
-			<?= Html::a(t('main', 'go_to_frontend'), param('url.frontend')) ?>
+			<?= Html::a(t('main', 'go_to_frontend'), env('url.frontend')) ?>
 		</div>
 	</div>
 
