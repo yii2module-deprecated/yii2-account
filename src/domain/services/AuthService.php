@@ -15,7 +15,6 @@ use yii2module\account\domain\interfaces\services\AuthInterface;
 use yii2woop\generated\enums\SubjectType;
 use yii\web\ServerErrorHttpException;
 use yii2module\account\domain\entities\LoginEntity;
-use yii2woop\generated\request\command\system\PseudoAuthenticationCommandRequest;
 
 /**
  * Class AuthService
@@ -25,7 +24,9 @@ use yii2woop\generated\request\command\system\PseudoAuthenticationCommandRequest
  * @property \yii2module\account\domain\interfaces\repositories\AuthInterface $repository
  */
 class AuthService extends BaseService implements AuthInterface {
-	
+
+    public $rememberExpire = 3600 * 24 * 30;
+
 	public function authentication($login, $password) {
 		$body = compact(['login', 'password']);
 		$body = $this->validateForm(LoginForm::className(), $body);
@@ -96,7 +97,7 @@ class AuthService extends BaseService implements AuthInterface {
 		if(empty($user)) {
 			return null;
 		}
-		$duration = $rememberMe ? param('user.auth.rememberExpire') : 0;
+		$duration = $rememberMe ? $this->rememberExpire : 0;
 		Yii::$app->user->login($user, $duration);
 	}
 	

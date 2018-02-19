@@ -6,10 +6,11 @@ use yii2module\account\domain\forms\RestorePasswordForm;
 use yii2lab\domain\helpers\ErrorCollection;
 use yii2lab\domain\services\BaseService;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
-use Yii;
 
 class RestorePasswordService extends BaseService {
-	
+
+    public $tokenExpire = 300;
+
 	public function request($login, $mail = null) {
 		$body = compact(['login']);
 		$this->validateForm(RestorePasswordForm::className(), $body, RestorePasswordForm::SCENARIO_REQUEST);

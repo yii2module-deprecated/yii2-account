@@ -9,7 +9,9 @@ use yii2lab\domain\helpers\ErrorCollection;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 
 class TempService extends BaseService {
-	
+
+    public $loginExpire = 20 * 60;
+
 	public function isActivated($login) {
 		$user = $this->oneByLogin($login);
 		return $user->ip == Yii::$app->request->getUserIP();
@@ -51,8 +53,7 @@ class TempService extends BaseService {
 	
 	private function isExpire($created_at) {
 		$left = TIMESTAMP - $created_at;
-		$paramExpire = param('user.registration.tempLoginExpire');
-		return $left > $paramExpire;
+		return $left > $this->loginExpire;
 	}
 	
 	private function oneByLogin($login) {

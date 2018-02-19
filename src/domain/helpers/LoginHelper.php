@@ -5,14 +5,16 @@ namespace yii2module\account\domain\helpers;
 use Yii;
 
 class LoginHelper {
-	
+
+    const DEFAULT_MASK = '+9 (999) 999-99-99';
+
 	public static function format($login, $mask = null)
 	{
 		if(!self::validate($login)) {
 			return $login;
 		}
 		if(empty($mask)) {
-			$mask = param('user.login.mask');
+			$mask = self::DEFAULT_MASK;
 		}
 		$result = self::formatByMask($login, $mask);
 		return $result;
