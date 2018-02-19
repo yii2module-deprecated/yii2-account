@@ -8,12 +8,12 @@ use yii2lab\test\helpers\TestHelper;
 $config = [
 	'account' => [
 		'class' => Domain::class,
-		'path' => 'yii2module\account\domain',
+		'path' => 'yii2module\account\domain\v1',
 		'repositories' => [
 			'auth' => Driver::primary(),
 			'login' => [
 				'driver' => Driver::primary(),
-				'path' => '@yii2module/account/domain/fixtures/data',
+				'path' => '@yii2module/account/domain/v1/fixtures/data',
 			],
 			'registration' => Driver::primary(),
 			'temp' => Driver::ACTIVE_RECORD,

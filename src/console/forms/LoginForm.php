@@ -3,9 +3,9 @@
 namespace yii2module\account\console\forms;
 
 use Yii;
-use yii2module\account\domain\helpers\LoginHelper;
+use yii2module\account\domain\v1\helpers\LoginHelper;
 use yii\base\Model;
-use yii2module\account\domain\validators\LoginValidator;
+use yii2module\account\domain\v1\validators\LoginValidator;
 use domain\v1\account\models\Subjects;
 use domain\v1\account\models\User;
 use domain\v1\account\models\TypeSubject;

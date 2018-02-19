@@ -4,7 +4,7 @@ namespace yii2module\account\module\helpers;
 
 use Yii;
 use yii2lab\helpers\yii\Html;
-use yii2module\account\domain\entities\LoginEntity;
+use yii2module\account\domain\v1\entities\LoginEntity;
 
 class Menu {
 	
