@@ -2,7 +2,6 @@
 
 namespace yii2module\account\domain\filters\auth;
 
-use Yii;
 use yii\filters\auth\AuthMethod;
 
 class HttpTokenAuth extends AuthMethod

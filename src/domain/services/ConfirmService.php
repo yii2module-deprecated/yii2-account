@@ -8,7 +8,6 @@ use yii2lab\domain\data\Query;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2lab\domain\helpers\ErrorCollection;
 use yii2lab\domain\services\ActiveBaseService;
-use yii2module\account\domain\exceptions\IncorrectCodeHttpException;
 use yii2module\account\domain\helpers\ConfirmHelper;
 use yii2module\account\domain\helpers\LoginHelper;
 
