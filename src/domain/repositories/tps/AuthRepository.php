@@ -8,6 +8,7 @@ use yii\base\UnknownPropertyException;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii2lab\domain\repositories\TpsRepository;
+use yii2lab\helpers\ClientHelper;
 use yii2lab\helpers\Registry;
 use yii2module\account\domain\helpers\LoginEntityFactory;
 use yii2module\account\domain\interfaces\repositories\AuthInterface;
@@ -27,7 +28,7 @@ class AuthRepository extends TpsRepository implements AuthInterface {
 	
 	public function authentication($login, $password) {
 		try {
-			$address = TpsTransport::getUserHostAddress();
+			$address = ClientHelper::ip();
 			$request = TpsCommands::authentication($login, $password, $address);
 			$user = $request->send();
 			if($user) {

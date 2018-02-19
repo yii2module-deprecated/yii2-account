@@ -6,6 +6,7 @@ use Yii;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2lab\domain\rest\Controller;
 use yii2lab\helpers\Behavior;
+use yii2lab\helpers\ClientHelper;
 use yii2woop\common\components\TpsTransport;
 
 class AuthController extends Controller {
@@ -66,11 +67,11 @@ class AuthController extends Controller {
 			return $response;
 		}
 	}
-	
+
 	public function actionPseudo() {
 		$body = Yii::$app->request->getBodyParams();
 		try {
-			$address = TpsTransport::getUserHostAddress();
+			$address = ClientHelper::ip();
 			$entity = $this->service->pseudoAuthenticationWithParent($body['login'], $address, $body['email'], $body['parentLogin']);
 			return ['token'=> $entity->token];
 		} catch(UnprocessableEntityHttpException $e) {
