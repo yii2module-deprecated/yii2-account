@@ -10,6 +10,8 @@ use yii\web\Response;
  * Class HttpAuth
  *
  * @package yii2module\account\domain\filters\auth
+ *
+ * @deprecated use yii2module\account\domain\filters\auth\HttpTokenAuth
  */
 class HttpAuth extends AuthMethod
 {
