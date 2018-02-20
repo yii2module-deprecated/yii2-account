@@ -12,7 +12,7 @@ use yii\web\NotFoundHttpException;
 class Module extends YiiModule
 {
 	
-	public static $langDir = 'yii2module/account/domain/messages';
+	public static $langDir = 'yii2module/account/domain/v1/messages';
 	
 	public function beforeAction($action)
 	{

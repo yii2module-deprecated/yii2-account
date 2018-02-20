@@ -31,7 +31,7 @@ class TestAuthHelper {
 				'auth' => Driver::DISC,
 				'login' => [
 					'driver' => Driver::DISC,
-					'path' => '@yii2module/account/domain/fixtures/data',
+					'path' => '@yii2module/account/domain/v1/fixtures/data',
 				],
 				'rbac' => Driver::MEMORY,
 				'assignment' => Driver::DISC,
