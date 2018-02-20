@@ -3,10 +3,9 @@ namespace yii2module\account\module\controllers;
 
 use Yii;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii2lab\helpers\Behavior;
-use yii2module\account\domain\forms\LoginForm;
+use yii2module\account\domain\v1\forms\LoginForm;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2lab\notify\domain\widgets\Alert;
 
