@@ -1,14 +1,14 @@
 <?php
 
-namespace tests\unit\services;
+namespace tests\functional\v1\services;
 
 use Codeception\Test\Unit;
-use tests\functional\enums\LoginEnum;
+use tests\functional\v1\enums\LoginEnum;
 use UnitTester;
 use Yii;
 use yii\web\UnauthorizedHttpException;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
-use yii2module\account\domain\entities\LoginEntity;
+use yii2module\account\domain\v1\entities\LoginEntity;
 
 /**
  * Class AuthTest
