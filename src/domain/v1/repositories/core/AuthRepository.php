@@ -23,7 +23,6 @@ class AuthRepository extends CoreRepository implements AuthInterface {
 	}
 	
 	public function pseudoAuthenticationWithParrent($login, $ip, $email = null, $parentLogin) {
-		TpsCommands::
 		$response = $this->post(null, compact('login','ip','email', 'parentLogin'));
 		return $this->forgeEntity($response->data);
 	}
