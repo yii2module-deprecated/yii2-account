@@ -1,6 +1,7 @@
 <?php
 namespace yii2module\account\module\controllers;
 
+use common\enums\rbac\PermissionEnum;
 use Yii;
 use yii\web\Controller;
 use yii\filters\AccessControl;
@@ -90,7 +91,7 @@ class AuthController extends Controller
 		if(APP != BACKEND) {
 			return true;
 		}
-		if (Yii::$app->user->can('backend.*')) {
+		if (Yii::$app->user->can(PermissionEnum::BACKEND_ALL)) {
 			return true;
 		}
 		return false;
