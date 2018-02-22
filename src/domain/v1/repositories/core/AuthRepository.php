@@ -19,7 +19,7 @@ class AuthRepository extends CoreRepository implements AuthInterface {
 	
 	public function authentication($login, $password) {
 		$response = $this->post(null, compact('login', 'password'));
-		return $this->forgeEntity($response->data, LoginEntity::className());
+		return $this->forgeEntity($response->data, LoginEntity::class);
 	}
 	
 	public function pseudoAuthenticationWithParrent($login, $ip, $email = null, $parentLogin) {

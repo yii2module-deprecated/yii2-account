@@ -22,7 +22,7 @@ class RegistrationController extends Controller
 	{
 		return [
 			'access' => [
-				'class' => AccessControl::className(),
+				'class' => AccessControl::class,
 				'rules' => [
 					[
 						'actions' => ['create', 'set-password'],

@@ -2,6 +2,7 @@
 
 namespace yii2module\account\domain\v1\services;
 
+use yii2lab\domain\helpers\Helper;
 use yii2module\account\domain\v1\helpers\LoginHelper;
 use yii2lab\domain\services\BaseService;
 use Yii;
@@ -15,8 +16,8 @@ class RegistrationService extends BaseService {
 	public function createTempAccount($login, $email = null) {
 		$login = LoginHelper::pregMatchLogin($login);
 		$body = compact(['login', 'email']);
-		
-		$this->validateForm(RegistrationForm::className(), $body, RegistrationForm::SCENARIO_REQUEST);
+
+        Helper::validateForm(RegistrationForm::class, $body, RegistrationForm::SCENARIO_REQUEST);
 	
 		$this->checkLoginExistsInTps($login);
 	
@@ -30,7 +31,7 @@ class RegistrationService extends BaseService {
 	public function checkActivationCode($login, $activation_code) {
 		$login = LoginHelper::pregMatchLogin($login);
 		$body = compact(['login', 'activation_code']);
-		$this->validateForm(RegistrationForm::className(), $body, RegistrationForm::SCENARIO_CHECK);
+        Helper::validateForm(RegistrationForm::class, $body, RegistrationForm::SCENARIO_CHECK);
 		$this->checkLoginExistsInTemp($login);
 		//$this->isActivated($login);
 		$this->verifyActivationCode($login, $activation_code);
@@ -45,7 +46,7 @@ class RegistrationService extends BaseService {
 	public function createTpsAccount($login, $activation_code, $password, $email = null) {
 		$login = LoginHelper::pregMatchLogin($login);
 		$body = compact(['login', 'activation_code', 'password']);
-		$this->validateForm(RegistrationForm::className(), $body, RegistrationForm::SCENARIO_CONFIRM);
+        Helper::validateForm(RegistrationForm::class, $body, RegistrationForm::SCENARIO_CONFIRM);
 		$this->checkLoginExistsInTemp($login);
 		if(empty($email)) {
 			$email = 'demo@wooppay.com';

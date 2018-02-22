@@ -8,6 +8,7 @@ use yii\web\NotFoundHttpException;
 use yii\web\UnauthorizedHttpException;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2lab\domain\helpers\ErrorCollection;
+use yii2lab\domain\helpers\Helper;
 use yii2lab\domain\services\BaseService;
 use yii2lab\helpers\Registry;
 use yii2module\account\domain\v1\forms\LoginForm;
@@ -29,7 +30,7 @@ class AuthService extends BaseService implements AuthInterface {
 
 	public function authentication($login, $password) {
 		$body = compact(['login', 'password']);
-		$body = $this->validateForm(LoginForm::className(), $body);
+		$body = Helper::validateForm(LoginForm::class, $body);
 		try {
 			$user = $this->repository->authentication($body['login'], $body['password']);
 		} catch(NotFoundHttpException $e) {

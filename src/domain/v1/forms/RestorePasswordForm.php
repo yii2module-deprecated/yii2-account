@@ -20,7 +20,7 @@ class RestorePasswordForm extends Model {
 		return [
 			[['login', 'password', 'activation_code'], 'trim'],
 			[['login', 'password', 'activation_code'], 'required'],
-			['login', LoginValidator::className()],
+			['login', LoginValidator::class],
 			[['activation_code'], 'integer'],
 			[['activation_code'], 'string', 'length' => 6],
 			[['password'], 'string', 'min' => 8],

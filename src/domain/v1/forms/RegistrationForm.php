@@ -20,7 +20,7 @@ class RegistrationForm extends RestorePasswordForm {
 		return [
 			[['login', 'password', 'activation_code', 'email'], 'trim'],
 			[['login', 'password', 'activation_code'], 'required'],
-			//['login', LoginValidator::className()],
+			//['login', LoginValidator::class],
 			['email', 'email'],
 			[['activation_code'], 'integer'],
 			[['activation_code'], 'string', 'length' => 6],

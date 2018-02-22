@@ -4,6 +4,7 @@ namespace yii2module\account\domain\v1\services;
 
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii2lab\domain\helpers\Helper;
 use yii2module\account\domain\v1\interfaces\services\LoginInterface;
 use yii2module\account\domain\v1\forms\LoginForm;
 use yii2lab\domain\helpers\ErrorCollection;
@@ -47,7 +48,7 @@ class LoginService extends ActiveBaseService implements LoginInterface {
 	public function create($data) {
 		//$data['role'] = !empty($data['role']) ? $data['role'] : RoleEnum::UNKNOWN_USER;
 		$data['email'] = !empty($data['email']) ? $data['email'] : 'api@wooppay.com';
-		$this->validateForm(LoginForm::className(), $data);
+        Helper::validateForm(LoginForm::class, $data);
 		try {
 			$user = $this->repository->oneByLogin($data['login']);
 			$error = new ErrorCollection();

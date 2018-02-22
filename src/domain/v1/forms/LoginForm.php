@@ -26,7 +26,7 @@ class LoginForm extends Model
 			[['login', 'password'], 'required'],
 			['email', 'email'],
 			//['login', 'match', 'pattern' => '/^[0-9_]{11,13}$/i', 'message' => Yii::t('account/registration', 'login_not_valid')],
-			//['login', LoginValidator::className()],
+			//['login', LoginValidator::class],
 			'normalizeLogin' => ['login', 'normalizeLogin'],
 			[['password'], 'string', 'min' => 8],
 			['rememberMe', 'boolean'],

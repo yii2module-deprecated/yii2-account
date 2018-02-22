@@ -14,7 +14,7 @@ class LoginController extends Controller
 	
 	public function actionCreate()
 	{
-		$data = Enter::form(LoginForm::className());
+		$data = Enter::form(LoginForm::class);
 		try {
 			$entity = Yii::$app->account->login->create($data);
 			Output::arr($entity->toArray());
