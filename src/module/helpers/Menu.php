@@ -3,6 +3,7 @@
 namespace yii2module\account\module\helpers;
 
 use Yii;
+use yii2lab\helpers\MenuHelper;
 use yii2lab\helpers\yii\Html;
 use yii2module\account\domain\v1\entities\LoginEntity;
 
@@ -19,19 +20,13 @@ class Menu {
 	private function getItemList() {
 		return [
 			[
-				'label' => ['profile/main','my_cards'],
-				'url' => 'card',
-				'module' => 'bank',
-				'domain' => 'bank',
-				'access' => ['@'],
-			],
-			[
 				'label' => ['profile/main','my_profile'],
 				'url' => 'profile/person',
 				'module' => 'profile',
 				'domain' => 'profile',
 				'access' => ['@'],
 			],
+            MenuHelper::DIVIDER,
 			[
 				'label' => ['account/auth', 'logout_action'],
 				'url' => 'user/auth/logout',
@@ -51,7 +46,7 @@ class Menu {
 		return [
 			'label' => 
 				Html::fa('user') . NBSP . 
-				Yii::t('account/auth', 'title'),
+				t('account/auth', 'title'),
 			'module' => 'user',
 			'encode' => false,
 			'items' => $items,
