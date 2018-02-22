@@ -33,9 +33,6 @@ class Menu {
 				'access' => ['@'],
 			],
 			[
-				'options' => ['class'=>'divider'],
-			],
-			[
 				'label' => ['account/auth', 'logout_action'],
 				'url' => 'user/auth/logout',
 				'linkOptions' => ['data-method' => 'post'],
@@ -54,7 +51,7 @@ class Menu {
 		return [
 			'label' => 
 				Html::fa('user') . NBSP . 
-				t('account/auth', 'title'),
+				Yii::t('account/auth', 'title'),
 			'module' => 'user',
 			'encode' => false,
 			'items' => $items,
