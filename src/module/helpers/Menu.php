@@ -47,7 +47,7 @@ class Menu implements MenuInterface {
 		return [
 			'label' => 
 				Html::fa('user') . NBSP . 
-				t('account/auth', 'title'),
+				Yii::t('account/auth', 'title'),
 			'module' => 'user',
 			'encode' => false,
 			'items' => $items,
