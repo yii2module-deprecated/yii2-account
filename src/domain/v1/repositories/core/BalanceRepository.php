@@ -8,6 +8,6 @@ use common\enums\app\ApiVersionEnum;
 class BalanceRepository extends ActiveCoreRepository {
 	
 	public $baseUri = 'balance';
-	public $version = ApiVersionEnum::VERSION_4;
+	public $version = 'v4';
 	
 }

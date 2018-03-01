@@ -9,7 +9,7 @@ use common\enums\app\ApiVersionEnum;
 
 class RestorePasswordService extends CoreBaseService {
 	
-	public $version = ApiVersionEnum::VERSION_4;
+	public $version = 'v4';
 	public $baseUri = 'auth/restore-password';
 	
 	public function request($login) {

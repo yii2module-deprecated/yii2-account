@@ -13,7 +13,7 @@ use yii2module\account\domain\v1\interfaces\repositories\LoginInterface;
 class LoginRepository extends ActiveCoreRepository implements LoginInterface {
 	
 	public $baseUri = 'user';
-	public $version = ApiVersionEnum::VERSION_4;
+	public $version = 'v4';
 	
 	public function isExistsByLogin($login) {
 		try {

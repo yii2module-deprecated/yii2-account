@@ -9,7 +9,7 @@ use yii2module\account\domain\v1\forms\RegistrationForm;
 
 class RegistrationService extends CoreBaseService {
 	
-	public $version = ApiVersionEnum::VERSION_4;
+	public $version = 'v4';
 	public $baseUri = 'registration';
 	
 	public function createTempAccount($login, $email = null) {

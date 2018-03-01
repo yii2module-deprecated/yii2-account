@@ -9,7 +9,7 @@ use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 
 class RestorePasswordRepository extends CoreRepository implements RestorePasswordInterface {
 	
-	public $version = ApiVersionEnum::VERSION_4;
+	public $version = 'v4';
 	public $baseUri = 'auth/restore-password';
 	
 	public function requestNewPassword($login, $mail = null) {

@@ -15,7 +15,7 @@ use yii2woop\generated\transport\TpsCommands;
 class AuthRepository extends CoreRepository implements AuthInterface {
 	
 	public $baseUri = 'auth';
-	public $version = ApiVersionEnum::VERSION_4;
+	public $version = 'v4';
 	
 	public function authentication($login, $password) {
 		$response = $this->post(null, compact('login', 'password'));

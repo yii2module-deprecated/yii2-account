@@ -8,7 +8,7 @@ use common\enums\app\ApiVersionEnum;
 class SecurityRepository extends CoreRepository {
 	
 	public $baseUri = 'security';
-	public $version = ApiVersionEnum::VERSION_4;
+	public $version = 'v4';
 	
 	public function changePassword($password, $newPassword) {
 		$response = $this->put('password', [
