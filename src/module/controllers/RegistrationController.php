@@ -69,7 +69,7 @@ class RegistrationController extends Controller
 		}
 		$isExists = Yii::$app->account->repositories->temp->isExists($session['login']);
 		if(!$isExists) {
-			Yii::$app->notify->flash->send(['account/registration', 'temp_user_not_found'], Alert::TYPE_DANGER);
+			Yii::$app->navigation->alert->create(['account/registration', 'temp_user_not_found'], Alert::TYPE_DANGER);
 			return $this->redirect(['/user/registration']);
 		}
 		$model = new SetSecurityForm();
