@@ -2,6 +2,7 @@
 
 namespace yii2module\account\domain\v1\services;
 
+use yii2lab\misc\enums\TimeEnum;
 use yii2module\account\domain\v1\entities\TempEntity;
 use yii2lab\domain\services\BaseService;
 use Yii;
@@ -10,7 +11,7 @@ use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 
 class TempService extends BaseService {
 
-    public $loginExpire = 20 * 60;
+    public $loginExpire = TimeEnum::SECOND_PER_MINUTE * 20;
 
 	public function isActivated($login) {
 		$user = $this->oneByLogin($login);

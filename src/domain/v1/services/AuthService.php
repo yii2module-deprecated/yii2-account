@@ -11,6 +11,7 @@ use yii2lab\domain\helpers\ErrorCollection;
 use yii2lab\domain\helpers\Helper;
 use yii2lab\domain\services\BaseService;
 use yii2lab\helpers\Registry;
+use yii2lab\misc\enums\TimeEnum;
 use yii2module\account\domain\v1\forms\LoginForm;
 use yii2module\account\domain\v1\interfaces\services\AuthInterface;
 use yii2woop\generated\enums\SubjectType;
@@ -26,7 +27,7 @@ use yii2module\account\domain\v1\entities\LoginEntity;
  */
 class AuthService extends BaseService implements AuthInterface {
 
-    public $rememberExpire = 3600 * 24 * 30;
+    public $rememberExpire = TimeEnum::SECOND_PER_DAY * 30;
 
 	public function authentication($login, $password) {
 		$body = compact(['login', 'password']);

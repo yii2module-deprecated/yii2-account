@@ -3,13 +3,14 @@
 namespace yii2module\account\domain\v1\repositories\ar;
 
 use Yii;
+use yii2lab\misc\enums\TimeEnum;
 use yii2module\account\domain\v1\helpers\LoginHelper;
 use yii2module\account\domain\v1\interfaces\repositories\RestorePasswordInterface;
 use yii2lab\domain\repositories\TpsRepository;
 
 class RestorePasswordRepository extends TpsRepository implements RestorePasswordInterface {
 
-	public $smsCodeExpire = 3600;
+	public $smsCodeExpire = TimeEnum::SECOND_PER_HOUR;
 	
 	public function requestNewPassword($login, $mail = null) {
 		$login = LoginHelper::getPhone($login);
