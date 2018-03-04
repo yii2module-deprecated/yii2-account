@@ -89,7 +89,7 @@ class RegistrationController extends Controller
 	{
 		$model = new ProfileForm();
 		$callback = function($model) {
-			Yii::$app->profile->profile->updateSelf($model->toArray());
+			Yii::$app->profile->person->updateSelf($model->toArray());
 			return $this->redirect(['/user/registration/set-address']);
 		};
 		$this->validateForm($model,$callback);
