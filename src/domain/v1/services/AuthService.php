@@ -10,7 +10,7 @@ use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2lab\domain\helpers\ErrorCollection;
 use yii2lab\domain\helpers\Helper;
 use yii2lab\domain\services\BaseService;
-use yii2lab\helpers\Registry;
+use yii2lab\extension\registry\helpers\Registry;
 use yii2lab\misc\enums\TimeEnum;
 use yii2module\account\domain\v1\forms\LoginForm;
 use yii2module\account\domain\v1\interfaces\services\AuthInterface;

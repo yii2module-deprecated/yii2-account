@@ -6,7 +6,7 @@ namespace yii2module\account\domain\v1\web;
 
 use yii\web\NotFoundHttpException;
 use yii2module\account\domain\v1\entities\LoginEntity;
-use yii2lab\helpers\Registry;
+use yii2lab\extension\registry\helpers\Registry;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\InvalidValueException;
