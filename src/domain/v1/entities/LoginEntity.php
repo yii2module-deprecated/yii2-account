@@ -45,6 +45,8 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 	protected $roles;
 	protected $profile;
 	protected $balance;
+	/** @var $address
+	 * @deprecated */
 	protected $address;
 	protected $password;
 	private $isShowToken = false;
@@ -88,18 +90,6 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 		if(!empty($value)) {
 			$this->roles = ArrayHelper::toArray($value);
 		}
-	}
-	public function setProfile($value) {
-		if(empty($value)) {
-			return null;
-		}
-		$this->profile= Yii::$app->profile->factory->entity->create('profile',$value);
-	}
-	public function setAddress($value) {
-		if(empty($value)) {
-			return null;
-		}
-		$this->address= Yii::$app->profile->factory->entity->create('address',$value);
 	}
 	
 	public function fieldType() {

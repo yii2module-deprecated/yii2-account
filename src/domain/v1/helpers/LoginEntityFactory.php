@@ -15,7 +15,8 @@ class LoginEntityFactory {
 		}
 		$user = ArrayHelper::toArray($user);
 		foreach(Yii::$app->account->login->relations as $propName => $serviceName) {
-			$user[$propName] = ServiceHelper::oneById($serviceName, $user['login']);
+			list($domain, $service) = explode(DOT, $serviceName);
+			$user[$domain][$service] = ServiceHelper::oneById($serviceName, $user['login']);
 		}
 		return self::forgeEntity($user);
 	}
