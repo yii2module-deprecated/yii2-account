@@ -68,7 +68,7 @@ class LoginRepository extends ActiveArRepository implements LoginInterface {
 		$entityClone = clone $entity;
 		$entityClone->showToken();
 		/** @var IdentityInterface $model */
-		$model = Yii::createObject($this->model->className());
+		$model = Yii::createObject(get_class($this->model));
 		$model->id = $this->lastId() + 1;
 		$model->login = $entityClone->login;
 		$model->email = $entityClone->email;
