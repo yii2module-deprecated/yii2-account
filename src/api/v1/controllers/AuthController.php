@@ -17,7 +17,6 @@ class AuthController extends Controller {
 		return [
 			'profile' => [
 				'sex' => 'boolean',
-				'birth_date' => 'time:api',
 			],
 		];
 	}

@@ -9,13 +9,6 @@ class UserController extends Controller
 
 	public $serviceName = 'account.login';
 
-	public function format() {
-		return [
-			'creation_date' => 'time:api',
-			'birth_date' => 'time:api',
-		];
-	}
-
 	/**
 	 * @inheritdoc
 	 */
