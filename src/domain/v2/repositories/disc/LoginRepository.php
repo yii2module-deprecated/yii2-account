@@ -72,10 +72,6 @@ class LoginRepository extends ActiveDiscRepository implements LoginInterface {
 		return LoginEntityFactory::forgeLoginEntity($user);
 	}
 	
-	public function getBalance($login) {
-		return [];
-	}
-	
 	public function insert(BaseEntity $entity) {
 		// TODO: Implement insert() method.
 	}

@@ -3,11 +3,26 @@
 namespace yii2module\account\domain\v2\helpers;
 
 use Yii;
+use yii\web\NotFoundHttpException;
+use yii2lab\domain\data\Query;
 
 class LoginHelper {
 
     const DEFAULT_MASK = '+9 (999) 999-99-99';
-
+	
+	public static function getLoginByQuery(Query $query = null) {
+		$query2 = Query::forge();
+		$query2->where($query->getParam('where'));
+		return Yii::$app->account->login->one($query2);
+	}
+	
+	public static function getLogin($id) {
+		try {
+			return Yii::$app->account->login->oneById($id);
+		} catch(NotFoundHttpException $e) {}
+		return Yii::$app->account->login->oneByLogin($id);
+	}
+ 
 	public static function format($login, $mask = null)
 	{
 		if(!self::validate($login)) {

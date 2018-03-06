@@ -22,7 +22,7 @@ Yii::$app->navigation->breadcrumbs->create($this->title);
 				<?= $form->field($model, 'activation_code')->textInput(['autofocus' => true]) ?>
 
 				<div class="form-group">
-					<?= Html::submitButton(t('account/password', 'request_action'), ['class' => 'btn btn-primary']) ?>
+					<?= Html::submitButton(Yii::t('account/password', 'request_action'), ['class' => 'btn btn-primary']) ?>
 				</div>
 
 			<?php ActiveForm::end(); ?>

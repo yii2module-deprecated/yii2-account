@@ -34,7 +34,7 @@ Yii::$app->navigation->breadcrumbs->create($this->title);
 	        <?= $form->field($model, 'email_repeat') ?>
 
             <div class="form-group">
-	            <?= Html::submitButton(t('action', 'next'), [
+	            <?= Html::submitButton(Yii::t('action', 'next'), [
 		            'class' => 'btn btn-primary',
 		            'name' => 'create-button',
 	            ]) ?>

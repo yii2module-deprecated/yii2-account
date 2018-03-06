@@ -26,7 +26,7 @@ Yii::$app->navigation->breadcrumbs->create($this->title);
 	        <?= $form->field($model, 'post_code') ?>
             
             <div class="form-group">
-				<?= Html::submitButton(t('action', 'complete'), [
+				<?= Html::submitButton(Yii::t('action', 'complete'), [
 					'class' => 'btn btn-primary',
 					'name' => 'create-button',
 				]) ?>

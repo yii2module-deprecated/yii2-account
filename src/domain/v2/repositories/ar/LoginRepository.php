@@ -3,12 +3,10 @@
 namespace yii2module\account\domain\v2\repositories\ar;
 
 use Yii;
-use yii\rbac\Assignment;
 use yii\web\IdentityInterface;
 use yii\web\NotFoundHttpException;
 use yii2lab\domain\BaseEntity;
 use yii2module\account\domain\v2\entities\LoginEntity;
-use yii2module\account\domain\v2\helpers\LoginEntityFactory;
 use yii2lab\domain\repositories\ActiveArRepository;
 use yii\helpers\ArrayHelper;
 use yii2module\account\domain\v2\interfaces\repositories\LoginInterface;
@@ -96,13 +94,12 @@ class LoginRepository extends ActiveArRepository implements LoginInterface {
 			}
 			return $collection;
 		}
-		$user = ArrayHelper::toArray($user);
 		$user['roles'] = $this->domain->repositories->assignment->allRoleNamesByUserId($user['id']);
 		$user = $this->alias->decode($user);
 		if(empty($user['token'])) {
 			$user['token'] = $this->generateToken($user['id']);
 		}
-		return LoginEntityFactory::forgeLoginEntity($user);
+		return parent::forgeEntity($user);
 	}
 
 	private function generateToken($userId) {

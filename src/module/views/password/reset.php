@@ -24,7 +24,7 @@ Yii::$app->navigation->breadcrumbs->create($this->title);
 			    <?= $form->field($model, 'new_password_repeat')->passwordInput() ?>
 
 				<div class="form-group">
-					<?= Html::submitButton(t('account/password', 'save_password_action'), ['class' => 'btn btn-primary']) ?>
+					<?= Html::submitButton(Yii::t('account/password', 'save_password_action'), ['class' => 'btn btn-primary']) ?>
 				</div>
 
 			<?php ActiveForm::end(); ?>

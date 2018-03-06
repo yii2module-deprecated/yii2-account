@@ -23,7 +23,7 @@ Yii::$app->navigation->breadcrumbs->create($this->title);
 				<?= $form->field($model, 'login')->textInput(['autofocus' => true]) ?>
 
 				<div class="form-group">
-					<?= Html::submitButton(t('action', 'next'), ['class' => 'btn btn-primary']) ?>
+					<?= Html::submitButton(Yii::t('action', 'next'), ['class' => 'btn btn-primary']) ?>
 				</div>
 
 			<?php ActiveForm::end(); ?>

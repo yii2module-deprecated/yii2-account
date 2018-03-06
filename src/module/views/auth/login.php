@@ -22,7 +22,7 @@ $loginForm = $this->render('helpers/_loginForm.php', [
 		</div>
 		<div class="login-box-body">
 			<?= $loginForm ?>
-			<?= Html::a(t('main', 'go_to_frontend'), env('url.frontend')) ?>
+			<?= Html::a(Yii::t('main', 'go_to_frontend'), env('url.frontend')) ?>
 		</div>
 	</div>
 
@@ -35,9 +35,9 @@ $loginForm = $this->render('helpers/_loginForm.php', [
 		<div class="row">
 			<div class="col-lg-5">
 				<?= $loginForm ?>
-				<?= Html::a(t('account/auth', 'register_new_user'), ['/user/registration']) ?>
+				<?= Html::a(Yii::t('account/auth', 'register_new_user'), ['/user/registration']) ?>
 				<br/>
-				<?= Html::a(t('account/auth', 'i_forgot_my_password'), ['/user/password']) ?>
+				<?= Html::a(Yii::t('account/auth', 'i_forgot_my_password'), ['/user/password']) ?>
 				
 			</div>
 		</div>

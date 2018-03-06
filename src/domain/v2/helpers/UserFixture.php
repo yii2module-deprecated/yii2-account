@@ -22,12 +22,6 @@ class UserFixture {
 		$user['password_reset_token'] = null;
 		$user['created_at'] = 1497349018;
 		$user['updated_at'] = 1497349018;
-		if(!isset($user['balance'])) {
-			$user['balance'] = [
-				'blocked' => 1000,
-				'active' => 1000,
-			];
-		}
 		return $user;
 	}
 

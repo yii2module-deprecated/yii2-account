@@ -47,7 +47,7 @@ Yii::$app->navigation->breadcrumbs->create($this->title);
         <div class="col-lg-5">
 			<?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
 			
-			<?php $buttonGetCode = Html::submitButton(t('account/registration', 'send_activation_code'), [
+			<?php $buttonGetCode = Html::submitButton(Yii::t('account/registration', 'send_activation_code'), [
 				'onclick' => 'return sendSms()',
 				'class' => 'btn btn-default btn-block',
 			]); ?>
@@ -72,7 +72,7 @@ Yii::$app->navigation->breadcrumbs->create($this->title);
 			<?= $form->field($model, 'activation_code') ?>
 
             <div class="form-group">
-	            <?= Html::submitButton(t('action', 'next'), [
+	            <?= Html::submitButton(Yii::t('action', 'next'), [
 		            'class' => 'btn btn-primary',
 		            'name' => 'create-button',
 	            ]) ?>

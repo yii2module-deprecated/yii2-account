@@ -24,15 +24,6 @@ class AuthRepository extends BaseRepository implements AuthInterface {
 		return $user;
 	}
 	
-	public function updateBalance() {
-	
-	}
-	
-	public function getBalance() {
-		$balance = [];
-		return $this->domain->factory->entity->create('balance', $balance);
-	}
-	
 	public function setToken($token) {
 	
 	}

@@ -16,16 +16,10 @@ use yii2module\account\domain\v2\helpers\LoginHelper;
  * @property integer $id
  * @property string $login
  * @property string $email
- * @property integer $subject_type
  * @property string $token
- * @property integer $parent_id
- * @property string $iin_fixed
- * @property integer $creation_date
  * @property string $password_hash
  * @property array $roles
  * @property BaseEntity $profile
- * @property BaseEntity $balance
- * @property BaseEntity $address
  * @property string $avatar
  * @property string $username
  * @property string $created_at
@@ -35,19 +29,11 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 	protected $id;
 	protected $login;
 	protected $email;
-	//protected $subject_type = 3000;
 	protected $token;
-	//protected $parent_id;
-	//protected $iin_fixed = false;
 	protected $status;
-	//protected $creation_date;
 	protected $password_hash;
 	protected $roles;
 	protected $profile;
-	protected $balance;
-	/** @var $address
-	 * @deprecated */
-	protected $address;
 	protected $password;
 	private $isShowToken = false;
 	
@@ -68,13 +54,6 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 		return $this->creation_date;
 	}
 	
-	public function getBalance() {
-		if(!empty($this->balance)) {
-			return $this->balance;
-		}
-		return Yii::$app->account->auth->getBalance();
-	}
-
 	public function getUsername() {
 		return LoginHelper::format($this->login);
 	}

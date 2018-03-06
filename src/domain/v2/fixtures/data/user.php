@@ -13,10 +13,6 @@ return UserFixture::generateAll([
 		'username' => 'Admin',
 		'role' => 'rAdministrator',
 		'password_hash' => $passwordHash,
-		'balance' => [
-			'blocked' => 136809,
-			'active' => 23795,
-		],
 	],
 	[
 		'id' => 381069,
@@ -24,10 +20,6 @@ return UserFixture::generateAll([
 		'username' => 'User',
 		'role' => 'rUnknownUser',
 		'password_hash' => $passwordHash,
-		'balance' => [
-			'blocked' => 32678,
-			'active' => 5667,
-		],
 	],
 	[
 		'id' => 381070,
@@ -35,10 +27,6 @@ return UserFixture::generateAll([
 		'username' => 'User',
 		'role' => 'rUnknownUser',
 		'password_hash' => $passwordHash,
-		'balance' => [
-			'blocked' => 3842,
-			'active' => 889,
-		],
 	],
 	[
 		'id' => 375664,
@@ -46,10 +34,6 @@ return UserFixture::generateAll([
 		'username' => 'User',
 		'role' => 'rUnknownUser',
 		'password_hash' => $passwordHash,
-		'balance' => [
-			'blocked' => 5473,
-			'active' => 19,
-		],
 	],
 	[
 		'id' => 381072,
@@ -57,10 +41,6 @@ return UserFixture::generateAll([
 		'username' => 'Finance specialist',
 		'role' => 'rFinanceSpecialist',
 		'password_hash' => $passwordHash,
-		'balance' => [
-			'blocked' => 456677,
-			'active' => 5498,
-		],
 	],
 	[
 		'id' => 381073,
@@ -68,10 +48,6 @@ return UserFixture::generateAll([
 		'username' => 'user 2',
 		'role' => 'rUnknownUser',
 		'password_hash' => $passwordHash,
-		'balance' => [
-			'blocked' => 36894,
-			'active' => 6597,
-		],
 	],
 	[
 		'id' => 381074,
@@ -79,10 +55,6 @@ return UserFixture::generateAll([
 		'username' => 'user 3',
 		'role' => 'rUnknownUser,rResmiUnknownUser',
 		'password_hash' => $passwordHash,
-		'balance' => [
-			'blocked' => 96735,
-			'active' => 6545,
-		],
 	],
 	[
 		'id' => 381075,
@@ -90,10 +62,6 @@ return UserFixture::generateAll([
 		'username' => 'user 4',
 		'role' => 'rUnknownUser',
 		'password_hash' => $passwordHash,
-		'balance' => [
-			'blocked' => 9787,
-			'active' => 76576,
-		],
 	],
 	[
 		'id' => 381076,
@@ -101,9 +69,5 @@ return UserFixture::generateAll([
 		'username' => 'user 5',
 		'role' => 'rAdministrator',
 		'password_hash' => $passwordHash,
-		'balance' => [
-			'blocked' => 528932,
-			'active' => 121447,
-		],
 	],
 ]);

@@ -26,11 +26,11 @@ Yii::$app->navigation->breadcrumbs->create($this->title);
 	        <?= $form->field($model, 'last_name') ?>
             
             <div class="form-group">
-				<?= Html::submitButton(t('action', 'next'), [
+				<?= Html::submitButton(Yii::t('action', 'next'), [
 					'class' => 'btn btn-primary',
 					'name' => 'create-button',
 				]) ?>
-				<?= Html::a(t('action', 'skip'), ['/user/registration/set-address'], [
+				<?= Html::a(Yii::t('action', 'skip'), ['/user/registration/set-address'], [
 					'class' => 'btn btn-default',
 				]) ?>
             </div>

@@ -11,7 +11,6 @@ interface AuthInterface {
 	public function denyAccess();
 	public function breakSession();
 	public function getIdentity();
-	public function getBalance();
 	public function getToken();
 
 }

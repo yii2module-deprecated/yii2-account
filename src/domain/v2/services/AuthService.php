@@ -43,9 +43,7 @@ class AuthService extends BaseService implements AuthInterface {
 			$error->add('password', 'account/auth', 'incorrect_login_or_password');
 			throw new UnprocessableEntityHttpException($error);
 		}
-		
 		$this->checkStatus($user);
-		
 		$this->repository->setToken($user->token);
 		$user->showToken();
 		return $user;
@@ -53,8 +51,8 @@ class AuthService extends BaseService implements AuthInterface {
 	
 	private function checkStatus(LoginEntity $entity)
 	{
-	    if (\Yii::$app->account->login->isForbiddenByStatus($entity->status)) {
-	        throw new ServerErrorHttpException(t('account/login', 'user_status_forbidden'));
+	    if (Yii::$app->account->login->isForbiddenByStatus($entity->status)) {
+	        throw new ServerErrorHttpException(Yii::t('account/login', 'user_status_forbidden'));
 	    }
 	}
 	
@@ -113,9 +111,7 @@ class AuthService extends BaseService implements AuthInterface {
 		if(empty($user)) {
 			$this->breakSession();
 		}
-		
 		$this->checkStatus($user);
-		
 		return $user;
 	}
 	
@@ -127,7 +123,7 @@ class AuthService extends BaseService implements AuthInterface {
 		if(Yii::$app->user->getIsGuest()) {
 			Yii::$app->user->loginRequired();
 		} else {
-			throw new ForbiddenHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
+			throw new ForbiddenHttpException();
 		}
 	}
 	
@@ -156,18 +152,6 @@ class AuthService extends BaseService implements AuthInterface {
 		return $identity;
 	}
 	
-	/**
-	 * @param      $action
-	 * @param null $access
-	 * @param null $param
-	 *
-	 * @return boolean
-	 * @deprecated
-	 */
-	public function checkAccess($action, $access = null, $param = null) {
-		return $this->domain->rbac->checkAccess($action, $access, $param);
-	}
-	
 	public function getToken() {
 		if(!Yii::$app->user->isGuest && Yii::$app->user->identity->getAuthKey()) {
 			return Yii::$app->user->identity->getAuthKey();
@@ -184,14 +168,6 @@ class AuthService extends BaseService implements AuthInterface {
 			return $authorization;
 		}
 		return null;
-	}
-	
-	public function getBalance() {
-		if(empty(Yii::$app->user->identity->login)) {
-			return [];
-		}
-		$balance = $this->domain->balance->oneSelf();
-		return $balance;
 	}
 	
 }
