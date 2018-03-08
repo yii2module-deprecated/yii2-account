@@ -7,7 +7,6 @@ use yii2lab\domain\data\Query;
 use yii2lab\extension\menu\interfaces\MenuInterface;
 use yii2lab\extension\menu\helpers\MenuHelper;
 use yii2lab\helpers\yii\Html;
-use yii2module\account\domain\v1\entities\LoginEntity;
 
 class Menu implements MenuInterface {
 	
