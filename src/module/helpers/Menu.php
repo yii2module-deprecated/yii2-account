@@ -3,10 +3,10 @@
 namespace yii2module\account\module\helpers;
 
 use Yii;
-use yii2lab\domain\data\Query;
 use yii2lab\extension\menu\interfaces\MenuInterface;
 use yii2lab\extension\menu\helpers\MenuHelper;
 use yii2lab\helpers\yii\Html;
+use yii2module\profile\widget\Avatar;
 
 class Menu implements MenuInterface {
 	
@@ -56,7 +56,7 @@ class Menu implements MenuInterface {
 	
 	private function getUserMenu()
 	{
-		$label =  $this->getAvatar(). NBSP . '<small>'. Yii::$app->user->identity->username . '</small>';
+		$label =  Avatar::widget() . NBSP . Yii::$app->user->identity->username;
 		return [
 			'label' => $label,
 			'module' => 'user',
@@ -65,20 +65,4 @@ class Menu implements MenuInterface {
 		];
 	}
 
-	private function getAvatar() {
-		$query = Query::forge();
-		$profileRelations = Yii::$app->account->login->relations['profile'];
-		if($profileRelations) {
-			foreach($profileRelations as $relation) {
-				$query->with($relation);
-			}
-		}
-		$profile = Yii::$app->profile->profile->oneById(Yii::$app->user->identity->id, $query);
-		if(is_object($profile) && is_object($profile->avatar)) {
-			$avatar = '<img src="'. $profile->avatar->url . '" height="19" />';
-		} else {
-			$avatar = '';
-		}
-		return $avatar;
-	}
 }
