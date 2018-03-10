@@ -28,10 +28,6 @@ $config = [
 		'services' => [
 			'auth',
 			'login' => [
-				'relations' => [
-					/*'profile' => 'profile.profile',
-					'address' => 'profile.address',*/
-				],
 				'prefixList' => ['B', 'BS', 'R', 'QRS'],
 				'defaultRole' => null,
 				'defaultStatus' => 1,
