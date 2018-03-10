@@ -19,7 +19,6 @@ use yii2module\account\domain\v2\helpers\LoginHelper;
  * @property string $token
  * @property string $password_hash
  * @property array $roles
- * @property BaseEntity $profile
  * @property string $avatar
  * @property string $username
  * @property string $created_at
@@ -33,7 +32,6 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 	protected $status;
 	protected $password_hash;
 	protected $roles;
-	protected $profile;
 	protected $password;
 	private $isShowToken = false;
 	

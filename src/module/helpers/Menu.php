@@ -3,8 +3,10 @@
 namespace yii2module\account\module\helpers;
 
 use Yii;
+use yii2lab\domain\helpers\ServiceHelper;
 use yii2lab\extension\menu\interfaces\MenuInterface;
 use yii2lab\extension\menu\helpers\MenuHelper;
+use yii2lab\helpers\ModuleHelper;
 use yii2lab\helpers\yii\Html;
 use yii2module\profile\widget\Avatar;
 
@@ -26,6 +28,7 @@ class Menu implements MenuInterface {
 				'module' => 'profile',
 				'domain' => 'profile',
 				'access' => ['@'],
+				'visible' => ModuleHelper::has('profile', FRONTEND) && ServiceHelper::has('profile.person'),
 			],
             MenuHelper::DIVIDER,
 			[
@@ -38,19 +41,26 @@ class Menu implements MenuInterface {
 	
 	private function getGuestMenu()
 	{
-		$items = [];
-		$items[] = ['label' => ['account/auth', 'login_action'], 'url' => Yii::$app->user->loginUrl];
-		if(APP == FRONTEND) {
-			$items[] = ['label' => ['account/registration', 'title'], 'url' => 'user/registration'];
-			$items[] = ['label' => ['account/password', 'title'], 'url' => 'user/password'];
-		}
 		return [
 			'label' => 
 				Html::fa('user') . NBSP . 
 				Yii::t('account/auth', 'title'),
 			'module' => 'user',
 			'encode' => false,
-			'items' => $items,
+			'items' => [
+				[
+					'label' => ['account/auth', 'login_action'],
+					'url' => Yii::$app->user->loginUrl,
+				],
+				[
+					'label' => ['account/registration', 'title'],
+					'url' => 'user/registration',
+				],
+				[
+					'label' => ['account/password', 'title'],
+					'url' => 'user/password',
+				],
+			],
 		];
 	}
 	

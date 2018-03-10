@@ -19,14 +19,6 @@ class AuthController extends Controller {
 	
 	public $serviceName = 'account.auth';
 	
-	public function format() {
-		return [
-			'profile' => [
-				'sex' => 'boolean',
-			],
-		];
-	}
-	
 	/**
 	 * @inheritdoc
 	 */
