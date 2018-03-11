@@ -15,7 +15,6 @@ class SecurityService extends BaseService {
 	}
 	
 	public function changePassword($body) {
-		
 		$body = Helper::validateForm(ChangePasswordForm::class, $body);
 		$this->repository->changePassword($body['password'], $body['new_password']);
 	}
