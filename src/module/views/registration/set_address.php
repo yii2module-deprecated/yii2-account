@@ -23,7 +23,7 @@ Yii::$app->navigation->breadcrumbs->create($this->title);
 
             <?= $form->field($model, 'district') ?>
 	
-	        <?= $form->field($model, 'post_code') ?>
+	        <?= $form->field($model, 'zip_code') ?>
             
             <div class="form-group">
 				<?= Html::submitButton(Yii::t('action', 'complete'), [
