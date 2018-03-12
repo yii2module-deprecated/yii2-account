@@ -14,10 +14,9 @@ use yii2module\account\domain\v2\helpers\LoginHelper;
  *
  * @property integer $id
  * @property string $login
- * @property string $email
+ * @property integer $status
  * @property string $token
  * @property array $roles
- * @property string $avatar
  * @property string $username
  * @property string $created_at
  * @property SecurityEntity $security
@@ -26,10 +25,10 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 
 	protected $id;
 	protected $login;
-	protected $email;
 	protected $status;
 	protected $roles;
 	protected $security;
+	protected $password;
 	
 	public function rules() {
 		return [
@@ -101,6 +100,7 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 	{
 		$fields = parent::fields();
 		unset($fields['security']);
+		unset($fields['password']);
 		return $fields;
 	}
 }

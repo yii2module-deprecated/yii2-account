@@ -5,6 +5,7 @@ namespace yii2module\account\domain\v2\services;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii2lab\domain\helpers\Helper;
+use yii2module\account\domain\v2\entities\SecurityEntity;
 use yii2module\account\domain\v2\interfaces\services\LoginInterface;
 use yii2module\account\domain\v2\forms\LoginForm;
 use yii2lab\domain\helpers\ErrorCollection;
@@ -56,20 +57,24 @@ class LoginService extends ActiveBaseService implements LoginInterface {
 			throw new UnprocessableEntityHttpException($error);
 		} catch(NotFoundHttpException $e) {
 			//$data['roles'] = $data['role'];
-			$data['password_hash'] = Yii::$app->security->generatePasswordHash($data['password']);
-			$entity = $this->domain->factory->entity->create($this->id, $data);
-			$this->repository->insert($entity);
-			if(!empty($entity->id)) {
+			$loginEntity = $this->domain->factory->entity->create($this->id, $data);
+			$this->repository->insert($loginEntity);
+			if(!empty($loginEntity->id)) {
+				$this->domain->security->create([
+					'id' => $loginEntity->id,
+					'email' => $data['email'],
+					'password' => $data['password'],
+				]);
 				if (!empty($data['role'])){
 					$role = ArrayHelper::toArray($data['role']);
 					foreach ($role as $item){
-						$this->domain->assignment->assignRole($entity->id, $item);
+						$this->domain->assignment->assignRole($loginEntity->id, $item);
 					}
 				} else {
-					$this->domain->assignment->assignRole($entity->id, $this->defaultRole);
+					$this->domain->assignment->assignRole($loginEntity->id, $this->defaultRole);
 				}
 			}
-			return $entity;
+			return $loginEntity;
 		}
 	}
 	

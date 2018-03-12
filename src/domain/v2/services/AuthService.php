@@ -33,20 +33,20 @@ class AuthService extends BaseService implements AuthInterface {
 		$body = compact(['login', 'password']);
 		$body = Helper::validateForm(LoginForm::class, $body);
 		try {
-			$user = $this->repository->authentication($body['login'], $body['password']);
+			$loginEntity = $this->repository->authentication($body['login'], $body['password']);
 		} catch(NotFoundHttpException $e) {
-			$user = false;
+			$loginEntity = false;
 		}
 		
-		if(empty($user)) {
+		if(empty($loginEntity)) {
 			$error = new ErrorCollection();
 			$error->add('password', 'account/auth', 'incorrect_login_or_password');
 			throw new UnprocessableEntityHttpException($error);
 		}
-		$this->checkStatus($user);
-		$this->repository->setToken($user->token);
-		//$user->showToken();
-		return $user;
+		$this->checkStatus($loginEntity);
+		$this->repository->setToken($loginEntity->token);
+		//$loginEntity->showToken();
+		return $loginEntity;
 	}
 	
 	private function checkStatus(LoginEntity $entity)
@@ -67,52 +67,52 @@ class AuthService extends BaseService implements AuthInterface {
 	 */
     public function pseudoAuthentication($login, $ip, $subjectType, $email = null) {
 	    trigger_error('Method ' . __METHOD__ . ' is deprecated', E_USER_DEPRECATED);
-	    /** @var LoginEntity $user */
-	    $user = $this->repository->pseudoAuthentication($login, $ip, $subjectType, $email);
-		if(empty($user)) {
+	    /** @var LoginEntity $loginEntity */
+	    $loginEntity = $this->repository->pseudoAuthentication($login, $ip, $subjectType, $email);
+		if(empty($loginEntity)) {
 			$error = new ErrorCollection();
 			$error->add('password', 'account/auth', 'incorrect_login_or_password');
 			throw new UnprocessableEntityHttpException($error);
 		}
-		Registry::set('authToken', $user->token);
-		$user->showToken();
-		return $user;
+		Registry::set('authToken', $loginEntity->token);
+		$loginEntity->showToken();
+		return $loginEntity;
 	}
 	
 	public function pseudoAuthenticationWithParent($login, $ip, $email = null, $parentLogin = null) {
-		/** @var LoginEntity $user */
-    	$user = $this->repository->pseudoAuthenticationWithParent($login, $ip, SubjectType::USER_UNIDENT_PSEUDO, $email, $parentLogin);
-		if(empty($user)) {
+		/** @var LoginEntity $loginEntity */
+    	$loginEntity = $this->repository->pseudoAuthenticationWithParent($login, $ip, SubjectType::USER_UNIDENT_PSEUDO, $email, $parentLogin);
+		if(empty($loginEntity)) {
 			$error = new ErrorCollection();
 			$error->add('password', 'account/auth', 'incorrect_login_or_password');
 			throw new UnprocessableEntityHttpException($error);
 		}
-		Registry::set('authToken', $user->token);
-		$user->showToken();
-		return $user;
+		Registry::set('authToken', $loginEntity->token);
+		$loginEntity->showToken();
+		return $loginEntity;
 	}
 
 	public function authenticationFromWeb($login, $password, $rememberMe = false) {
-		$user = $this->authentication($login, $password);
-		if(empty($user)) {
+		$loginEntity = $this->authentication($login, $password);
+		if(empty($loginEntity)) {
 			return null;
 		}
 		$duration = $rememberMe ? $this->rememberExpire : 0;
-		Yii::$app->user->login($user, $duration);
+		Yii::$app->user->login($loginEntity, $duration);
 	}
 	
 	public function authenticationByToken($token, $type = null) {
 		$this->repository->setToken($token);
 		try {
-			$user = $this->domain->repositories->login->oneByToken($token, $type);
+			$loginEntity = $this->domain->repositories->login->oneByToken($token, $type);
 		} catch(NotFoundHttpException $e) {
 			throw new UnauthorizedHttpException();
 		}
-		if(empty($user)) {
+		if(empty($loginEntity)) {
 			$this->breakSession();
 		}
-		$this->checkStatus($user);
-		return $user;
+		$this->checkStatus($loginEntity);
+		return $loginEntity;
 	}
 	
 	public function logout() {

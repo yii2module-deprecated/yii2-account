@@ -2,12 +2,22 @@
 
 namespace yii2module\account\domain\v2\services;
 
+use Yii;
 use yii2lab\domain\helpers\Helper;
+use yii2module\account\domain\v2\entities\SecurityEntity;
 use yii2module\account\domain\v2\forms\ChangeEmailForm;
 use yii2module\account\domain\v2\forms\ChangePasswordForm;
-use yii2lab\domain\services\BaseService;
+use yii2lab\domain\services\ActiveBaseService;
+use yii2module\account\domain\v2\interfaces\repositories\SecurityInterface;
 
-class SecurityService extends BaseService {
+/**
+ * Class SecurityService
+ *
+ * @package yii2module\account\domain\v2\services
+ *
+ * @property-read SecurityInterface $repository
+ */
+class SecurityService extends ActiveBaseService {
 	
 	public function changeEmail($body) {
 		$body = Helper::validateForm(ChangeEmailForm::class, $body);
@@ -19,4 +29,15 @@ class SecurityService extends BaseService {
 		$this->repository->changePassword($body['password'], $body['new_password']);
 	}
 
+	public function create($data) {
+		$securityEntity = new SecurityEntity();
+		$securityEntity->load([
+			'id' => $data['id'],
+			'email' => $data['email'],
+			'password_hash' => Yii::$app->security->generatePasswordHash($data['password']),
+			'token' => $this->repository->generateUniqueToken(),
+		]);
+		$this->repository->insert($securityEntity);
+	}
+	
 }

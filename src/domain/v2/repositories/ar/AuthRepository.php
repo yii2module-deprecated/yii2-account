@@ -3,6 +3,7 @@
 namespace yii2module\account\domain\v2\repositories\ar;
 
 use yii\web\NotFoundHttpException;
+use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2module\account\domain\v2\entities\LoginEntity;
 use yii2module\account\domain\v2\entities\SecurityEntity;
 use yii2module\account\domain\v2\interfaces\repositories\AuthInterface;
@@ -21,9 +22,13 @@ class AuthRepository extends BaseRepository implements AuthInterface {
 			return false;
 		}
 		/** @var SecurityEntity $securityEntity */
-		$securityEntity = $this->domain->repositories->security->validatePassword($loginEntity->id, $password);
-		if(!$securityEntity) {
+		try {
+			$securityEntity = $this->domain->repositories->security->validatePassword($loginEntity->id, $password);
+		} catch(UnprocessableEntityHttpException $e) {
 			return false;
+		}
+		if($securityEntity->token == null) {
+			$securityEntity = $this->domain->repositories->security->generateToken($loginEntity->id);
 		}
 		$loginEntity->security = $securityEntity;
 		return $loginEntity;

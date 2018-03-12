@@ -3,6 +3,8 @@
 namespace yii2module\account\domain\v2\repositories\ar;
 
 use Yii;
+use yii\web\NotFoundHttpException;
+use yii2lab\domain\data\Query;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2lab\domain\helpers\ErrorCollection;
 use yii2lab\domain\repositories\ActiveArRepository;
@@ -19,6 +21,12 @@ class SecurityRepository extends ActiveArRepository implements SecurityInterface
 		return [
 			'token' => 'auth_key',
 		];
+	}
+	
+	public function oneByToken($token, $type = null) {
+		$query = Query::forge();
+		$query->where('token',  $token);
+		return $this->one($query);
 	}
 	
 	/**
@@ -65,5 +73,24 @@ class SecurityRepository extends ActiveArRepository implements SecurityInterface
 		$securityEntity->email = $email;
 		$this->update($securityEntity);
 	}
-
+	
+	public function generateToken($userId) {
+		$securityEntity = $this->oneById($userId);
+		$securityEntity->token = $this->generateUniqueToken();
+		$this->update($securityEntity);
+		return $securityEntity;
+	}
+	
+	public function generateUniqueToken() {
+		do {
+			$token = Yii::$app->security->generateRandomString(64);
+			$isExists = true;
+			try {
+				$this->oneByToken($token);
+			} catch(NotFoundHttpException $e) {
+				$isExists = false;
+			}
+		} while($isExists);
+		return $token;
+	}
 }
