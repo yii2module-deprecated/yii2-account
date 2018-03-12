@@ -4,10 +4,27 @@ namespace yii2module\account\domain\v2\interfaces\repositories;
 
 interface AssignmentInterface {
 	
-	/*public function assignRole($id, $role);
-	public function revokeRole($id, $role);
-	public function revokeAllRoles($id);
-	public function allAssignments($id);
-	public function isHasRole($id, $role);*/
+	public function revokeOneRole($userId, $role);
+	
+	public function revokeAllRoles($userId);
+	
+	public function oneAssign($userId, $itemName);
+	
+	public function allByUserId($userId);
+	
+	public function allRoleNamesByUserId($userId);
+	
+	public function allAssignments($userId);
+	
+	public function assignRole($userId, $role);
+	
+	public function revokeRole($userId, $role);
+	
+	public function isHasRole($userId, $role);
+	
+	public function allUserIdsByRole($role);
+	
+	public function allByRole($role);
+	
 
 }
