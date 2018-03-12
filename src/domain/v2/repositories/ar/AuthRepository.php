@@ -28,7 +28,7 @@ class AuthRepository extends BaseRepository implements AuthInterface {
 			return false;
 		}
 		if($securityEntity->token == null) {
-			$securityEntity = $this->domain->repositories->security->generateToken($loginEntity->id);
+			$securityEntity = $this->domain->repositories->security->generateTokenById($loginEntity->id);
 		}
 		$loginEntity->security = $securityEntity;
 		return $loginEntity;

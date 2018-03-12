@@ -74,7 +74,7 @@ class SecurityRepository extends ActiveArRepository implements SecurityInterface
 		$this->update($securityEntity);
 	}
 	
-	public function generateToken($userId) {
+	public function generateTokenById($userId) {
 		$securityEntity = $this->oneById($userId);
 		$securityEntity->token = $this->generateUniqueToken();
 		$this->update($securityEntity);
