@@ -29,13 +29,6 @@ class SecurityRepository extends ActiveArRepository implements SecurityInterface
 		return $this->one($query);
 	}
 	
-	/**
-	 * @param $userId
-	 * @param $password
-	 *
-	 * @return SecurityEntity|false
-	 * @throws UnprocessableEntityHttpException
-	 */
 	public function validatePassword($userId, $password) {
 		$securityEntity = $this->isValidPassword($userId, $password);
 		if(!$securityEntity) {
@@ -44,20 +37,6 @@ class SecurityRepository extends ActiveArRepository implements SecurityInterface
 			throw new UnprocessableEntityHttpException($error);
 		}
 		return $securityEntity;
-	}
-	
-	/**
-	 * @param $userId
-	 * @param $password
-	 *
-	 * @return SecurityEntity|false
-	 */
-	public function isValidPassword($userId, $password) {
-		$securityEntity = $this->oneById($userId);
-		if(Yii::$app->security->validatePassword($password, $securityEntity->password_hash)) {
-			return $securityEntity;
-		}
-		return false;
 	}
 	
 	public function changePassword($password, $newPassword) {
@@ -93,4 +72,19 @@ class SecurityRepository extends ActiveArRepository implements SecurityInterface
 		} while($isExists);
 		return $token;
 	}
+	
+	/**
+	 * @param $userId
+	 * @param $password
+	 *
+	 * @return SecurityEntity|false
+	 */
+	private function isValidPassword($userId, $password) {
+		$securityEntity = $this->oneById($userId);
+		if(Yii::$app->security->validatePassword($password, $securityEntity->password_hash)) {
+			return $securityEntity;
+		}
+		return false;
+	}
+	
 }
