@@ -45,7 +45,7 @@ class AuthService extends BaseService implements AuthInterface {
 		}
 		$this->checkStatus($user);
 		$this->repository->setToken($user->token);
-		$user->showToken();
+		//$user->showToken();
 		return $user;
 	}
 	

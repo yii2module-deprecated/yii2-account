@@ -2,7 +2,6 @@
 
 namespace yii2module\account\domain\v2\entities;
 
-use Yii;
 use yii\helpers\ArrayHelper;
 use yii2lab\domain\BaseEntity;
 use yii\web\IdentityInterface;
@@ -17,23 +16,20 @@ use yii2module\account\domain\v2\helpers\LoginHelper;
  * @property string $login
  * @property string $email
  * @property string $token
- * @property string $password_hash
  * @property array $roles
  * @property string $avatar
  * @property string $username
  * @property string $created_at
+ * @property SecurityEntity $security
  */
 class LoginEntity extends BaseEntity implements IdentityInterface {
 
 	protected $id;
 	protected $login;
 	protected $email;
-	protected $token;
 	protected $status;
-	protected $password_hash;
 	protected $roles;
-	protected $password;
-	private $isShowToken = false;
+	protected $security;
 	
 	public function rules() {
 		return [
@@ -78,10 +74,6 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 		return $fieldTypeConfig;
 	}
 	
-	public function showToken() {
-		$this->isShowToken = true;
-	}
-
 	public static function findIdentity($id) {}
 
 	public static function findIdentityByAccessToken($token, $type = null) {}
@@ -89,9 +81,16 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 	public function getId() {
 		return intval($this->id);
 	}
-
+	
+	public function getToken() {
+		return $this->getAuthKey();
+	}
+	
 	public function getAuthKey() {
-		return $this->token;
+		if(!$this->security instanceof SecurityEntity) {
+			return null;
+		}
+		return $this->security->token;
 	}
 
 	public function validateAuthKey($authKey) {
@@ -101,11 +100,7 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 	public function fields()
 	{
 		$fields = parent::fields();
-		unset($fields['password_hash']);
-		if(!$this->isShowToken) {
-			unset($fields['token']);
-		}
-		unset($fields['password']);
+		unset($fields['security']);
 		return $fields;
 	}
 }

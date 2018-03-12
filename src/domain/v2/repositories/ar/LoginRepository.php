@@ -6,9 +6,11 @@ use Yii;
 use yii\web\IdentityInterface;
 use yii\web\NotFoundHttpException;
 use yii2lab\domain\BaseEntity;
+use yii2lab\domain\data\Query;
 use yii2module\account\domain\v2\entities\LoginEntity;
 use yii2lab\domain\repositories\ActiveArRepository;
 use yii\helpers\ArrayHelper;
+use yii2module\account\domain\v2\entities\SecurityEntity;
 use yii2module\account\domain\v2\interfaces\repositories\LoginInterface;
 use yii2module\account\domain\v2\models\User;
 
@@ -18,6 +20,13 @@ class LoginRepository extends ActiveArRepository implements LoginInterface {
 	
 	public function uniqueFields() {
 		return ['login'];
+	}
+	
+	public function fieldAlias() {
+		return [
+			'name' => 'username',
+			'token' => 'auth_key',
+		];
 	}
 	
 	public function isExistsByLogin($login) {
@@ -49,15 +58,11 @@ class LoginRepository extends ActiveArRepository implements LoginInterface {
 	}
 	
 	public function oneByToken($token, $type = null) {
-		$model = $this->oneModelByCondition(['token' => $token]);
-		return $this->forgeEntity($model);
-	}
-	
-	public function fieldAlias() {
-		return [
-			'name' => 'username',
-			'token' => 'auth_key',
-		];
+		$query = Query::forge();
+		$query->where('token',  $token);
+		/** @var SecurityEntity $securityEntity */
+		$securityEntity = $this->domain->repositories->security->one($query);
+		return $this->oneById($securityEntity->id);
 	}
 	
 	public function insert(BaseEntity $entity) {
