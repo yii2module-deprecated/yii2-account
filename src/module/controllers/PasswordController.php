@@ -5,7 +5,6 @@ use yii2lab\helpers\Behavior;
 use yii2module\account\module\forms\RestorePasswordForm;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use Yii;
-use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii2lab\notify\domain\widgets\Alert;
 

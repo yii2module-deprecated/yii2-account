@@ -8,7 +8,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 $this->title = Yii::t('account/registration', 'create_title');
-Yii::$app->navigation->breadcrumbs->create(['account/registration', 'title']);
+//Yii::$app->navigation->breadcrumbs->create(['account/registration', 'title']);
 Yii::$app->navigation->breadcrumbs->create($this->title);
 ?>
 <div class="user-signup">

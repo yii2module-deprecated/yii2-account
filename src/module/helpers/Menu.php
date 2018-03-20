@@ -11,58 +11,69 @@ use yii2module\profile\widget\Avatar;
 class Menu implements MenuInterface {
 	
 	public function toArray() {
+		return self::menu(null);
+	}
+	
+	public static function menu($items) {
+		return $menu = [
+			'label' => self::getTitle(),
+			'module' => 'user',
+			'encode' => false,
+			'items' => self::getItems($items),
+		];
+	}
+	
+	public static function getItems($items = null) {
+		if(!empty($items)) {
+			return $items;
+		}
 		if(Yii::$app->user->isGuest) {
-			return $this->getGuestMenu();
+			return self::getGuestMenu();
 		} else {
-			return $this->getUserMenu();
+			return self::getUserMenu();
 		}
 	}
 	
-	private function getItemList() {
+	private static function getTitle() {
+		if(Yii::$app->user->isGuest) {
+			return Html::fa('user') . NBSP . Yii::t('account/auth', 'title');
+		} else {
+			return Avatar::widget() . NBSP . Yii::$app->user->identity->username;
+		}
+	}
+	
+	private static function getGuestMenu()
+	{
+		return [
+			[
+				'label' => ['account/auth', 'login_action'],
+				'url' => Yii::$app->user->loginUrl,
+			],
+			[
+				'label' => ['account/registration', 'title'],
+				'url' => 'user/registration',
+			],
+			[
+				'label' => ['account/password', 'title'],
+				'url' => 'user/password',
+			],
+		];
+	}
+	
+	private static function getUserMenu()
+	{
 		return [
 			'yii2module\profile\module\v1\helpers\Menu',
-            MenuHelper::DIVIDER,
+			//MenuHelper::DIVIDER,
+			[
+				'label' => ['account/security', 'title'],
+				'url' => 'user/security',
+			],
 			[
 				'label' => ['account/auth', 'logout_action'],
 				'url' => 'user/auth/logout',
 				'linkOptions' => ['data-method' => 'post'],
 			],
-		];
-	}
-	
-	private function getGuestMenu()
-	{
-		return [
-			'label' => 
-				Html::fa('user') . NBSP . 
-				Yii::t('account/auth', 'title'),
-			'module' => 'user',
-			'encode' => false,
-			'items' => [
-				[
-					'label' => ['account/auth', 'login_action'],
-					'url' => Yii::$app->user->loginUrl,
-				],
-				[
-					'label' => ['account/registration', 'title'],
-					'url' => 'user/registration',
-				],
-				[
-					'label' => ['account/password', 'title'],
-					'url' => 'user/password',
-				],
-			],
-		];
-	}
-	
-	private function getUserMenu()
-	{
-		$label =  Avatar::widget() . NBSP . Yii::$app->user->identity->username;
-		return [
-			'label' => $label,
-			'module' => 'user',
-			'encode' => false,
-			'items' => $this->getItemList(),
 		];
 	}
 

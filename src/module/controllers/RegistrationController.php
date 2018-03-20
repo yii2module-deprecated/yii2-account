@@ -1,8 +1,6 @@
 <?php
 namespace yii2module\account\module\controllers;
 
-use yii2woop\profile\module\forms\ProfileForm;
-use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2module\account\domain\v1\forms\RegistrationForm;
 use yii2module\account\module\forms\SetSecurityForm;
 use Yii;
@@ -76,7 +74,7 @@ class RegistrationController extends Controller
 		$callback = function($model) use ($session) {
 			Yii::$app->account->registration->createTpsAccount($session['login'], $session['activation_code'], $model->password, $model->email);
 			Yii::$app->account->auth->authenticationFromWeb($session['login'], $model->password, true);
-			return $this->redirect(['/user/registration/set-name']);
+			return $this->redirect(['/user/registration/set-password']);
 		};
 		$this->validateForm($model,$callback);
 		return $this->render('set_password', [
@@ -85,41 +83,4 @@ class RegistrationController extends Controller
 		]);
 	}
 	
-	public function actionSetName()
-	{
-		$model = new ProfileForm();
-		$callback = function($model) {
-			Yii::$app->profile->person->updateSelf($model->toArray());
-			return $this->redirect(['/user/registration/set-address']);
-		};
-		$this->validateForm($model,$callback);
-		return $this->render('set_name', [
-			'model' => $model,
-		]);
-	}
-	
-	public function actionSetAddress()
-	{
-		$model = new ProfileForm();
-		$callback = function($model) {
-			Yii::$app->profile->address->updateSelf($model->toArray());
-			return $this->goHome();
-		};
-		$this->validateForm($model,$callback);
-		return $this->render('set_address', [
-			'model' => $model,
-		]);
-	}
-	
-	private function validateForm($form, $callback) {
-		$body = Yii::$app->request->post();
-		$isValid = $form->load($body) && $form->validate();
-		if ($isValid) {
-			try {
-				return call_user_func_array($callback, [$form]);
-			} catch (UnprocessableEntityHttpException $e) {
-				$form->addErrorsFromException($e);
-			}
-		}
-	}
 }
