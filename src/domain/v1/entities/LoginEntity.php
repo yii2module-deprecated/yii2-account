@@ -112,7 +112,11 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 	public function getId() {
 		return intval($this->id);
 	}
-
+	
+	public function getToken() {
+		return $this->getAuthKey();
+	}
+	
 	public function getAuthKey() {
 		return $this->token;
 	}

@@ -30,6 +30,7 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 	protected $roles;
 	protected $security;
 	protected $password;
+	protected $token;
 	
 	public function rules() {
 		return [
@@ -88,7 +89,7 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 	
 	public function getAuthKey() {
 		if(!$this->security instanceof SecurityEntity) {
-			return null;
+			return $this->token;
 		}
 		return $this->security->token;
 	}
