@@ -1,42 +1,29 @@
 <?php
 namespace yii2module\account\module\controllers;
 
-use yii2module\account\domain\v1\forms\RegistrationForm;
+use yii2lab\domain\base\Model;
+use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
+use yii2lab\helpers\Behavior;
+use yii2module\account\domain\v2\forms\RegistrationForm;
 use yii2module\account\module\forms\SetSecurityForm;
 use Yii;
 use yii\web\Controller;
-use yii\filters\AccessControl;
 use yii2lab\notify\domain\widgets\Alert;
 
 class RegistrationController extends Controller
 {
 	
 	public $defaultAction = 'create';
-
+	
 	/**
 	 * @inheritdoc
 	 */
-	public function behaviors()
-	{
+	public function behaviors() {
 		return [
-			'access' => [
-				'class' => AccessControl::class,
-				'rules' => [
-					[
-						'actions' => ['create', 'set-password'],
-						'allow' => true,
-						'roles' => ['?'],
-					],
-					[
-						'actions' => ['set-name', 'set-address'],
-						'allow' => true,
-						'roles' => ['@'],
-					],
-				],
-			],
+			'access' => Behavior::access('?'),
 		];
 	}
-
+	
 	/**
 	 * Signs user up.
 	 *
@@ -83,4 +70,15 @@ class RegistrationController extends Controller
 		]);
 	}
 	
+	private function validateForm(Model $form, $callback) {
+		$body = Yii::$app->request->post();
+		$isValid = $form->load($body) && $form->validate();
+		if ($isValid) {
+			try {
+				return call_user_func_array($callback, [$form]);
+			} catch (UnprocessableEntityHttpException $e) {
+				$form->addErrorsFromException($e);
+			}
+		}
+	}
 }

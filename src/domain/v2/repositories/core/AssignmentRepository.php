@@ -11,7 +11,6 @@ use yii2lab\domain\repositories\ActiveArRepository;
 
 class AssignmentRepository extends ActiveArRepository {
 
-	protected $modelClass = 'yii2module\account\domain\v2\models\UserAssignment';
 	protected $primaryKey = null;
 	
 	public function uniqueFields() {

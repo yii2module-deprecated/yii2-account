@@ -3,8 +3,8 @@
 namespace yii2module\account\domain\v2\forms;
 
 use Yii;
+use yii2lab\domain\base\Model;
 use yii2module\account\domain\v2\helpers\LoginHelper;
-use yii\base\Model;
 use yii2module\account\domain\v2\validators\LoginValidator;
 
 class LoginForm extends Model
@@ -51,11 +51,4 @@ class LoginForm extends Model
 		$this->$attribute = LoginHelper::pregMatchLogin($this->$attribute);
 	}
 	
-	public function addErrorsFromException($e) {
-		foreach($e->getErrors() as $error) {
-			if(!empty($error)) {
-				$this->addError($error['field'], $error['message']);
-			}
-		}
-	}
 }
