@@ -153,7 +153,7 @@ class AuthService extends BaseService implements AuthInterface {
 	}
 	
 	public function getToken() {
-		if(!Yii::$app->user->isGuest && Yii::$app->user->identity->getAuthKey()) {
+		if(!Yii::$app->user->isGuest && Yii::$app->user->identity instanceof LoginEntity && Yii::$app->user->identity->getAuthKey()) {
 			return Yii::$app->user->identity->getAuthKey();
 		}
 		if(Yii::$app->user->enableSession && !empty(Yii::$app->session['token'])) {
