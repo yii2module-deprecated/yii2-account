@@ -4,9 +4,21 @@
  * @var $model yii\base\Model
  */
 
+use yii\bootstrap\Tabs;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii2lab\extension\menu\helpers\MenuHelper;
+
+$this->title = Yii::t('account/security', 'password');
+Yii::$app->navigation->breadcrumbs->create($this->title);
+
 ?>
+
+<?= Tabs::widget([
+	'items' => MenuHelper::gen('yii2module\account\module\helpers\SecurityMenu'),
+]) ?>
+
+<br/>
 
 <?php $form = ActiveForm::begin(); ?>
 

@@ -4,7 +4,6 @@ namespace yii2module\account\module\helpers;
 
 use Yii;
 use yii2lab\extension\menu\interfaces\MenuInterface;
-use yii2lab\extension\menu\helpers\MenuHelper;
 use yii2lab\helpers\yii\Html;
 use yii2module\profile\widget\Avatar;
 
