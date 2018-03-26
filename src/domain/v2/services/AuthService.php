@@ -75,7 +75,7 @@ class AuthService extends BaseService implements AuthInterface {
 			throw new UnprocessableEntityHttpException($error);
 		}
 		Registry::set('authToken', $loginEntity->token);
-		$loginEntity->showToken();
+		//$loginEntity->showToken();
 		return $loginEntity;
 	}
 	
@@ -88,7 +88,7 @@ class AuthService extends BaseService implements AuthInterface {
 			throw new UnprocessableEntityHttpException($error);
 		}
 		Registry::set('authToken', $loginEntity->token);
-		$loginEntity->showToken();
+		//$loginEntity->showToken();
 		return $loginEntity;
 	}
 
