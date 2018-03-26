@@ -32,6 +32,7 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 	protected $security;
 	protected $password;
 	protected $token;
+	protected $email;
 	
 	public function rules() {
 		return [
