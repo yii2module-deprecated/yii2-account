@@ -21,6 +21,7 @@ use yii2module\account\domain\v2\helpers\LoginHelper;
  * @property string $created_at
  * @property SecurityEntity $security
  * @property string $password
+ * @property string $email
  */
 class LoginEntity extends BaseEntity implements IdentityInterface {
 
@@ -85,6 +86,14 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 	
 	public function getToken() {
 		return $this->getAuthKey();
+	}
+	
+	// todo: после перехода на security выпилить
+	public function getEmail() {
+		if(!$this->security instanceof SecurityEntity) {
+			return $this->email;
+		}
+		return $this->security->email;
 	}
 	
 	public function getAuthKey() {
