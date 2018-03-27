@@ -67,7 +67,7 @@ class LoginRepository extends ActiveDiscRepository implements LoginInterface {
 		$user = ArrayHelper::toArray($user);
 		$user['roles'] = explode(',', $user['role']);
 		$user = $this->alias->decode($user);
-		return LoginEntityFactory::forgeLoginEntity($user);
+		return parent::forgeEntity($user);
 	}
 	
 	public function insert(BaseEntity $entity) {

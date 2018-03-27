@@ -6,7 +6,6 @@ use Yii;
 use yii2lab\domain\Domain;
 use yii2lab\domain\enums\Driver;
 use yii2lab\domain\helpers\ConfigHelper;
-use yii2module\account\domain\v2\entities\LoginEntity;
 
 class TestAuthHelper {
 	
@@ -23,6 +22,7 @@ class TestAuthHelper {
 		$userEntity = Yii::$app->account->login->oneById($id);
 		Yii::$app->user->setIdentity($userEntity);
 	}
+	
 	public static function getAccountDomainDefinition() {
 		$domainDefinition = [
 			'class' => Domain::class,
