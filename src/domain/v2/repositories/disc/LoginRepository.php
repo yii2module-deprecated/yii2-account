@@ -3,7 +3,6 @@
 namespace yii2module\account\domain\v2\repositories\disc;
 
 use yii2lab\domain\BaseEntity;
-use yii2module\account\domain\v2\helpers\LoginEntityFactory;
 use yii2module\account\domain\v2\interfaces\repositories\LoginInterface;
 use yii2lab\domain\data\Query;
 use yii2lab\domain\repositories\ActiveDiscRepository;
