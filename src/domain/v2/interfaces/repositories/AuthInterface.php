@@ -13,6 +13,5 @@ interface AuthInterface {
 	 * @return LoginEntity
 	 */
 	public function authentication($login, $password);
-	public function setToken($token);
-
+	
 }

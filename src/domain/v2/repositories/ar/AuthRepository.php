@@ -34,8 +34,4 @@ class AuthRepository extends BaseRepository implements AuthInterface {
 		return $loginEntity;
 	}
 	
-	public function setToken($token) {
-	
-	}
-	
 }

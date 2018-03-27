@@ -28,23 +28,23 @@ class LoginService extends ActiveBaseService implements LoginInterface {
 	public $defaultStatus;
 	public $forbiddenStatusList;
 	
-	public function allById($id) {
+	/*public function allById($id) {
 	    return $this->repository->allById($id);
-	}
+	}*/
 	
 	public function oneByLogin($login) {
 		$user = $this->repository->oneByLogin($login);
 		return $user;
 	}
 	
-	public function oneByRole($role) {
+	/*public function oneByRole($role) {
 		$user = $this->repository->oneByRole($role);
 		return $user;
 	}
 	
 	public function allByRole($roleName) {
 		return $this->repository->allByRole($roleName);
-	}
+	}*/
 	
 	public function create($data) {
 		//$data['role'] = !empty($data['role']) ? $data['role'] : RoleEnum::UNKNOWN_USER;
@@ -84,6 +84,7 @@ class LoginService extends ActiveBaseService implements LoginInterface {
 		}
 		return in_array($status, $this->forbiddenStatusList);
 	}
+	
 	public function getAvailableServices() {
 		return $this->repository->getAvailableServices();
 	}

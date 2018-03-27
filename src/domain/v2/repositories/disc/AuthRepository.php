@@ -19,8 +19,4 @@ class AuthRepository extends BaseRepository implements AuthInterface {
 		return $user;
 	}
 	
-	public function setToken($token) {
-	
-	}
-
 }

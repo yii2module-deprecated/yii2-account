@@ -2,16 +2,31 @@
 
 namespace yii2module\account\domain\v2\interfaces\repositories;
 
-use yii2lab\domain\BaseEntity;
+use yii2lab\domain\interfaces\repositories\CrudInterface;
+use yii2module\account\domain\v2\entities\LoginEntity;
 
-interface LoginInterface {
+interface LoginInterface extends CrudInterface {
 	
-	/*public function isExistsByLogin($login);
+	/**
+	 * @param string $login
+	 *
+	 * @return boolean
+	 */
+	public function isExistsByLogin($login);
+	
+	/**
+	 * @param string $login
+	 *
+	 * @return LoginEntity
+	 */
 	public function oneByLogin($login);
-	public function allByRole($role);
-	public function oneById($id);
+	
+	/**
+	 * @param string $token
+	 * @param null|string $type
+	 *
+	 * @return LoginEntity
+	 */
 	public function oneByToken($token, $type = null);
-	public function insert(BaseEntity $entity);
-	public function oneByRole($role);*/
 
 }

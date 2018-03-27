@@ -2,13 +2,19 @@
 
 namespace yii2module\account\domain\v2\repositories\core;
 
-use yii2lab\domain\repositories\CoreRepository;
+use yii\web\NotFoundHttpException;
+use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
+use yii2lab\domain\repositories\ActiveCoreRepository;
 use common\enums\app\ApiVersionEnum;
+use yii2module\account\domain\v2\entities\SecurityEntity;
+use yii2module\account\domain\v2\interfaces\repositories\SecurityInterface;
 
-class SecurityRepository extends CoreRepository {
+class SecurityRepository extends ActiveCoreRepository implements SecurityInterface {
 	
 	public $baseUri = 'security';
-	public $version = 'v4';
+	public $version = 'v1';
+	
+	
 	
 	public function changePassword($password, $newPassword) {
 		$response = $this->put('password', [
@@ -24,4 +30,42 @@ class SecurityRepository extends CoreRepository {
 		]);
 	}
 	
+	/**
+	 * @param string $token
+	 * @param string $type
+	 *
+	 * @return SecurityEntity
+	 */
+	public function oneByToken($token, $type = null) {
+		// TODO: Implement oneByToken() method.
+	}
+	
+	/**
+	 * @param integer $userId
+	 * @param string  $password
+	 *
+	 * @return SecurityEntity|false
+	 * @throws UnprocessableEntityHttpException
+	 * @throws NotFoundHttpException
+	 */
+	public function validatePassword($userId, $password) {
+		// TODO: Implement validatePassword() method.
+	}
+	
+	/**
+	 * @param $userId
+	 *
+	 * @return SecurityEntity
+	 * @throws NotFoundHttpException
+	 */
+	public function generateTokenById($userId) {
+		// TODO: Implement generateTokenById() method.
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function generateUniqueToken() {
+		// TODO: Implement generateUniqueToken() method.
+	}
 }

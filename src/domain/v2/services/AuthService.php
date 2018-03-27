@@ -13,7 +13,9 @@ use yii2lab\domain\services\BaseService;
 use yii2lab\extension\registry\helpers\Registry;
 use yii2lab\misc\enums\TimeEnum;
 use yii2module\account\domain\v2\forms\LoginForm;
+use yii2module\account\domain\v2\helpers\AuthHelper;
 use yii2module\account\domain\v2\interfaces\services\AuthInterface;
+use yii2module\account\domain\v2\web\User;
 use yii2woop\generated\enums\SubjectType;
 use yii\web\ServerErrorHttpException;
 use yii2module\account\domain\v2\entities\LoginEntity;
@@ -44,7 +46,7 @@ class AuthService extends BaseService implements AuthInterface {
 			throw new UnprocessableEntityHttpException($error);
 		}
 		$this->checkStatus($loginEntity);
-		$this->repository->setToken($loginEntity->token);
+		AuthHelper::setToken($loginEntity->token);
 		//$loginEntity->showToken();
 		return $loginEntity;
 	}
@@ -102,7 +104,7 @@ class AuthService extends BaseService implements AuthInterface {
 	}
 	
 	public function authenticationByToken($token, $type = null) {
-		$this->repository->setToken($token);
+		AuthHelper::setToken($token);
 		try {
 			$loginEntity = $this->domain->repositories->login->oneByToken($token, $type);
 		} catch(NotFoundHttpException $e) {
@@ -127,47 +129,18 @@ class AuthService extends BaseService implements AuthInterface {
 		}
 	}
 	
-	public function isGuest() {
-		return Yii::$app->user->isGuest;
-	}
-	
 	public function breakSession() {
+		if(APP != CONSOLE) {
+			return;
+		}
 		if(APP == API) {
-			throw  new UnauthorizedHttpException;
+			throw new UnauthorizedHttpException;
 		} else {
 			$this->logout();
-			if(APP != CONSOLE) {
-				Yii::$app->session->destroy();
-				Yii::$app->response->cookies->removeAll();
-				Yii::$app->user->loginRequired();
-			}
+			Yii::$app->session->destroy();
+			Yii::$app->response->cookies->removeAll();
+			Yii::$app->user->loginRequired();
 		}
-	}
-	
-	public function getIdentity() {
-		$identity = Yii::$app->user->identity;
-		if(empty($identity)) {
-			throw new UnauthorizedHttpException();
-		}
-		return $identity;
-	}
-	
-	public function getToken() {
-		if(!Yii::$app->user->isGuest && Yii::$app->user->identity instanceof LoginEntity && Yii::$app->user->identity->getAuthKey()) {
-			return Yii::$app->user->identity->getAuthKey();
-		}
-		if(Yii::$app->user->enableSession && !empty(Yii::$app->session['token'])) {
-			return Yii::$app->session['token'];
-		}
-		$authToken = Registry::get('authToken', false);
-		if($authToken) {
-			return $authToken;
-		}
-		$authorization = Yii::$app->request->headers->get('Authorization');
-		if(!empty($authorization)) {
-			return $authorization;
-		}
-		return null;
 	}
 	
 }

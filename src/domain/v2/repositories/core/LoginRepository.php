@@ -2,18 +2,17 @@
 
 namespace yii2module\account\domain\v2\repositories\core;
 
-use common\enums\app\ApiVersionEnum;
-use yii\helpers\ArrayHelper;
-use yii\rbac\Assignment;
 use yii\web\NotFoundHttpException;
+use yii\web\UnauthorizedHttpException;
 use yii2lab\domain\repositories\ActiveCoreRepository;
-use yii2module\account\domain\v2\helpers\LoginEntityFactory;
+use yii2lab\misc\enums\HttpHeaderEnum;
+use yii2lab\rest\domain\helpers\RestHelper;
 use yii2module\account\domain\v2\interfaces\repositories\LoginInterface;
 
 class LoginRepository extends ActiveCoreRepository implements LoginInterface {
 	
 	public $baseUri = 'user';
-	public $version = 'v4';
+	public $version = 'v1';
 	
 	public function isExistsByLogin($login) {
 		try {
@@ -30,16 +29,10 @@ class LoginRepository extends ActiveCoreRepository implements LoginInterface {
 	}
 	
 	public function oneByToken($token, $type = null) {
-		$response = $this->get('/auth');
+		//$response = $this->get('\auth', [], [HttpHeaderEnum::AUTHORIZATION => $token]);
+		$url = env('servers.core.domain') . $this->version . SL . 'auth';
+		$response = RestHelper::get($url, [], [HttpHeaderEnum::AUTHORIZATION => $token]);
 		return $this->forgeEntity($response->data);
 	}
 	
-	public function forgeEntity($user, $class = null) {
-		if(empty($user)) {
-			return null;
-		}
-		$user = ArrayHelper::toArray($user);
-		$user = $this->alias->decode($user);
-		return LoginEntityFactory::forgeLoginEntity($user);
-	}
 }

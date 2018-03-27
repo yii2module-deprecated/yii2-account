@@ -8,6 +8,13 @@ use yii2lab\domain\helpers\ServiceHelper;
 
 class LoginEntityFactory {
 	
+	/**
+	 * @param $user
+	 *
+	 * @return array|null
+	 * @throws \yii\base\InvalidConfigException
+	 * @deprecated
+	 */
 	public static function forgeLoginEntity($user)
 	{
 		if(empty($user)) {

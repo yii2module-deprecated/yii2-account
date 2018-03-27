@@ -16,9 +16,7 @@ class LoginRepository extends ActiveDiscRepository implements LoginInterface {
 	
 	public function fieldAlias() {
 		return [
-			'name' => 'username',
 			'token' => 'auth_key',
-			'creation_date' => 'created_at',
 		];
 	}
 
@@ -76,31 +74,4 @@ class LoginRepository extends ActiveDiscRepository implements LoginInterface {
 		// TODO: Implement insert() method.
 	}
 
-	public function allByRole($role) {
-		return [];
-	}
-	
-	public function oneByRole($role) {
-		// TODO: Implement oneByRole() method.
-	}
-	
-	public function assignRole($id, $role) {
-		// TODO: Implement assignRole() method.
-	}
-	
-	public function revokeRole($id, $role) {
-		// TODO: Implement revokeRole() method.
-	}
-	
-	public function revokeAllRoles($id) {
-		// TODO: Implement revokeAllRoles() method.
-	}
-	
-	public function allAssignments($id) {
-		// TODO: Implement allAssignments() method.
-	}
-	
-	public function isHasRole($id, $role) {
-		// TODO: Implement isHasRole() method.
-	}
 }

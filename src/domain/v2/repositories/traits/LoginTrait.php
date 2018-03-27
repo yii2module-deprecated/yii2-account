@@ -3,8 +3,11 @@
 namespace yii2module\account\domain\v2\repositories\traits;
 
 use Yii;
+use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
+use yii\web\IdentityInterface;
 use yii2lab\domain\BaseEntity;
+use yii2module\account\domain\v2\entities\LoginEntity;
 use yii2module\account\domain\v2\entities\SecurityEntity;
 
 trait LoginTrait {
@@ -21,25 +24,6 @@ trait LoginTrait {
 		return $this->isExists(['login' => $login]);
 	}
 	
-	public function oneByRole($role) {
-		$collection = $this->domain->repositories->assignment->allByRole($role);
-		if(count($collection) < 1) {
-			return null;
-		}
-		return $this->forgeEntity($collection[0]);
-	}
-	
-	public function allByRole($role) {
-		$collection = $this->domain->repositories->assignment->allByRole($role);
-		$ids = ArrayHelper::getColumn($collection, 'user_id');
-		return $this->allById($ids);
-	}
-	
-	public function allById($id) {
-		$models = $this->allModelsByCondition(['id' => $id]);
-		return $this->forgeEntity($models);
-	}
-	
 	public function oneByLogin($login) {
 		$model = $this->oneModelByCondition(['login' => $login]);
 		return $this->forgeEntity($model);
@@ -54,7 +38,7 @@ trait LoginTrait {
 	public function insert(BaseEntity $loginEntity) {
 		/** @var LoginEntity $loginEntity */
 		$this->findUnique($loginEntity);
-		/** @var IdentityInterface $model */
+		/** @var IdentityInterface|ActiveRecord $model */
 		$model = Yii::createObject(get_class($this->model));
 		$model->id = $this->lastId() + 1;
 		$model->login = $loginEntity->login;
