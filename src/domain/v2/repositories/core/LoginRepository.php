@@ -24,14 +24,13 @@ class LoginRepository extends BaseActiveCoreRepository implements LoginInterface
 	
 	public function oneByLogin($login) {
 		$response = $this->get($login);
-		return $this->forgeEntity($response->data);
+		return $this->forgeEntity($response);
 	}
 	
 	public function oneByToken($token, $type = null) {
-		//$response = $this->get('\auth', [], [HttpHeaderEnum::AUTHORIZATION => $token]);
-		$url = env('servers.core.domain') . 'v' . $this->version . SL . 'auth';
-		$response = RestHelper::get($url, [], [HttpHeaderEnum::AUTHORIZATION => $token]);
-		return $this->forgeEntity($response->data);
+		$url = $this->forgeUrl('auth');
+		$response = $this->get($url);
+		return $this->forgeEntity($response);
 	}
 	
 }
