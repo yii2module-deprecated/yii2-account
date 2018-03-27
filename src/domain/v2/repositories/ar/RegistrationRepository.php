@@ -10,7 +10,7 @@ use Yii;
 class RegistrationRepository extends TpsRepository implements RegistrationInterface {
 
 	public function generateActivationCode() {
-		return ConfirmHelper::generateCode();;
+		return ConfirmHelper::generateCode();
 	}
 	
 	public function create($data) {

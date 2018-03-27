@@ -7,8 +7,8 @@ use yii2module\account\domain\v2\entities\LoginEntity;
 interface AuthInterface {
 	
 	/**
-	 * @param $login
-	 * @param $password
+	 * @param string $login
+	 * @param string $password
 	 *
 	 * @return LoginEntity
 	 */
