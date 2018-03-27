@@ -4,8 +4,6 @@ namespace yii2module\account\domain\v2\repositories\core;
 
 use yii\web\NotFoundHttpException;
 use yii2lab\core\domain\repositories\base\BaseActiveCoreRepository;
-use yii2lab\misc\enums\HttpHeaderEnum;
-use yii2lab\rest\domain\helpers\RestHelper;
 use yii2module\account\domain\v2\interfaces\repositories\LoginInterface;
 
 class LoginRepository extends BaseActiveCoreRepository implements LoginInterface {
