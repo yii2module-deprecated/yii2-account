@@ -4,6 +4,7 @@ namespace yii2module\account\domain\v2\repositories\core;
 
 use yii\web\NotFoundHttpException;
 use yii2lab\core\domain\repositories\base\BaseActiveCoreRepository;
+use yii2lab\misc\enums\HttpHeaderEnum;
 use yii2module\account\domain\v2\interfaces\repositories\LoginInterface;
 
 class LoginRepository extends BaseActiveCoreRepository implements LoginInterface {
@@ -27,7 +28,7 @@ class LoginRepository extends BaseActiveCoreRepository implements LoginInterface
 	
 	public function oneByToken($token, $type = null) {
 		$url = $this->forgeUrl('auth');
-		$response = $this->get($url);
+		$response = $this->get($url, [], [HttpHeaderEnum::AUTHORIZATION => $token]);
 		return $this->forgeEntity($response);
 	}
 	
