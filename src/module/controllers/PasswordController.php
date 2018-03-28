@@ -13,6 +13,9 @@ use yii2lab\notify\domain\widgets\Alert;
  */
 class PasswordController extends Controller
 {
+	
+	const SESSION_KEY = 'restore-password';
+	
 	public $defaultAction = 'request';
 	
 	/**
@@ -34,7 +37,7 @@ class PasswordController extends Controller
 			try {
 				Yii::$app->account->restorePassword->request($model->login);
 				$session['login'] = $model->login;
-				Yii::$app->session->set('restore-password', $session);
+				Yii::$app->session->set(self::SESSION_KEY, $session);
 				return $this->redirect(['/user/password/check']);
 			} catch (UnprocessableEntityHttpException $e){
 				$model->addErrorsFromException($e);
@@ -46,7 +49,7 @@ class PasswordController extends Controller
 	public function actionCheck() {
 		$model = new RestorePasswordForm();
 		$model->setScenario(RestorePasswordForm::SCENARIO_CHECK);
-		$session = Yii::$app->session->get('restore-password');
+		$session = Yii::$app->session->get(self::SESSION_KEY);
 		$model->login = $session['login'];
 		if(Yii::$app->request->isPost) {
 			$body = Yii::$app->request->post('RestorePasswordForm');
@@ -55,7 +58,7 @@ class PasswordController extends Controller
 				
 				Yii::$app->account->restorePassword->checkActivationCode($model->login, $model->activation_code);
 				$session['activation_code'] = $model->activation_code;
-				Yii::$app->session->set('restore-password', $session);
+				Yii::$app->session->set(self::SESSION_KEY, $session);
 				return $this->redirect(['/user/password/confirm']);
 			} catch (UnprocessableEntityHttpException $e){
 				$model->addErrorsFromException($e);
@@ -68,7 +71,7 @@ class PasswordController extends Controller
 	{
 		$model = new RestorePasswordForm();
 		$model->setScenario(RestorePasswordForm::SCENARIO_CONFIRM);
-		$session = Yii::$app->session->get('restore-password');
+		$session = Yii::$app->session->get(self::SESSION_KEY);
 		$model->login = $session['login'];
 		$model->activation_code = $session['activation_code'];
 		if(Yii::$app->request->isPost) {

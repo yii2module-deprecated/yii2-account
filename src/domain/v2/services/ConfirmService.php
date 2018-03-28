@@ -16,11 +16,7 @@ class ConfirmService extends ActiveBaseService {
 	public function delete($login, $action) {
 		$login = LoginHelper::getPhone($login);
 		$this->beforeAction(self::EVENT_DELETE);
-		$query = Query::forge();
-		$query->where('login', $login);
-		$query->where('action', $action);
-		$entity = $this->one($query);
-		$this->repository->delete($entity);
+		$this->repository->cleanOld($login, $action, -1);
 		return $this->afterAction(self::EVENT_DELETE);
 	}
 	
