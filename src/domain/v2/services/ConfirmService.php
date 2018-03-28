@@ -50,13 +50,13 @@ class ConfirmService extends ActiveBaseService {
 		}
 	}
 	
-	public function createNew($login, $action, $smsCodeExpire) {
+	public function createNew($login, $action, $smsCodeExpire, $data = null) {
 		$login = LoginHelper::getPhone($login);
 		$this->cleanOld($login, $action, $smsCodeExpire);
-		$data = compact(['login', 'action']);
-		$data['code'] = ConfirmHelper::generateCode();
+		$entityArray = compact(['login', 'action', 'data']);
+		$entityArray['code'] = ConfirmHelper::generateCode();
 		try {
-			return parent::create($data);
+			return parent::create($entityArray);
 		} catch(IntegrityException $e) {
 			$error = new ErrorCollection();
 			$error->add('login', 'account/auth', 'already_sended_code');

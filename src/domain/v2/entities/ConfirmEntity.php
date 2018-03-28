@@ -2,6 +2,7 @@
 
 namespace yii2module\account\domain\v2\entities;
 
+use paulzi\jsonBehavior\JsonValidator;
 use yii2lab\domain\BaseEntity;
 use yii2module\account\domain\v2\helpers\ConfirmHelper;
 use yii2module\account\domain\v2\helpers\LoginHelper;
@@ -12,6 +13,7 @@ class ConfirmEntity extends BaseEntity {
 	protected $login;
 	protected $action;
 	protected $code;
+	protected $data;
 	protected $created_at;
 	
 	public function rules()
@@ -22,6 +24,7 @@ class ConfirmEntity extends BaseEntity {
 			['login', LoginValidator::class],
 			//'normalizeLogin' => ['login', 'normalizeLogin'],
 			[['code'], 'string', 'length' => 6],
+			[['data'], JsonValidator::class],
 		];
 	}
 	
