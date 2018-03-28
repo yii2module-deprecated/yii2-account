@@ -61,7 +61,8 @@ class RegistrationController extends Controller
 		$callback = function($model) use ($session) {
 			Yii::$app->account->registration->createTpsAccount($session['login'], $session['activation_code'], $model->password, $model->email);
 			Yii::$app->account->auth->authenticationFromWeb($session['login'], $model->password, true);
-			return $this->redirect(['/user/registration/set-password']);
+			Yii::$app->navigation->alert->create(['account/registration', 'registration_success'], Alert::TYPE_SUCCESS);
+			return $this->goHome();
 		};
 		$this->validateForm($model,$callback);
 		return $this->render('set_password', [

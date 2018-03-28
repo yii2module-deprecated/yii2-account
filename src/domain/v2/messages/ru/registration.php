@@ -28,4 +28,5 @@ return [
 	'user_dont_create_by_unknown_reason' => 'Пользователь не был создан, попробуйте позже',
 	'user_create_success' => 'Вы успешно прошли регистрацию',
 	'activation_success' => 'Аккаунт ативирован',
+	'registration_success' => 'Регистрация успешно завершена',
 ];

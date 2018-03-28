@@ -3,6 +3,7 @@
 namespace yii2module\account\domain\v2\services;
 
 use yii2lab\domain\helpers\Helper;
+use yii2module\account\domain\v2\helpers\ConfirmHelper;
 use yii2module\account\domain\v2\helpers\LoginHelper;
 use yii2lab\domain\services\BaseService;
 use Yii;
@@ -21,7 +22,7 @@ class RegistrationService extends BaseService {
 	
 		$this->checkLoginExistsInTps($login);
 	
-		$activation_code = $this->repository->generateActivationCode();
+		$activation_code = ConfirmHelper::generateCode();
 
 		Yii::$app->account->temp->create(compact('login', 'email', 'activation_code'));
 	
@@ -53,7 +54,7 @@ class RegistrationService extends BaseService {
 		}
 		$this->verifyActivationCode($login, $activation_code);
 		$data = compact('login','password','email');
-		$this->repository->create($data);
+		Yii::$app->account->login->create($data);
 		Yii::$app->account->temp->delete($login);
 	}
 
@@ -78,7 +79,7 @@ class RegistrationService extends BaseService {
 
 	protected function checkLoginExistsInTps($login) {
 		$login = LoginHelper::pregMatchLogin($login);
-		$isExists = $this->repository->isExists($login);
+		$isExists = $this->domain->repositories->login->isExistsByLogin($login);
 	
 		if($isExists) {
 			$error = new ErrorCollection();
