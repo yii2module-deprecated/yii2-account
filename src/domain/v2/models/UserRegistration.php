@@ -44,13 +44,4 @@ class UserRegistration extends ActiveRecord
 		];
 	}
 	
-	public function fields()
-	{
-		$fields = parent::fields();
-		$fields['created_at'] = function () {
-			return Helper::timeForApi($this->created_at);
-		};
-		return $fields;
-	}
-	
 }
