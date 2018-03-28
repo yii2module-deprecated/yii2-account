@@ -11,7 +11,7 @@ use yii2lab\notify\domain\widgets\Alert;
 /**
  * PasswordController controller
  */
-class PasswordController extends Controller
+class RestorePasswordController extends Controller
 {
 	
 	const SESSION_KEY = 'restore-password';
@@ -38,7 +38,7 @@ class PasswordController extends Controller
 				Yii::$app->account->restorePassword->request($model->login);
 				$session['login'] = $model->login;
 				Yii::$app->session->set(self::SESSION_KEY, $session);
-				return $this->redirect(['/user/password/check']);
+				return $this->redirect(['/user/restore-password/check']);
 			} catch (UnprocessableEntityHttpException $e){
 				$model->addErrorsFromException($e);
 			}
@@ -59,7 +59,7 @@ class PasswordController extends Controller
 				Yii::$app->account->restorePassword->checkActivationCode($model->login, $model->activation_code);
 				$session['activation_code'] = $model->activation_code;
 				Yii::$app->session->set(self::SESSION_KEY, $session);
-				return $this->redirect(['/user/password/confirm']);
+				return $this->redirect(['/user/restore-password/confirm']);
 			} catch (UnprocessableEntityHttpException $e){
 				$model->addErrorsFromException($e);
 			}

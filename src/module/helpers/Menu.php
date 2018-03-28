@@ -54,7 +54,7 @@ class Menu implements MenuInterface {
 			],
 			[
 				'label' => ['account/password', 'title'],
-				'url' => 'user/password',
+				'url' => 'user/restore-password',
 			],
 		];
 	}

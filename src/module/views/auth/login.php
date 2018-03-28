@@ -37,7 +37,7 @@ $loginForm = $this->render('helpers/_loginForm.php', [
 				<?= $loginForm ?>
 				<?= Html::a(Yii::t('account/auth', 'register_new_user'), ['/user/registration']) ?>
 				<br/>
-				<?= Html::a(Yii::t('account/auth', 'i_forgot_my_password'), ['/user/password']) ?>
+				<?= Html::a(Yii::t('account/auth', 'i_forgot_my_password'), ['/user/restore-password']) ?>
 				
 			</div>
 		</div>
