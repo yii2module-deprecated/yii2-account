@@ -2,10 +2,8 @@
 
 namespace yii2module\account\domain\v2\services;
 
-use Yii;
 use yii\helpers\ArrayHelper;
 use yii2lab\domain\helpers\Helper;
-use yii2module\account\domain\v2\entities\SecurityEntity;
 use yii2module\account\domain\v2\interfaces\services\LoginInterface;
 use yii2module\account\domain\v2\forms\LoginForm;
 use yii2lab\domain\helpers\ErrorCollection;
@@ -28,23 +26,10 @@ class LoginService extends ActiveBaseService implements LoginInterface {
 	public $defaultStatus;
 	public $forbiddenStatusList;
 	
-	/*public function allById($id) {
-	    return $this->repository->allById($id);
-	}*/
-	
 	public function oneByLogin($login) {
 		$user = $this->repository->oneByLogin($login);
 		return $user;
 	}
-	
-	/*public function oneByRole($role) {
-		$user = $this->repository->oneByRole($role);
-		return $user;
-	}
-	
-	public function allByRole($roleName) {
-		return $this->repository->allByRole($roleName);
-	}*/
 	
 	public function create($data) {
 		//$data['role'] = !empty($data['role']) ? $data['role'] : RoleEnum::UNKNOWN_USER;
@@ -85,6 +70,7 @@ class LoginService extends ActiveBaseService implements LoginInterface {
 		return in_array($status, $this->forbiddenStatusList);
 	}
 	
+	// todo: перенести в домен услуг
 	public function getAvailableServices() {
 		return $this->repository->getAvailableServices();
 	}

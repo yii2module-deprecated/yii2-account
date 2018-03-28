@@ -4,8 +4,9 @@ namespace yii2module\account\domain\v2\repositories\disc;
 
 use yii2lab\domain\data\Query;
 use yii2lab\domain\repositories\ActiveDiscRepository;
+use yii2module\account\domain\v2\interfaces\repositories\TestInterface;
 
-class TestRepository extends ActiveDiscRepository {
+class TestRepository extends ActiveDiscRepository implements TestInterface {
 	
 	public $table = 'user';
 

@@ -15,7 +15,6 @@ use yii2lab\misc\enums\TimeEnum;
 use yii2module\account\domain\v2\forms\LoginForm;
 use yii2module\account\domain\v2\helpers\AuthHelper;
 use yii2module\account\domain\v2\interfaces\services\AuthInterface;
-use yii2module\account\domain\v2\web\User;
 use yii2woop\generated\enums\SubjectType;
 use yii\web\ServerErrorHttpException;
 use yii2module\account\domain\v2\entities\LoginEntity;

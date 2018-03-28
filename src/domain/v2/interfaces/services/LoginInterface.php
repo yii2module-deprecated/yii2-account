@@ -6,8 +6,7 @@ interface LoginInterface {
 
 	public function oneById($id);
 	public function oneByLogin($login);
-	//public function oneByRole($role);
-	//public function allByRole($role);
 	public function create($data);
+	public function isForbiddenByStatus($status);
 
 }

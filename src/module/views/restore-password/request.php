@@ -8,13 +8,13 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 
-$this->title = Yii::t('account/password', 'title');
+$this->title = Yii::t('account/restore-password', 'title');
 Yii::$app->navigation->breadcrumbs->create($this->title);
 ?>
 <div class="user-request-password-reset">
 	<h1><?= Html::encode($this->title) ?></h1>
 
-	<p><?= Yii::t('account/password', 'request_text') ?></p>
+	<p><?= Yii::t('account/restore-password', 'request_text') ?></p>
 
 	<div class="row">
 		<div class="col-lg-5">

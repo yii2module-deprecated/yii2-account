@@ -4,12 +4,21 @@ namespace yii2module\account\domain\v2\repositories\traits;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\db\ActiveRecordInterface;
 use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
+use yii2lab\domain\Alias;
 use yii2lab\domain\BaseEntity;
 use yii2module\account\domain\v2\entities\LoginEntity;
 use yii2module\account\domain\v2\entities\SecurityEntity;
 
+/**
+ * Trait LoginTrait
+ *
+ * @package yii2module\account\domain\v2\repositories\traits
+ * @property Alias $alias
+ * @property ActiveRecordInterface $model
+ */
 trait LoginTrait {
 	
 	public function tableName() {

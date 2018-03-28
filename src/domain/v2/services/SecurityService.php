@@ -8,16 +8,16 @@ use yii2module\account\domain\v2\entities\SecurityEntity;
 use yii2module\account\domain\v2\forms\ChangeEmailForm;
 use yii2module\account\domain\v2\forms\ChangePasswordForm;
 use yii2lab\domain\services\ActiveBaseService;
-use yii2module\account\domain\v2\interfaces\repositories\SecurityInterface;
+use yii2module\account\domain\v2\interfaces\services\SecurityInterface;
 
 /**
  * Class SecurityService
  *
  * @package yii2module\account\domain\v2\services
  *
- * @property-read SecurityInterface $repository
+ * @property-read \yii2module\account\domain\v2\interfaces\repositories\SecurityInterface $repository
  */
-class SecurityService extends ActiveBaseService {
+class SecurityService extends ActiveBaseService implements SecurityInterface {
 	
 	public function changeEmail($body) {
 		$body = Helper::validateForm(ChangeEmailForm::class, $body);

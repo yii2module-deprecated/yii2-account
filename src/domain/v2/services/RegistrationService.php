@@ -10,8 +10,11 @@ use Yii;
 use yii2module\account\domain\v2\forms\RegistrationForm;
 use yii2lab\domain\helpers\ErrorCollection;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
+use yii2module\account\domain\v2\interfaces\repositories\LoginInterface;
+use yii2module\account\domain\v2\interfaces\repositories\TempInterface;
+use yii2module\account\domain\v2\interfaces\services\RegistrationInterface;
 
-class RegistrationService extends BaseService {
+class RegistrationService extends BaseService implements RegistrationInterface {
 	
 	//todo: изменить путь чтения временного аккаунта для ригистрации. Инкапсулировать все в ядро. Сейчас запрос идет на прямую.
 	public function createTempAccount($login, $email = null) {
@@ -19,13 +22,9 @@ class RegistrationService extends BaseService {
 		$body = compact(['login', 'email']);
 
         Helper::validateForm(RegistrationForm::class, $body, RegistrationForm::SCENARIO_REQUEST);
-	
 		$this->checkLoginExistsInTps($login);
-	
 		$activation_code = ConfirmHelper::generateCode();
-
 		Yii::$app->account->temp->create(compact('login', 'email', 'activation_code'));
-	
 		$this->sendSmsWithActivationCode($login, $activation_code);
 	}
 	
@@ -60,14 +59,14 @@ class RegistrationService extends BaseService {
 
 	protected function checkLoginExistsInTemp($login) {
 		$login = LoginHelper::pregMatchLogin($login);
-		$isExists = $this->domain->repositories->temp->isExists($login);
-	
+		/** @var TempInterface $tempRepository */
+		$tempRepository = $this->domain->repositories->temp;
+		$isExists = $tempRepository->isExists($login);
 		if(!$isExists) {
 			$error = new ErrorCollection();
 			$error->add('login', 'account/registration', 'temp_user_not_found');
 			throw new UnprocessableEntityHttpException($error);
 		}
-	
 	}
 
 	protected function sendSmsWithActivationCode($login, $activation_code) {
@@ -79,16 +78,14 @@ class RegistrationService extends BaseService {
 
 	protected function checkLoginExistsInTps($login) {
 		$login = LoginHelper::pregMatchLogin($login);
-		$isExists = $this->domain->repositories->login->isExistsByLogin($login);
-	
+		/** @var LoginInterface $loginRepository */
+		$loginRepository = $this->domain->repositories->login;
+		$isExists = $loginRepository->isExistsByLogin($login);
 		if($isExists) {
 			$error = new ErrorCollection();
-		
 			$error->add('login', 'account/registration', 'user_already_exists_and_activated');
-	
 			throw new UnprocessableEntityHttpException($error);
 		}
-	
 	}
 	
 	protected function isActivated($login) {

@@ -9,13 +9,13 @@ use yii2module\account\domain\v2\entities\SecurityEntity;
 
 interface SecurityInterface extends CrudInterface {
 	
-	/**
+	/*
 	 * @param string $token
 	 * @param string $type
 	 *
 	 * @return SecurityEntity
 	 */
-	public function oneByToken($token, $type = null);
+	//public function oneByToken($token, $type = null);
 	
 	/**
 	 * @param string $password
@@ -33,7 +33,7 @@ interface SecurityInterface extends CrudInterface {
 	 */
 	public function changeEmail($password, $email);
 	
-	/**
+	/*
 	 * @param integer $userId
 	 * @param string $password
 	 *
@@ -41,15 +41,15 @@ interface SecurityInterface extends CrudInterface {
 	 * @throws UnprocessableEntityHttpException
 	 * @throws NotFoundHttpException
 	 */
-	public function validatePassword($userId, $password);
+	//public function validatePassword($userId, $password);
 	
-	/**
+	/*
 	 * @param $userId
 	 *
 	 * @return SecurityEntity
 	 * @throws NotFoundHttpException
 	 */
-	public function generateTokenById($userId);
+	//public function generateTokenById($userId);
 	
 	/**
 	 * @return string

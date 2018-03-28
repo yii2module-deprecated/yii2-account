@@ -7,6 +7,12 @@ use yii\web\ForbiddenHttpException;
 use yii2lab\domain\services\BaseService;
 use yii2module\account\domain\v2\interfaces\services\RbacInterface;
 
+/**
+ * Class RbacService
+ *
+ * @package yii2module\account\domain\v2\services
+ * @property \yii2module\account\domain\v2\interfaces\repositories\RbacInterface $repository
+ */
 class RbacService extends BaseService implements RbacInterface {
 	
 	public function can($rule, $param = null, $allowCaching = true) {

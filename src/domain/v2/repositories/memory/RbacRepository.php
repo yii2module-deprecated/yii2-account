@@ -5,8 +5,9 @@ namespace yii2module\account\domain\v2\repositories\memory;
 use yii\helpers\ArrayHelper;
 use yii2lab\domain\repositories\BaseRepository;
 use Yii;
+use yii2module\account\domain\v2\interfaces\repositories\RbacInterface;
 
-class RbacRepository extends BaseRepository {
+class RbacRepository extends BaseRepository implements RbacInterface {
 	
 	public function isGuestOnlyAllowed($rule) {
 		return $this->isInRules('?', $rule) && !Yii::$app->user->isGuest;

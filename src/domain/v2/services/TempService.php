@@ -4,19 +4,26 @@ namespace yii2module\account\domain\v2\services;
 
 use yii2lab\misc\enums\TimeEnum;
 use yii2module\account\domain\v2\entities\TempEntity;
-use yii2lab\domain\services\BaseService;
+use yii2lab\domain\services\ActiveBaseService;
 use Yii;
 use yii2lab\domain\helpers\ErrorCollection;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
+use yii2module\account\domain\v2\interfaces\services\TempInterface;
 
-class TempService extends BaseService {
+/**
+ * Class TempService
+ *
+ * @package yii2module\account\domain\v2\services
+ * @property-read \yii2module\account\domain\v2\interfaces\repositories\TempInterface $repository
+ */
+class TempService extends ActiveBaseService implements TempInterface {
 
     public $loginExpire = TimeEnum::SECOND_PER_MINUTE * 20;
 
 	public function isActivated($login) {
-		$user = $this->oneByLogin($login);
-		return $user->ip == Yii::$app->request->getUserIP();
-	}
+	$user = $this->oneByLogin($login);
+	return $user->ip == Yii::$app->request->getUserIP();
+}
 	
 	public function checkActivationCode($login, $code) {
 		$user = $this->oneByLogin($login);
@@ -46,7 +53,7 @@ class TempService extends BaseService {
 		$entity->activation_code = $data['activation_code'];
 		return $this->repository->insert($entity);
 	}
-
+	
 	public function delete($login) {
 		$user = $this->oneByLogin($login);
 		return $this->repository->delete($user);

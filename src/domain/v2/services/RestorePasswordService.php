@@ -7,8 +7,15 @@ use yii2module\account\domain\v2\forms\RestorePasswordForm;
 use yii2lab\domain\helpers\ErrorCollection;
 use yii2lab\domain\services\BaseService;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
+use yii2module\account\domain\v2\interfaces\services\RestorePasswordInterface;
 
-class RestorePasswordService extends BaseService {
+/**
+ * Class RestorePasswordService
+ *
+ * @package yii2module\account\domain\v2\services
+ * @property \yii2module\account\domain\v2\interfaces\repositories\RestorePasswordInterface $repository
+ */
+class RestorePasswordService extends BaseService implements RestorePasswordInterface {
 
     public $tokenExpire = 300;
 
@@ -47,7 +54,7 @@ class RestorePasswordService extends BaseService {
 		$isChecked = $this->repository->checkActivationCode($login, $activation_code);
 		if(!$isChecked) {
 			$error = new ErrorCollection();
-			$error->add('activation_code', 'account/password', 'invalid_activation_code');
+			$error->add('activation_code', 'account/restore-password', 'invalid_activation_code');
 			throw new UnprocessableEntityHttpException($error);
 		}
 	}

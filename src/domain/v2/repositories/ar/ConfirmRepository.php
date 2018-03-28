@@ -3,8 +3,9 @@
 namespace yii2module\account\domain\v2\repositories\ar;
 
 use yii2lab\domain\repositories\ActiveArRepository;
+use yii2module\account\domain\v2\interfaces\repositories\ConfirmInterface;
 
-class ConfirmRepository extends ActiveArRepository {
+class ConfirmRepository extends ActiveArRepository implements ConfirmInterface {
 	
 	protected $modelClass = 'yii2module\account\domain\v2\models\UserConfirm';
 	protected $primaryKey = false;

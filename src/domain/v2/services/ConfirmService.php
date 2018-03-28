@@ -4,14 +4,20 @@ namespace yii2module\account\domain\v2\services;
 
 use yii\db\IntegrityException;
 use yii\web\NotFoundHttpException;
-use yii2lab\domain\data\Query;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2lab\domain\helpers\ErrorCollection;
 use yii2lab\domain\services\ActiveBaseService;
 use yii2module\account\domain\v2\helpers\ConfirmHelper;
 use yii2module\account\domain\v2\helpers\LoginHelper;
+use yii2module\account\domain\v2\interfaces\services\ConfirmInterface;
 
-class ConfirmService extends ActiveBaseService {
+/**
+ * Class ConfirmService
+ *
+ * @package yii2module\account\domain\v2\services
+ * @property \yii2module\account\domain\v2\interfaces\repositories\ConfirmInterface $repository
+ */
+class ConfirmService extends ActiveBaseService implements ConfirmInterface {
 	
 	public function delete($login, $action) {
 		$login = LoginHelper::getPhone($login);
@@ -38,14 +44,6 @@ class ConfirmService extends ActiveBaseService {
 		$this->cleanOld($login, $action, $smsCodeExpire);
 		return $this->repository->oneByLoginAndAction($login, $action);
 	}
-	
-	private function cleanOld($login, $action, $smsCodeExpire) {
-		$login = LoginHelper::getPhone($login);
-		if(!empty($smsCodeExpire)) {
-			$this->repository->cleanOld($login, $action, $smsCodeExpire);
-		}
-	}
-	
 	public function createNew($login, $action, $smsCodeExpire, $data = null) {
 		$login = LoginHelper::getPhone($login);
 		$this->cleanOld($login, $action, $smsCodeExpire);
@@ -59,4 +57,12 @@ class ConfirmService extends ActiveBaseService {
 			throw new UnprocessableEntityHttpException($error);
 		}
 	}
+	
+	private function cleanOld($login, $action, $smsCodeExpire) {
+		$login = LoginHelper::getPhone($login);
+		if(!empty($smsCodeExpire)) {
+			$this->repository->cleanOld($login, $action, $smsCodeExpire);
+		}
+	}
+	
 }
