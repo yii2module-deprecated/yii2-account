@@ -3,6 +3,7 @@
 namespace yii2module\account\domain\v2\services;
 
 use yii2lab\domain\helpers\Helper;
+use yii2lab\misc\enums\TimeEnum;
 use yii2module\account\domain\v2\forms\RestorePasswordForm;
 use yii2lab\domain\helpers\ErrorCollection;
 use yii2lab\domain\services\BaseService;
@@ -17,7 +18,7 @@ use yii2module\account\domain\v2\interfaces\services\RestorePasswordInterface;
  */
 class RestorePasswordService extends BaseService implements RestorePasswordInterface {
 
-    public $tokenExpire = 300;
+    public $tokenExpire = TimeEnum::SECOND_PER_MINUTE * 1;
 
 	public function request($login, $mail = null) {
 		$body = compact(['login']);
