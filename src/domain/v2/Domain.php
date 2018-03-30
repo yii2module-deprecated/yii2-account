@@ -28,6 +28,7 @@ class Domain extends \yii2lab\domain\Domain {
 	
 	public function config() {
 		$remoteServiceDriver = Driver::primary() == Driver::CORE ? Driver::CORE : null;
+		$serviceNamespace = Driver::primary() == Driver::CORE ? 'yii2module\account\domain\v2\services\core' : 'yii2module\account\domain\v2\services';
 		return [
 			'repositories' => [
 				'auth' => Driver::primary(),
@@ -50,14 +51,9 @@ class Domain extends \yii2lab\domain\Domain {
 					'defaultStatus' => 1,
 					'forbiddenStatusList' => [0],
 				],
-				'registration' => $remoteServiceDriver,
-				'temp' => [
-					'loginExpire' => TimeEnum::SECOND_PER_MINUTE * 20,
-				],
-				'restorePassword' => [
-					'class' => Driver::primary() == Driver::CORE ? 'yii2module\account\domain\v2\services\core\RestorePasswordService' : 'yii2module\account\domain\v2\services\RestorePasswordService',
-					'tokenExpire' => TimeEnum::SECOND_PER_MINUTE * 1,
-				],
+				'registration' => $remoteServiceDriver, //$serviceNamespace . '\RegistrationService',
+				'temp',
+				'restorePassword' => $serviceNamespace . '\RestorePasswordService',
 				'security',
 				'test',
 				'rbac',
