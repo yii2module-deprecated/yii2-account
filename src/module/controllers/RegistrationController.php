@@ -8,7 +8,7 @@ use yii2module\account\domain\v2\forms\RegistrationForm;
 use yii2module\account\module\forms\SetSecurityForm;
 use Yii;
 use yii\web\Controller;
-use yii2lab\notify\domain\widgets\Alert;
+use yii2lab\navigation\domain\widgets\Alert;
 
 class RegistrationController extends Controller
 {
