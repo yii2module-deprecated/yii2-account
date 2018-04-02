@@ -25,7 +25,7 @@ Yii::$app->navigation->breadcrumbs->create($this->title);
 			data.activation_code = form.find('#registrationform-activation_code').val();
 			$.ajax({
 				method: 'post',
-				url: '<?= env('url.api') . 'v1/registration/create-account' ?>',
+				url: '<?= env('url.api') . 'v'.env('api.version.default').'/registration/create-account' ?>',
 				dataType: 'json',
 				data: data,
 				success: function () {
