@@ -52,6 +52,7 @@ trait LoginTrait {
 		$model->id = $this->lastId() + 1;
 		$model->login = $loginEntity->login;
 		$model->status = $loginEntity->status !== null ? $loginEntity->status : $this->domain->login->defaultStatus;
+		$model->created_at = $loginEntity->created_at;
 		$this->saveModel($model);
 		$loginEntity->id = $model->id;
 	}

@@ -5,6 +5,7 @@ namespace yii2module\account\domain\v2\entities;
 use yii\helpers\ArrayHelper;
 use yii2lab\domain\BaseEntity;
 use yii\web\IdentityInterface;
+use yii2lab\domain\values\TimeValue;
 use yii2module\account\domain\v2\helpers\LoginHelper;
 
 /**
@@ -33,6 +34,23 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 	protected $password;
 	protected $token;
 	protected $email;
+	protected $created_at;
+	
+	public function init() {
+		parent::init();
+		$this->created_at = new TimeValue;
+		$this->created_at->setNow();
+	}
+	
+	public function fieldType() {
+		$fieldTypeConfig = [
+			'id' => 'integer',
+			'parent_id' => 'integer',
+			'subject_type' => 'integer',
+			'created_at' => TimeValue::class,
+		];
+		return $fieldTypeConfig;
+	}
 	
 	public function rules() {
 		return [
@@ -47,9 +65,9 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 		return $avatar;
 	}
 	
-	public function getCreatedAt() {
+	/*public function getCreatedAt() {
 		return $this->creation_date;
-	}
+	}*/
 	
 	public function getUsername() {
 		return LoginHelper::format($this->login);
@@ -66,15 +84,6 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 		if(!empty($value)) {
 			$this->roles = ArrayHelper::toArray($value);
 		}
-	}
-	
-	public function fieldType() {
-		$fieldTypeConfig = [
-			'id' => 'integer',
-			'parent_id' => 'integer',
-			'subject_type' => 'integer',
-		];
-		return $fieldTypeConfig;
 	}
 	
 	public static function findIdentity($id) {}
