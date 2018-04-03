@@ -46,7 +46,7 @@ class AuthService extends BaseService implements AuthInterface {
 		
 		$this->checkStatus($user);
 		
-		$this->repository->setToken($user->token);
+		AuthHelper::setToken($user->token);
 		$user->showToken();
 		return $user;
 	}
@@ -104,7 +104,7 @@ class AuthService extends BaseService implements AuthInterface {
 	}
 	
 	public function authenticationByToken($token, $type = null) {
-		$this->repository->setToken($token);
+		AuthHelper::setToken($token);
 		try {
 			$user = $this->domain->repositories->login->oneByToken($token, $type);
 		} catch(NotFoundHttpException $e) {
