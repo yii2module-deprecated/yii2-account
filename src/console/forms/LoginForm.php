@@ -61,7 +61,7 @@ class LoginForm extends Model
      * Внутренний валидатор пароля
      */
     public function validatePassword(){
-        if (\Yii::$app->account->manager->signIn($this->login, $this->password) === false) {
+        if (\Yii::$domain->account->manager->signIn($this->login, $this->password) === false) {
             $this->addError('password', \Yii::t('app', 'Неверный логин или пароль'));
         }
     }

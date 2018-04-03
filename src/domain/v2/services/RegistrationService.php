@@ -24,7 +24,7 @@ class RegistrationService extends BaseService implements RegistrationInterface {
         Helper::validateForm(RegistrationForm::class, $body, RegistrationForm::SCENARIO_REQUEST);
 		$this->checkLoginExistsInTps($login);
 		$activation_code = ConfirmHelper::generateCode();
-		Yii::$app->account->temp->create(compact('login', 'email', 'activation_code'));
+		Yii::$domain->account->temp->create(compact('login', 'email', 'activation_code'));
 		$this->sendSmsWithActivationCode($login, $activation_code);
 	}
 	
@@ -40,7 +40,7 @@ class RegistrationService extends BaseService implements RegistrationInterface {
 	public function activateAccount($login, $activation_code) {
 		$login = LoginHelper::pregMatchLogin($login);
 		$this->checkActivationCode($login, $activation_code);
-		Yii::$app->account->temp->activate($login);
+		Yii::$domain->account->temp->activate($login);
 	}
 	
 	public function createTpsAccount($login, $activation_code, $password, $email = null) {
@@ -53,8 +53,8 @@ class RegistrationService extends BaseService implements RegistrationInterface {
 		}
 		$this->verifyActivationCode($login, $activation_code);
 		$data = compact('login','password','email');
-		Yii::$app->account->login->create($data);
-		Yii::$app->account->temp->delete($login);
+		Yii::$domain->account->login->create($data);
+		Yii::$domain->account->temp->delete($login);
 	}
 
 	protected function checkLoginExistsInTemp($login) {
@@ -73,7 +73,7 @@ class RegistrationService extends BaseService implements RegistrationInterface {
 		$login = LoginHelper::pregMatchLogin($login);
 		$loginParts = LoginHelper::splitLogin($login);
 		$message = Yii::t('account/registration', 'activate_account_sms {activation_code}', ['activation_code' => $activation_code]);
-		Yii::$app->notify->sms->send($loginParts['phone'], $message);
+		Yii::$domain->notify->sms->send($loginParts['phone'], $message);
 	}
 
 	protected function checkLoginExistsInTps($login) {
@@ -90,7 +90,7 @@ class RegistrationService extends BaseService implements RegistrationInterface {
 	
 	protected function isActivated($login) {
 		$login = LoginHelper::pregMatchLogin($login);
-		if(Yii::$app->account->temp->isActivated($login)) {
+		if(Yii::$domain->account->temp->isActivated($login)) {
 			$error = new ErrorCollection();
 			$error->add('activation_code', 'account/registration', 'already_activated');
 			throw new UnprocessableEntityHttpException($error);
@@ -99,7 +99,7 @@ class RegistrationService extends BaseService implements RegistrationInterface {
 	
 	protected function verifyActivationCode($login, $activation_code) {
 		$login = LoginHelper::pregMatchLogin($login);
-		if(!Yii::$app->account->temp->checkActivationCode($login, $activation_code)) {
+		if(!Yii::$domain->account->temp->checkActivationCode($login, $activation_code)) {
 			$error = new ErrorCollection();
 			$error->add('activation_code', 'account/registration', 'invalid_activation_code');
 			throw new UnprocessableEntityHttpException($error);

@@ -56,13 +56,13 @@ class AuthController extends Controller
 		$isValid = $form->load($body) && $form->validate();
 		if ($isValid) {
 			try {
-				Yii::$app->account->auth->authenticationFromWeb($form->login, $form->password, $form->rememberMe);
+				Yii::$domain->account->auth->authenticationFromWeb($form->login, $form->password, $form->rememberMe);
 				if(!$this->isBackendAccessAllowed()) {
-					Yii::$app->account->auth->logout();
-					Yii::$app->navigation->alert->create(['account/auth', 'login_access_error'], Alert::TYPE_DANGER);
+					Yii::$domain->account->auth->logout();
+					Yii::$domain->navigation->alert->create(['account/auth', 'login_access_error'], Alert::TYPE_DANGER);
 					return $this->goHome();
 				}
-				Yii::$app->navigation->alert->create(['account/auth', 'login_success'], Alert::TYPE_SUCCESS);
+				Yii::$domain->navigation->alert->create(['account/auth', 'login_success'], Alert::TYPE_SUCCESS);
 				return $this->goBack();
 			} catch(UnprocessableEntityHttpException $e) {
 				$form->addErrorsFromException($e);
@@ -81,8 +81,8 @@ class AuthController extends Controller
 	 */
 	public function actionLogout()
 	{
-		Yii::$app->account->auth->logout();
-		Yii::$app->navigation->alert->create(['account/auth', 'logout_success'], Alert::TYPE_SUCCESS);
+		Yii::$domain->account->auth->logout();
+		Yii::$domain->navigation->alert->create(['account/auth', 'logout_success'], Alert::TYPE_SUCCESS);
 		return $this->goHome();
 	}
 	

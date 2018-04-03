@@ -16,7 +16,7 @@ class RestorePasswordRepository extends TpsRepository implements RestorePassword
 		$login = LoginHelper::getPhone($login);
 		$entity = $this->domain->confirm->createNew($login, 'restore-password', $this->smsCodeExpire);
 		$message = Yii::t('account/registration', 'activate_account_sms {activation_code}', ['activation_code' => $entity->activation_code]);
-		Yii::$app->notify->sms->send($login, $message);
+		Yii::$domain->notify->sms->send($login, $message);
 	}
 	
 	public function checkActivationCode($login, $code) {

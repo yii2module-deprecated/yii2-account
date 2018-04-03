@@ -14,7 +14,7 @@ class RegistrationRepository extends TpsRepository implements RegistrationInterf
 	}
 	
 	public function create($data) {
-		Yii::$app->account->login->create($data);
+		Yii::$domain->account->login->create($data);
 	}
 	
 	public function isExists($login) {

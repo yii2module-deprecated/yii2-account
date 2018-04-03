@@ -8,7 +8,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 $this->title = Yii::t('account/restore-password', 'title');
-Yii::$app->navigation->breadcrumbs->create($this->title);
+Yii::$domain->navigation->breadcrumbs->create($this->title);
 ?>
 <div class="user-request-password-reset">
 	<h1><?= Html::encode($this->title) ?></h1>

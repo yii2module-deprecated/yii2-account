@@ -44,7 +44,7 @@ class User extends \yii\web\User
 
 	public function loginByAccessToken($token, $type = null)
 	{
-		$identity = Yii::$app->account->auth->authenticationByToken($token, $type);
+		$identity = Yii::$domain->account->auth->authenticationByToken($token, $type);
 		if ($identity && $this->login($identity)) {
 			return $identity;
 		}
@@ -61,7 +61,7 @@ class User extends \yii\web\User
 		if (count($data) == 3) {
 			list ($id, $authKey, $duration) = $data;
 			try {
-				$identity = Yii::$app->account->login->oneById($id);
+				$identity = Yii::$domain->account->login->oneById($id);
 			} catch(NotFoundHttpException $e) {
 				$identity = null;
 			}
@@ -88,7 +88,7 @@ class User extends \yii\web\User
 			$identity = null;
 		} else {
 			try {
-				$identity = Yii::$app->account->login->oneById($id);
+				$identity = Yii::$domain->account->login->oneById($id);
 				Registry::set('authToken', Yii::$app->session['token']);
 			} catch(NotFoundHttpException $e) {
 				$identity = null;

@@ -26,7 +26,7 @@ class HttpAuth extends AuthMethod
 	 */
 	public function authenticate($user, $request, $response)
 	{
-		$authHeader = Yii::$app->account->auth->getToken();
+		$authHeader = Yii::$domain->account->auth->getToken();
 		if ($authHeader !== null) {
 			$identity = $user->loginByAccessToken($authHeader, get_class($this));
 			if ($identity === null) {

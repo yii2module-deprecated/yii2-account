@@ -35,7 +35,7 @@ class RestorePasswordController extends Controller
 			$body = Yii::$app->request->post('RestorePasswordForm');
 			$model->setAttributes($body, false);
 			try {
-				Yii::$app->account->restorePassword->request($model->login);
+				Yii::$domain->account->restorePassword->request($model->login);
 				$session['login'] = $model->login;
 				Yii::$app->session->set(self::SESSION_KEY, $session);
 				return $this->redirect(['/user/restore-password/check']);
@@ -56,7 +56,7 @@ class RestorePasswordController extends Controller
 			$model->setAttributes($body, false);
 			try {
 				
-				Yii::$app->account->restorePassword->checkActivationCode($model->login, $model->activation_code);
+				Yii::$domain->account->restorePassword->checkActivationCode($model->login, $model->activation_code);
 				$session['activation_code'] = $model->activation_code;
 				Yii::$app->session->set(self::SESSION_KEY, $session);
 				return $this->redirect(['/user/restore-password/confirm']);
@@ -78,8 +78,8 @@ class RestorePasswordController extends Controller
 			$body = Yii::$app->request->post('RestorePasswordForm');
 			$model->setAttributes($body, false);
 			try {
-				Yii::$app->account->restorePassword->confirm($model->login, $model->activation_code, $model->password);
-				Yii::$app->navigation->alert->create(['account/restore-password', 'new_password_saved_success'], Alert::TYPE_SUCCESS);
+				Yii::$domain->account->restorePassword->confirm($model->login, $model->activation_code, $model->password);
+				Yii::$domain->navigation->alert->create(['account/restore-password', 'new_password_saved_success'], Alert::TYPE_SUCCESS);
 				return $this->redirect('/' . Yii::$app->user->loginUrl[0]);
 			} catch (UnprocessableEntityHttpException $e){
 				$model->addErrorsFromException($e);

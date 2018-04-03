@@ -53,7 +53,7 @@ class AuthService extends BaseService implements AuthInterface {
 	
 	private function checkStatus(LoginEntity $entity)
 	{
-	    if (\Yii::$app->account->login->isForbiddenByStatus($entity->status)) {
+	    if (\Yii::$domain->account->login->isForbiddenByStatus($entity->status)) {
 	        throw new ServerErrorHttpException(Yii::t('account/login', 'user_status_forbidden'));
 	    }
 	}

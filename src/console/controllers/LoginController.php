@@ -16,7 +16,7 @@ class LoginController extends Controller
 	{
 		$data = Enter::form(LoginForm::class);
 		try {
-			$entity = Yii::$app->account->login->create($data);
+			$entity = Yii::$domain->account->login->create($data);
 			Output::arr($entity->toArray());
 			Output::line('Success created!');
 		} catch(UnprocessableEntityHttpException $e) {

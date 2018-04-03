@@ -34,7 +34,7 @@ class RegistrationController extends Controller
 		$model = new RegistrationForm();
 		$model->scenario = RegistrationForm::SCENARIO_CHECK;
 		$callback = function($model) {
-			Yii::$app->account->registration->activateAccount($model->login, $model->activation_code);
+			Yii::$domain->account->registration->activateAccount($model->login, $model->activation_code);
 			$session['login'] = $model->login;
 			$session['activation_code'] = $model->activation_code;
 			Yii::$app->session->set('registration', $session);
@@ -52,16 +52,16 @@ class RegistrationController extends Controller
 		if(empty($session['login']) || empty($session['activation_code'])) {
 			return $this->redirect(['/user/registration']);
 		}
-		$isExists = Yii::$app->account->repositories->temp->isExists($session['login']);
+		$isExists = Yii::$domain->account->repositories->temp->isExists($session['login']);
 		if(!$isExists) {
-			Yii::$app->navigation->alert->create(['account/registration', 'temp_user_not_found'], Alert::TYPE_DANGER);
+			Yii::$domain->navigation->alert->create(['account/registration', 'temp_user_not_found'], Alert::TYPE_DANGER);
 			return $this->redirect(['/user/registration']);
 		}
 		$model = new SetSecurityForm();
 		$callback = function($model) use ($session) {
-			Yii::$app->account->registration->createTpsAccount($session['login'], $session['activation_code'], $model->password, $model->email);
-			Yii::$app->account->auth->authenticationFromWeb($session['login'], $model->password, true);
-			Yii::$app->navigation->alert->create(['account/registration', 'registration_success'], Alert::TYPE_SUCCESS);
+			Yii::$domain->account->registration->createTpsAccount($session['login'], $session['activation_code'], $model->password, $model->email);
+			Yii::$domain->account->auth->authenticationFromWeb($session['login'], $model->password, true);
+			Yii::$domain->navigation->alert->create(['account/registration', 'registration_success'], Alert::TYPE_SUCCESS);
 			return $this->goHome();
 		};
 		$this->validateForm($model,$callback);

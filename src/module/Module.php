@@ -17,8 +17,8 @@ class Module extends YiiModule
 		$controllerId = Yii::$app->controller->id;
 		$moduleId = 'account';
 		Yii::$app->view->title = Yii::t($moduleId . SL . $controllerId, 'title');
-		Yii::$app->navigation->breadcrumbs->create([$moduleId . SL . 'main', 'title']);
-		Yii::$app->navigation->breadcrumbs->create([$moduleId . SL . $controllerId, 'title']);
+		Yii::$domain->navigation->breadcrumbs->create([$moduleId . SL . 'main', 'title']);
+		Yii::$domain->navigation->breadcrumbs->create([$moduleId . SL . $controllerId, 'title']);
 		
 		if(APP == BACKEND && in_array($controllerId, ['password', 'reg'])) {
 			throw new NotFoundHttpException();
