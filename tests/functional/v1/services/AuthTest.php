@@ -26,6 +26,7 @@ class AuthTest extends Unit
 		$entity = Yii::$domain->account->auth->authentication(LoginEnum::LOGIN_ADMIN, LoginEnum::PASSWORD);
 		$this->tester->assertEntity(LoginEnum::getUser(LoginEnum::ID_ADMIN), $entity);
 		$this->tester->assertEntityFormat(LoginEnum::getEntityFormat(), $entity);
+		$this->tester->assertEquals(LoginEnum::TOKEN_ADMIN, $entity->token);
 	}
 	
 	public function testAuthenticationBadPassword()

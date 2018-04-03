@@ -24,8 +24,7 @@ class LoginEnum extends BaseEnum {
 		self::ID_ADMIN => [
 			'id' => 381949,
 			'login' => '77771111111',
-			'email' => '77771111111@ya.ru',
-			'status' => 10,
+			'status' => 1,
 			'roles' => [
 				'rAdministrator',
 			],
@@ -33,8 +32,7 @@ class LoginEnum extends BaseEnum {
 		self::ID_USER => [
 			'id' => 381070,
 			'login' => '77751112233',
-			'email' => '77751112233@ya.ru',
-			'status' => 10,
+			'status' => 1,
 			'roles' => [
 				'rUnknownUser',
 			],
@@ -45,9 +43,7 @@ class LoginEnum extends BaseEnum {
 		return [
 			'id' => isType::TYPE_INT,
 			'login' => isType::TYPE_STRING,
-			'email' => isType::TYPE_STRING,
 			'status' => isType::TYPE_INT,
-			'token' => isType::TYPE_STRING,
 			'roles' => isType::TYPE_ARRAY,
 		];
 	}

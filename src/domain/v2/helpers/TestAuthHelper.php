@@ -28,13 +28,10 @@ class TestAuthHelper {
 			'class' => Domain::class,
 			'path' => 'yii2module\account\domain\v2',
 			'repositories' => [
-				'auth' => Driver::DISC,
-				'login' => [
-					'driver' => Driver::DISC,
-					'path' => '@yii2module/account/domain/v1/fixtures/data',
-				],
+				'auth' => Driver::FILEDB,
+				'login' => Driver::FILEDB,
 				'rbac' => Driver::MEMORY,
-				'assignment' => Driver::DISC,
+				'assignment' => Driver::FILEDB,
 			],
 			'services' => [
 				'auth',
@@ -49,16 +46,17 @@ class TestAuthHelper {
 				'assignment',
 			],
 		];
-		return ConfigHelper::normalizeItemConfig('account', $domainDefinition);
+		$domainDefinition =  ConfigHelper::normalizeItemConfig('account', $domainDefinition);
+		return $domainDefinition;
 	}
 	
 	/**
 	 * @throws \yii\base\InvalidConfigException
 	 */
 	public static function defineAccountDomain() {
-		if(!Yii::$app->has('account')) {
+		if(!Yii::$domain->has('account')) {
 			$domainDefinition = self::getAccountDomainDefinition();
-			Yii::$app->set('account', $domainDefinition);
+			Yii::$domain->set('account', $domainDefinition);
 		}
 	}
 	
