@@ -16,9 +16,4 @@ class AuthRepository extends BaseCoreRepository implements AuthInterface {
 		return $this->forgeEntity($response, LoginEntity::class);
 	}
 	
-	public function pseudoAuthenticationWithParrent($login, $ip, $email = null, $parentLogin) {
-		$response = $this->post(null, compact('login','ip','email', 'parentLogin'));
-		return $this->forgeEntity($response);
-	}
-
 }
