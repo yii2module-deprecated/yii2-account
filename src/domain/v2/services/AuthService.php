@@ -56,42 +56,7 @@ class AuthService extends BaseService implements AuthInterface {
 	        throw new ServerErrorHttpException(Yii::t('account/login', 'user_status_forbidden'));
 	    }
 	}
-	
-	/**
-	 * @param string      $login
-	 * @param string      $ip
-	 * @param SubjectType $subjectType
-	 * @param string|null $email
-	 *
-	 * @return LoginEntity
-	 * @throws UnprocessableEntityHttpException
-	 */
-    public function pseudoAuthentication($login, $ip, $subjectType, $email = null) {
-	    trigger_error('Method ' . __METHOD__ . ' is deprecated', E_USER_DEPRECATED);
-	    /** @var LoginEntity $loginEntity */
-	    $loginEntity = $this->repository->pseudoAuthentication($login, $ip, $subjectType, $email);
-		if(empty($loginEntity)) {
-			$error = new ErrorCollection();
-			$error->add('password', 'account/auth', 'incorrect_login_or_password');
-			throw new UnprocessableEntityHttpException($error);
-		}
-		Registry::set('authToken', $loginEntity->token);
-		//$loginEntity->showToken();
-		return $loginEntity;
-	}
-	
-	public function pseudoAuthenticationWithParent($login, $ip, $email = null, $parentLogin = null) {
-		/** @var LoginEntity $loginEntity */
-    	$loginEntity = $this->repository->pseudoAuthenticationWithParent($login, $ip, SubjectType::USER_UNIDENT_PSEUDO, $email, $parentLogin);
-		if(empty($loginEntity)) {
-			$error = new ErrorCollection();
-			$error->add('password', 'account/auth', 'incorrect_login_or_password');
-			throw new UnprocessableEntityHttpException($error);
-		}
-		Registry::set('authToken', $loginEntity->token);
-		//$loginEntity->showToken();
-		return $loginEntity;
-	}
+
 
 	public function authenticationFromWeb($login, $password, $rememberMe = false) {
 		$loginEntity = $this->authentication($login, $password);
