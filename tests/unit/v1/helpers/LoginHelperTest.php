@@ -3,7 +3,7 @@
 namespace tests\unit\v1\helpers;
 
 use Codeception\Test\Unit;
-use yii2module\account\domain\v1\helpers\LoginHelper;
+use yii2module\account\domain\v2\helpers\LoginHelper;
 
 class LoginHelperTest extends Unit
 {

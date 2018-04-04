@@ -8,7 +8,7 @@ use Yii;
 use yii\web\NotFoundHttpException;
 use yii2lab\domain\BaseEntity;
 use yii2lab\domain\data\Query;
-use yii2module\account\domain\v1\entities\LoginEntity;
+use yii2module\account\domain\v2\entities\LoginEntity;
 use tests\functional\v1\enums\LoginEnum;
 
 /**
