@@ -9,6 +9,7 @@ class LoginEnum extends BaseEnum {
 	
 	const ID_ADMIN = 381949;
 	const ID_USER = 381070;
+	const ID_USER_2 = 381074;
 	const ID_NOT_EXISTS = 1234567;
 	
 	const LOGIN_ADMIN = '77771111111';
