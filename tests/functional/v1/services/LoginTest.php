@@ -35,6 +35,35 @@ class LoginTest extends Unit
 		$this->tester->assertEntity(LoginEnum::getUser(LoginEnum::ID_ADMIN), $entity);
 	}
 	
+	public function testOneWithRelation()
+	{
+		$query = Query::forge();
+		$query->with('assignments');
+		$query->with('security');
+		/** @var LoginEntity $entity */
+		$entity = Yii::$domain->account->login->oneById(LoginEnum::ID_ADMIN, $query);
+		
+		$oo = [
+			'id' => '381949',
+			'login' => '77771111111',
+			'status' => '1',
+			'roles' => [
+				'rAdministrator',
+			],
+			'assignments' => [
+				[
+					'user_id' => '381949',
+					'item_name' => 'rAdministrator',
+				],
+			],
+			'token' => '4f6bbd8ea39e34f2f2d432a961be2a6a',
+			'email' => '',
+			'created_at' => '2018-03-28 21:00:13',
+		];
+		
+		$this->tester->assertEntity($oo, $entity);
+	}
+	
 	public function testOneByLoginNotFound()
 	{
 		try {
