@@ -30,4 +30,10 @@ class SecurityTest extends Unit
 		], $entity);
 	}
 	
+	public function testSecurityCheck()
+	{
+		$collection = Yii::$domain->account->security->all();
+		$this->tester->assertEquals([], $collection);
+	}
+	
 }
