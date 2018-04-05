@@ -18,6 +18,8 @@ class LoginEnum extends BaseEnum {
 	const TOKEN_ADMIN = '4f6bbd8ea39e34f2f2d432a961be2a6a';
 	const TOKEN_NOT_INCORRECT = '5f6bbd8ea39e34f212d432a968be2abe';
 	
+	const PASSWORD_HASH = '$2y$13$Xt.Zo0sIeIPi6CvraoUB1eihsZO3pFXx4rcYGWL9jGRr0YybqCqdK';
+	
 	const PASSWORD = 'Wwwqqq111';
 	const PASSWORD_INCORRECT = 'Wwwqqq222';
 	
