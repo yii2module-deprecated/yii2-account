@@ -12,6 +12,7 @@ use yii\web\NotFoundHttpException;
 class LoginRepository extends ActiveDiscRepository implements LoginInterface {
 	
 	public $table = 'user';
+	protected $schemaClass = true;
 	
 	public function fieldAlias() {
 		return [

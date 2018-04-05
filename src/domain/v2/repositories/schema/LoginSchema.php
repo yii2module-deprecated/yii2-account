@@ -23,7 +23,7 @@ class LoginSchema extends BaseSchema {
 					'field' => 'id',
 				],
 			],
-			'assignment' => [
+			'assignments' => [
 				'type' => RelationEnum::MANY,
 				'field' => 'id',
 				'foreign' => [

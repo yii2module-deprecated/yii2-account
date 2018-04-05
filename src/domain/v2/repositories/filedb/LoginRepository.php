@@ -10,4 +10,6 @@ class LoginRepository extends ActiveFiledbRepository implements LoginInterface {
 	
 	use LoginTrait;
 	
+	protected $schemaClass = true;
+	
 }

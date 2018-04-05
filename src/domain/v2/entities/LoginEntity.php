@@ -21,6 +21,7 @@ use yii2module\account\domain\v2\helpers\LoginHelper;
  * @property string $username
  * @property string $created_at
  * @property SecurityEntity $security
+ * @property AssignmentEntity $assignments
  * @property string $email
  */
 class LoginEntity extends BaseEntity implements IdentityInterface {
@@ -30,7 +31,7 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 	protected $status;
 	protected $roles;
 	protected $security;
-	protected $assignment;
+	protected $assignments;
 	protected $token;
 	protected $email;
 	protected $created_at;
