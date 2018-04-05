@@ -2,11 +2,11 @@
 
 namespace yii2module\account\domain\v2\interfaces\services;
 
-interface LoginInterface {
+use yii2lab\domain\interfaces\services\CrudInterface;
 
-	public function oneById($id);
+interface LoginInterface extends CrudInterface {
+
 	public function oneByLogin($login);
-	public function create($data);
 	public function isForbiddenByStatus($status);
 
 }

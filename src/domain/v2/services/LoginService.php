@@ -17,6 +17,7 @@ use yii\web\NotFoundHttpException;
  * @package yii2module\account\domain\v2\services
  *
  * @property \yii2module\account\domain\v2\interfaces\repositories\LoginInterface $repository
+ * @property \yii2module\account\domain\v2\Domain $domain
  */
 class LoginService extends ActiveBaseService implements LoginInterface {
 
