@@ -56,7 +56,7 @@ class LoginTest extends Unit
 					'item_name' => 'rAdministrator',
 				],
 			],
-			'token' => '4f6bbd8ea39e34f2f2d432a961be2a6a',
+			'token' => LoginEnum::TOKEN_ADMIN,
 			'email' => '',
 			'created_at' => '2018-03-28 21:00:13',
 		];
