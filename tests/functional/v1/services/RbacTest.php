@@ -43,7 +43,6 @@ class RbacTest extends Unit
 	
 	public function testCanByGuest()
 	{
-		//TestAuthHelper::authById(LoginEnum::ID_ADMIN);
 		try {
 			Yii::$domain->account->rbac->can('oBackendAll');
 			$this->tester->assertTrue(false);
@@ -51,4 +50,35 @@ class RbacTest extends Unit
 			$this->tester->assertTrue(true);
 		}
 	}
+	
+	public function testCanByGuest2()
+	{
+		try {
+			Yii::$domain->account->rbac->can('@');
+			$this->tester->assertTrue(false);
+		} catch(ForbiddenHttpException $e) {
+			$this->tester->assertTrue(true);
+		}
+	}
+	
+	/*public function testCanByGuest3()
+	{
+		try {
+			Yii::$domain->account->rbac->can('?');
+			$this->tester->assertTrue(true);
+		} catch(ForbiddenHttpException $e) {
+			$this->tester->assertTrue(false);
+		}
+	}
+	
+	public function testCanByUser2()
+	{
+		TestAuthHelper::authById(LoginEnum::ID_USER);
+		try {
+			Yii::$domain->account->rbac->can('?');
+			$this->tester->assertTrue(true);
+		} catch(ForbiddenHttpException $e) {
+			$this->tester->assertTrue(false);
+		}
+	}*/
 }
