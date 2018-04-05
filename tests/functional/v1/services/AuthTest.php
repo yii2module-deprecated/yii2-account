@@ -6,7 +6,6 @@ use Codeception\Test\Unit;
 use tests\functional\v1\enums\LoginEnum;
 use UnitTester;
 use Yii;
-use yii\base\InvalidConfigException;
 use yii\web\ForbiddenHttpException;
 use yii\web\UnauthorizedHttpException;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
@@ -86,13 +85,14 @@ class AuthTest extends Unit
 	
 	public function testDenyAccessForGuest()
 	{
-		try {
-			Yii::$domain->account->auth->denyAccess();
-			$this->tester->assertTrue(false);
-		} catch(InvalidConfigException $e) {
-			// for console
-			$this->tester->assertEquals('Unable to determine the request URI.', $e->getMessage());
-		}
+		Yii::$domain->account->auth->denyAccess();
+		// for console
+	}
+	
+	public function testLoginRequired()
+	{
+		Yii::$domain->account->auth->loginRequired();
+		// for console
 	}
 	
 }

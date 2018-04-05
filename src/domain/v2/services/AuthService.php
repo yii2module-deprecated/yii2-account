@@ -3,6 +3,7 @@
 namespace yii2module\account\domain\v2\services;
 
 use Yii;
+use yii\base\InvalidConfigException;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\UnauthorizedHttpException;
@@ -87,9 +88,17 @@ class AuthService extends BaseService implements AuthInterface {
 	
 	public function denyAccess() {
 		if(Yii::$app->user->getIsGuest()) {
-			Yii::$app->user->loginRequired();
+			$this->loginRequired();
 		} else {
 			throw new ForbiddenHttpException();
+		}
+	}
+	
+	public function loginRequired() {
+		try {
+			Yii::$app->user->loginRequired();
+		} catch(InvalidConfigException $e) {
+			return;
 		}
 	}
 	
@@ -103,7 +112,7 @@ class AuthService extends BaseService implements AuthInterface {
 			$this->logout();
 			Yii::$app->session->destroy();
 			Yii::$app->response->cookies->removeAll();
-			Yii::$app->user->loginRequired();
+			$this->loginRequired();
 		}
 	}
 	
