@@ -72,7 +72,7 @@ class LoginService extends ActiveBaseService implements LoginInterface {
 	}
 	
 	// todo: перенести в домен услуг
-	public function getAvailableServices() {
+	/*public function getAvailableServices() {
 		return $this->repository->getAvailableServices();
-	}
+	}*/
 }
