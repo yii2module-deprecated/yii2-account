@@ -8,6 +8,8 @@ use yii2module\account\domain\v2\repositories\traits\LoginTrait;
 
 class LoginRepository extends ActiveArRepository implements LoginInterface {
 
+	protected $schemaClass = true;
+	
 	use LoginTrait;
 
 }

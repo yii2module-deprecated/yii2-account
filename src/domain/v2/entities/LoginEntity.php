@@ -30,6 +30,7 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 	protected $status;
 	protected $roles;
 	protected $security;
+	protected $assignment;
 	protected $token;
 	protected $email;
 	protected $created_at;
