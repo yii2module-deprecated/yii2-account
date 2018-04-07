@@ -3,13 +3,13 @@
 namespace yii2module\account\domain\v2\helpers;
 
 use Yii;
-use yii2lab\domain\Domain;
-use yii2lab\domain\enums\Driver;
-use yii2lab\domain\helpers\ConfigHelper;
+use yii2lab\helpers\DomainHelper;
+use yii2module\account\domain\v2\entities\LoginEntity;
 
 class TestAuthHelper {
 	
 	const ADMIN_PASSWORD = 'Wwwqqq111';
+	const DOMAIN_CLASS = \yii2module\account\domain\v2\Domain::class;
 	
 	public static function authByLogin($login, $password = self::ADMIN_PASSWORD) {
 		self::defineAccountDomain();
@@ -19,45 +19,14 @@ class TestAuthHelper {
 	
 	public static function authById($id) {
 		self::defineAccountDomain();
+		/** @var LoginEntity $userEntity */
 		$userEntity = Yii::$domain->account->login->oneById($id);
 		Yii::$app->user->setIdentity($userEntity);
 	}
 	
-	public static function getAccountDomainDefinition() {
-		$domainDefinition = [
-			'class' => Domain::class,
-			'path' => 'yii2module\account\domain\v2',
-			'repositories' => [
-				'auth' => Driver::FILEDB,
-				'login' => Driver::FILEDB,
-				'rbac' => Driver::MEMORY,
-				'assignment' => Driver::FILEDB,
-			],
-			'services' => [
-				'auth',
-				'login' => [
-					'relations' => [],
-					'prefixList' => ['B', 'BS', 'R', 'QRS'],
-					'defaultRole' => null,
-					'defaultStatus' => 1,
-					'forbiddenStatusList' => [0],
-				],
-				'rbac',
-				'assignment',
-			],
-		];
-		$domainDefinition =  ConfigHelper::normalizeItemConfig('account', $domainDefinition);
-		return $domainDefinition;
-	}
-	
-	/**
-	 * @throws \yii\base\InvalidConfigException
-	 */
 	public static function defineAccountDomain() {
-		if(!Yii::$domain->has('account')) {
-			$domainDefinition = self::getAccountDomainDefinition();
-			Yii::$domain->set('account', $domainDefinition);
-		}
+		$domainDefinition = DomainHelper::getClassConfig('account', self::DOMAIN_CLASS);
+		DomainHelper::define('account', $domainDefinition);
 	}
 	
 }

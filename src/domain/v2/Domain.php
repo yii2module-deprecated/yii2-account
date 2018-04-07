@@ -27,19 +27,19 @@ use yii2lab\misc\enums\TimeEnum;
 class Domain extends \yii2lab\domain\Domain {
 	
 	public function config() {
-		$remoteServiceDriver = Driver::primary() == Driver::CORE ? Driver::CORE : null;
-		$serviceNamespace = Driver::primary() == Driver::CORE ? 'yii2module\account\domain\v2\services\core' : 'yii2module\account\domain\v2\services';
+		$remoteServiceDriver = $this->primaryDriver == Driver::CORE ? Driver::CORE : null;
+		$serviceNamespace = $this->primaryDriver == Driver::CORE ? 'yii2module\account\domain\v2\services\core' : 'yii2module\account\domain\v2\services';
 		return [
 			'repositories' => [
-				'auth' => Driver::primary(),
-				'login' => Driver::primary(),
+				'auth' => $this->primaryDriver,
+				'login' => $this->primaryDriver,
 				'temp' => Driver::ACTIVE_RECORD,
-				'restorePassword' => Driver::primary(),
-				'security' => Driver::primary(),
+				'restorePassword' => $this->primaryDriver,
+				'security' => $this->primaryDriver,
 				'test' => Driver::FILEDB,
 				'rbac' => Driver::MEMORY,
 				'confirm' => Driver::ACTIVE_RECORD,
-				'assignment' => Driver::primary(),
+				'assignment' => $this->primaryDriver,
 			],
 			'services' => [
 				'auth' => [
