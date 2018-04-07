@@ -11,12 +11,10 @@ use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2lab\domain\helpers\ErrorCollection;
 use yii2lab\domain\helpers\Helper;
 use yii2lab\domain\services\BaseService;
-use yii2lab\extension\registry\helpers\Registry;
 use yii2lab\misc\enums\TimeEnum;
 use yii2module\account\domain\v2\forms\LoginForm;
 use yii2module\account\domain\v2\helpers\AuthHelper;
 use yii2module\account\domain\v2\interfaces\services\AuthInterface;
-use yii2woop\generated\enums\SubjectType;
 use yii\web\ServerErrorHttpException;
 use yii2module\account\domain\v2\entities\LoginEntity;
 
@@ -47,7 +45,6 @@ class AuthService extends BaseService implements AuthInterface {
 		}
 		$this->checkStatus($loginEntity);
 		AuthHelper::setToken($loginEntity->token);
-		//$loginEntity->showToken();
 		return $loginEntity;
 	}
 	
