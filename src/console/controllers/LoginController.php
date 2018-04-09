@@ -4,7 +4,7 @@ namespace yii2module\account\console\controllers;
 
 use Yii;
 use yii2lab\console\helpers\Output;
-use yii2lab\console\yii\console\Controller;
+use yii2lab\console\base\Controller;
 use yii2lab\console\helpers\input\Enter;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2module\account\console\forms\LoginForm;
