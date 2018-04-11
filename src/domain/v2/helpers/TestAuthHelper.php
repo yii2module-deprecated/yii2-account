@@ -3,7 +3,7 @@
 namespace yii2module\account\domain\v2\helpers;
 
 use Yii;
-use yii2lab\helpers\DomainHelper;
+use yii2lab\domain\helpers\DomainHelper;
 use yii2module\account\domain\v2\entities\LoginEntity;
 
 class TestAuthHelper {
