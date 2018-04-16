@@ -6,6 +6,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii2lab\helpers\ApiVersionConfig;
 
 $this->title = Yii::t('account/registration', 'create_title');
 //Yii::$domain->navigation->breadcrumbs->create(['account/registration', 'title']);
@@ -25,7 +26,7 @@ Yii::$domain->navigation->breadcrumbs->create($this->title);
 			data.activation_code = form.find('#registrationform-activation_code').val();
 			$.ajax({
 				method: 'post',
-				url: '<?= env('url.api') . 'v'.env('api.version.default').'/registration/create-account' ?>',
+				url: '<?= env('url.api') . ApiVersionConfig::defaultApiVersionSting() .'/registration/create-account' ?>',
 				dataType: 'json',
 				data: data,
 				success: function () {
