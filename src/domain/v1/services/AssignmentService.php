@@ -8,20 +8,20 @@ use yii2lab\domain\services\ActiveBaseService;
 class AssignmentService extends ActiveBaseService implements AssignmentInterface {
 	
 	
-	public function allAssignments($id) {
-		return $this->repository->allAssignments($id);
+	public function allAssignments($userId) {
+		return $this->repository->allAssignments($userId);
 	}
 	
-	public function assignRole($id, $role) {
-		return $this->repository->assignRole($id, $role);
+	public function assignRole($userId, $role) {
+		return $this->repository->assignRole($userId, $role);
 	}
 	
-	public function revokeRole($id, $role) {
-		return $this->repository->revokeRole($id, $role);
+	public function revokeRole($userId, $role) {
+		return $this->repository->revokeRole($userId, $role);
 	}
 	
-	public function revokeAllRoles($id) {
-		return $this->repository->revokeAllRoles($id);
+	public function revokeAllRoles($userId) {
+		return $this->repository->revokeAllRoles($userId);
 	}
 	
 	public function isHasRole($userId, $roleName) {

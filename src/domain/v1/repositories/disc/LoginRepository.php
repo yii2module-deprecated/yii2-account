@@ -88,19 +88,19 @@ class LoginRepository extends ActiveDiscRepository implements LoginInterface {
 		// TODO: Implement oneByRole() method.
 	}
 	
-	public function assignRole($id, $role) {
+	public function assignRole($userId, $role) {
 		// TODO: Implement assignRole() method.
 	}
 	
-	public function revokeRole($id, $role) {
+	public function revokeRole($userId, $role) {
 		// TODO: Implement revokeRole() method.
 	}
 	
-	public function revokeAllRoles($id) {
+	public function revokeAllRoles($userId) {
 		// TODO: Implement revokeAllRoles() method.
 	}
 	
-	public function allAssignments($id) {
+	public function allAssignments($userId) {
 		// TODO: Implement allAssignments() method.
 	}
 	
