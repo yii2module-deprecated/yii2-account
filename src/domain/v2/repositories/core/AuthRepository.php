@@ -9,7 +9,6 @@ use yii2module\account\domain\v2\interfaces\repositories\AuthInterface;
 class AuthRepository extends BaseCoreRepository implements AuthInterface {
 	
 	public $point = 'auth';
-	public $version = 1;
 	
 	public function authentication($login, $password) {
 		$response = $this->post(null, compact('login', 'password'));

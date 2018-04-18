@@ -9,8 +9,7 @@ use yii2module\account\domain\v1\forms\RegistrationForm;
 
 class RegistrationService extends CoreBaseService {
 	
-	public $version = 'v4';
-	public $baseUri = 'registration';
+	public $point = 'registration';
 	
 	public function createTempAccount($login, $email = null) {
 		$body = compact('login', 'email');

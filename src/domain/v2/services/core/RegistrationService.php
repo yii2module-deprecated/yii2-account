@@ -6,11 +6,11 @@ use yii2lab\domain\helpers\Helper;
 use yii2lab\domain\services\CoreBaseService;
 use common\enums\app\ApiVersionEnum;
 use yii2module\account\domain\v2\forms\RegistrationForm;
+use yii2module\account\domain\v2\interfaces\services\RegistrationInterface;
 
-class RegistrationService extends CoreBaseService {
+class RegistrationService extends CoreBaseService implements RegistrationInterface {
 	
-	public $version = 'v4';
-	public $baseUri = 'registration';
+	public $point = 'registration';
 	
 	public function createTempAccount($login, $email = null) {
 		$body = compact('login', 'email');

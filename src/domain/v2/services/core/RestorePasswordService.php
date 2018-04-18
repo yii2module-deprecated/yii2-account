@@ -5,14 +5,14 @@ namespace yii2module\account\domain\v2\services\core;
 use yii2lab\domain\helpers\Helper;
 use yii2module\account\domain\v2\forms\RestorePasswordForm;
 use yii2lab\domain\services\CoreBaseService;
+use yii2module\account\domain\v2\interfaces\services\RestorePasswordInterface;
 
-class RestorePasswordService extends CoreBaseService {
+class RestorePasswordService extends CoreBaseService implements RestorePasswordInterface {
 	
-	public $version = 'v1';
-	public $baseUri = 'auth/restore-password';
+	public $point = 'auth/restore-password';
 	public $tokenExpire;
 	
-	public function request($login) {
+	public function request($login, $mail = null) {
 		$body = compact(['login']);
 		Helper::validateForm(RestorePasswordForm::class, $body, RestorePasswordForm::SCENARIO_REQUEST);
 		$this->client->post('request', $body);
