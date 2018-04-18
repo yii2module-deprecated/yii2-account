@@ -6,6 +6,7 @@ use yii\helpers\ArrayHelper;
 use yii\rbac\Assignment;
 use yii\web\NotFoundHttpException;
 use yii2lab\domain\data\Query;
+use yii2module\account\domain\v2\helpers\AssignmentHelper;
 
 trait AssignmentTrait {
 	
@@ -53,7 +54,7 @@ trait AssignmentTrait {
 			return [];
 		}
 		$roles = $this->allRoleNamesByUserId($userId);
-		return $this->forgeAssignments($userId, $roles);
+		return AssignmentHelper::forge($userId, $roles);
 	}
 	
 	public function assignRole($userId, $role) {
@@ -65,7 +66,7 @@ trait AssignmentTrait {
 			'item_name' => $role,
 		]);
 		$this->insert($assignEntity);
-		return $this->forgeAssignment($userId, $role);
+		return AssignmentHelper::forge($userId, $role);
 	}
 	
 	public function revokeRole($userId, $role) {
@@ -92,26 +93,6 @@ trait AssignmentTrait {
 		$query = Query::forge();
 		$query->where('item_name', $role);
 		return $this->all($query);
-	}
-	
-	private function forgeAssignment($userId, $roleName) {
-		$assignment = new Assignment([
-			'userId' => $userId,
-			'roleName' => $roleName,
-			'createdAt' => 1486774821,
-		]);
-		return $assignment;
-	}
-	
-	private function forgeAssignments($userId, $roleNames) {
-		if(empty($roleNames)) {
-			return [];
-		}
-		$assignments = [];
-		foreach($roleNames as $roleName) {
-			$assignments[$roleName] = $this->forgeAssignment($userId, $roleName);
-		}
-		return $assignments;
 	}
 	
 	private function getId($id) {
