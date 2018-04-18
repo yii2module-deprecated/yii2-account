@@ -3,18 +3,14 @@
 namespace yii2module\account\domain\v2\repositories\core;
 
 use yii\web\NotFoundHttpException;
+use yii2lab\core\domain\repositories\base\BaseActiveCoreRepository;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
-use yii2lab\domain\repositories\ActiveCoreRepository;
-use common\enums\app\ApiVersionEnum;
 use yii2module\account\domain\v2\entities\SecurityEntity;
 use yii2module\account\domain\v2\interfaces\repositories\SecurityInterface;
 
-class SecurityRepository extends ActiveCoreRepository implements SecurityInterface {
+class SecurityRepository extends BaseActiveCoreRepository implements SecurityInterface {
 	
-	public $baseUri = 'security';
-	public $version = 'v1';
-	
-	
+	public $point = 'security';
 	
 	public function changePassword($password, $newPassword) {
 		$response = $this->put('password', [
@@ -50,16 +46,6 @@ class SecurityRepository extends ActiveCoreRepository implements SecurityInterfa
 	 */
 	public function validatePassword($userId, $password) {
 		// TODO: Implement validatePassword() method.
-	}
-	
-	/**
-	 * @param $userId
-	 *
-	 * @return SecurityEntity
-	 * @throws NotFoundHttpException
-	 */
-	public function generateTokenById($userId) {
-		// TODO: Implement generateTokenById() method.
 	}
 	
 	/**
