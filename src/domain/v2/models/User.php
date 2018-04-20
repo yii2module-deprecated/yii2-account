@@ -1,9 +1,8 @@
 <?php
+
 namespace yii2module\account\domain\v2\models;
 
-use Yii;
 use yii\db\ActiveRecord;
-use yii\behaviors\TimestampBehavior;
 
 /**
  * User model
@@ -33,26 +32,4 @@ class User extends ActiveRecord
 		return ['id'];
 	}
 	
-	public static function findIdentity($id)
-	{
-		return static::findOne(['id' => $id]);
-	}
-	
-	public function getRoles()
-	{
-		return explode(',', $this->role);
-	}
-	
-	public function behaviors()
-	{
-		return [
-			'timestamp' => [
-				'class' => TimestampBehavior::class,
-				'attributes' => [
-					ActiveRecord::EVENT_BEFORE_INSERT => 'created_at',
-				],
-				'value' => function() { return date('Y-m-d H:i:s'); },
-			],
-		];
-	}
 }
