@@ -22,7 +22,7 @@ use yii2module\account\domain\v2\helpers\LoginHelper;
  * @property string $created_at
  * @property SecurityEntity $security
  * @property AssignmentEntity $assignments
- * @property string $email
+ * @property-read string $email
  */
 class LoginEntity extends BaseEntity implements IdentityInterface {
 
@@ -64,10 +64,6 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 		$avatar = env('url.frontend') . '/images/avatars/_default.jpg';
 		return $avatar;
 	}
-	
-	/*public function getCreatedAt() {
-		return $this->creation_date;
-	}*/
 	
 	public function getUsername() {
 		return LoginHelper::format($this->login);
