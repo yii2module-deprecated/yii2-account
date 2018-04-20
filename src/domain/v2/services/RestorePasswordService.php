@@ -14,7 +14,9 @@ use yii2module\account\domain\v2\interfaces\services\RestorePasswordInterface;
  * Class RestorePasswordService
  *
  * @package yii2module\account\domain\v2\services
- * @property \yii2module\account\domain\v2\interfaces\repositories\RestorePasswordInterface $repository
+ *
+ * @property-read \yii2module\account\domain\v2\interfaces\repositories\RestorePasswordInterface $repository
+ * @property-read \yii2module\account\domain\v2\Domain $domain
  */
 class RestorePasswordService extends BaseService implements RestorePasswordInterface {
 

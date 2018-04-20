@@ -31,9 +31,15 @@ class LoginService extends ActiveBaseService implements LoginInterface {
 		return $this->repository->isExistsByLogin($login);
 	}
 	
+	/**
+	 * @param $login
+	 *
+	 * @return \yii2module\account\domain\v2\entities\LoginEntity
+	 *
+	 * @throws NotFoundHttpException
+	 */
 	public function oneByLogin($login) {
-		$user = $this->repository->oneByLogin($login);
-		return $user;
+		return $this->repository->oneByLogin($login);
 	}
 	
 	public function create($data) {
@@ -79,4 +85,5 @@ class LoginService extends ActiveBaseService implements LoginInterface {
 	/*public function getAvailableServices() {
 		return $this->repository->getAvailableServices();
 	}*/
+	
 }

@@ -2,6 +2,7 @@
 
 namespace yii2module\account\domain\v2\interfaces\repositories;
 
+use yii\web\NotFoundHttpException;
 use yii2lab\domain\interfaces\repositories\CrudInterface;
 use yii2module\account\domain\v2\entities\LoginEntity;
 
@@ -18,6 +19,8 @@ interface LoginInterface extends CrudInterface {
 	 * @param string $login
 	 *
 	 * @return LoginEntity
+	 *
+	 * @throws NotFoundHttpException
 	 */
 	public function oneByLogin($login);
 	
