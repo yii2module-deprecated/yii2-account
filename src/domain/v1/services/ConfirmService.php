@@ -27,7 +27,7 @@ class ConfirmService extends ActiveBaseService {
 	public function isVerifyCode($login, $action, $code, $smsCodeExpire) {
 		$login = LoginHelper::getPhone($login);
 		try {
-			$confirmEntity = $this->oneByLoginAndAction($login, $action, $smsCodeExpire);
+			$confirmEntity = $this->oneByLoginAndAction($login, $action);
 		} catch(NotFoundHttpException $e) {
 			return false;
 		}

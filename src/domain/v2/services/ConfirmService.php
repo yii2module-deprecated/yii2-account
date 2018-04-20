@@ -21,29 +21,29 @@ class ConfirmService extends ActiveBaseService implements ConfirmInterface {
 	public function delete($login, $action) {
 		$login = LoginHelper::getPhone($login);
 		$this->beforeAction(self::EVENT_DELETE);
-		$this->repository->cleanOld($login, $action, -1);
+		$this->repository->cleanAll($login, $action);
 		return $this->afterAction(self::EVENT_DELETE);
 	}
 	
-	public function isVerifyCode($login, $action, $code, $smsCodeExpire) {
+	public function isVerifyCode($login, $action, $code) {
 		$login = LoginHelper::getPhone($login);
-		$confirmEntity = $this->oneByLoginAndAction($login, $action, $smsCodeExpire);
+		$confirmEntity = $this->oneByLoginAndAction($login, $action);
 		if ($confirmEntity->code != $code) {
 			return false;
 		}
 		return true;
 	}
 	
-	public function oneByLoginAndAction($login, $action, $smsCodeExpire) {
+	public function oneByLoginAndAction($login, $action) {
 		$login = LoginHelper::getPhone($login);
-		$this->cleanOld($login, $action, $smsCodeExpire);
+		$this->cleanOld($login, $action);
 		return $this->repository->oneByLoginAndAction($login, $action);
 	}
 	
-	public function createNew($login, $action, $smsCodeExpire, $data = null) {
+	public function createNew($login, $action, $expire, $data = null) {
 		$login = LoginHelper::getPhone($login);
-		$this->cleanOld($login, $action, $smsCodeExpire);
-		$entityArray = compact(['login', 'action', 'data']);
+		$this->cleanOld($login, $action);
+		$entityArray = compact(['login', 'action', 'data', 'expire']);
 		$entityArray['code'] = ConfirmHelper::generateCode();
 		try {
 			$this->repository->oneByLoginAndAction($login, $action);
@@ -55,11 +55,9 @@ class ConfirmService extends ActiveBaseService implements ConfirmInterface {
 		}
 	}
 	
-	private function cleanOld($login, $action, $smsCodeExpire) {
+	private function cleanOld($login, $action) {
 		$login = LoginHelper::getPhone($login);
-		if(!empty($smsCodeExpire)) {
-			$this->repository->cleanOld($login, $action, $smsCodeExpire);
-		}
+		$this->repository->cleanOld($login, $action);
 	}
 	
 }

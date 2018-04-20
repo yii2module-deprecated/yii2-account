@@ -25,6 +25,7 @@ interface ConfirmInterface extends CrudInterface {
 	 * @throws NotFoundHttpException
 	 */
 	public function oneByLogin($login);
-	public function cleanOld($login, $action, $expire = 30);
+	public function cleanOld($login, $action);
+	public function cleanAll($login, $action);
 
 }

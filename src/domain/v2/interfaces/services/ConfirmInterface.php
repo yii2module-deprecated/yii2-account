@@ -13,24 +13,22 @@ interface ConfirmInterface extends CrudInterface {
 	 * @param $login
 	 * @param $action
 	 * @param $code
-	 * @param $smsCodeExpire
 	 *
 	 * @return bool
 	 *
 	 * @throws NotFoundHttpException
 	 */
-	public function isVerifyCode($login, $action, $code, $smsCodeExpire);
+	public function isVerifyCode($login, $action, $code);
 	
 	/**
 	 * @param $login
 	 * @param $action
-	 * @param $smsCodeExpire
 	 *
 	 * @return mixed
 	 *
 	 * @throws NotFoundHttpException
 	 */
-	public function oneByLoginAndAction($login, $action, $smsCodeExpire);
-	public function createNew($login, $action, $smsCodeExpire, $data = null);
+	public function oneByLoginAndAction($login, $action);
+	public function createNew($login, $action, $expire, $data = null);
 
 }

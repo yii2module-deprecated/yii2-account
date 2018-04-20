@@ -9,12 +9,25 @@ use yii2module\account\domain\v2\helpers\ConfirmHelper;
 use yii2module\account\domain\v2\helpers\LoginHelper;
 use yii2module\account\domain\v2\validators\LoginValidator;
 
+/**
+ * Class ConfirmEntity
+ *
+ * @package yii2module\account\domain\v2\entities
+ *
+ * @property $login
+ * @property $action
+ * @property $code
+ * @property $data
+ * @property $expire
+ * @property $created_at
+ */
 class ConfirmEntity extends BaseEntity {
 
 	protected $login;
 	protected $action;
 	protected $code;
 	protected $data;
+	protected $expire;
 	protected $created_at;
 	
 	public function fieldType() {
@@ -27,7 +40,8 @@ class ConfirmEntity extends BaseEntity {
 	{
 		return [
 			[['login', 'action', 'code'], 'trim'],
-			[['login', 'action', 'code'], 'required'],
+			[['login', 'action', 'code', 'expire'], 'required'],
+			[['expire'], 'integer'],
 			['login', LoginValidator::class],
 			//'normalizeLogin' => ['login', 'normalizeLogin'],
 			[['code'], 'string', 'length' => 6],

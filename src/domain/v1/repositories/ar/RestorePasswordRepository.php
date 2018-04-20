@@ -20,7 +20,7 @@ class RestorePasswordRepository extends TpsRepository implements RestorePassword
 	}
 	
 	public function checkActivationCode($login, $code) {
-		return $this->domain->confirm->isVerifyCode($login, 'restore-password', $code, $this->smsCodeExpire);
+		return $this->domain->confirm->isVerifyCode($login, 'restore-password', $code);
 	}
 	
 	public function setNewPassword($login, $code, $password) {
