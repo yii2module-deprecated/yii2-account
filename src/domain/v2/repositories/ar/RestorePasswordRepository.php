@@ -36,7 +36,4 @@ class RestorePasswordRepository extends TpsRepository implements RestorePassword
 		return $this->domain->confirm->delete($login, self::CONFIRM_ACTION);
 	}
 	
-	public function isExists($login) {
-		return $this->domain->repositories->login->isExistsByLogin($login);
-	}
 }

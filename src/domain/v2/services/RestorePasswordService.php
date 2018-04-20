@@ -43,7 +43,7 @@ class RestorePasswordService extends BaseService implements RestorePasswordInter
 	}
 	
 	protected function validateLogin($login) {
-		$user = $this->repository->isExists($login);
+		$user = $this->domain->login->isExistsByLogin($login);
 		if(empty($user)) {
 			$error = new ErrorCollection();
 			$error->add('login', 'account/main', 'login_not_found');

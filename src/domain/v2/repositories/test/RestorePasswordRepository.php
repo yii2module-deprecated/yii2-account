@@ -22,8 +22,4 @@ class RestorePasswordRepository extends BaseRepository implements RestorePasswor
 	
 	}
 	
-	public function isExists($login) {
-		return $this->domain->repositories->test->isExists(['login' => $login]);
-	}
-	
 }

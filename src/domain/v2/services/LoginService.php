@@ -27,6 +27,10 @@ class LoginService extends ActiveBaseService implements LoginInterface {
 	public $defaultStatus;
 	public $forbiddenStatusList;
 	
+	public function isExistsByLogin($login) {
+		return $this->repository->isExistsByLogin($login);
+	}
+	
 	public function oneByLogin($login) {
 		$user = $this->repository->oneByLogin($login);
 		return $user;
