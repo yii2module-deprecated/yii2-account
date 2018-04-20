@@ -28,11 +28,7 @@ class ConfirmService extends ActiveBaseService implements ConfirmInterface {
 	
 	public function isVerifyCode($login, $action, $code, $smsCodeExpire) {
 		$login = LoginHelper::getPhone($login);
-		try {
-			$confirmEntity = $this->oneByLoginAndAction($login, $action, $smsCodeExpire);
-		} catch(NotFoundHttpException $e) {
-			return false;
-		}
+		$confirmEntity = $this->oneByLoginAndAction($login, $action, $smsCodeExpire);
 		if ($confirmEntity->code != $code) {
 			return false;
 		}

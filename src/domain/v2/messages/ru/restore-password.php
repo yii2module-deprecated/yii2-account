@@ -16,7 +16,7 @@ return [
 	'no_user_with_email' => 'Не найдено ни одного пользователя по указанной электронной почтой.',
 	
 	'password_reset_expire {min}' => 'Код активции пароля Вам был выслан ранее. Повторная отправка запроса возможна через {min} мин.',
-	'password_reset_message {activation_code}' => 'Код активции пароля: {activation_code}',
+	'restore_password_sms {activation_code}' => 'Воостановление пароля. Код активции: {activation_code}',
 	'not_found_request' => 'Не найдено запроса на восстановление пароля.',
 	'invalid_activation_code' => 'Неверный код активации.',
 	'email_template_body' => 'Хеш %reset_hash%, для логина %login%',

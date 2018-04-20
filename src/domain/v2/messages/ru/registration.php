@@ -19,7 +19,7 @@ return [
 	'send_activation_code' => 'Получить код',
 	'sms_not_sended' => 'Смс-сообщение не отправлено',
 	'sms_with_code_sended' => 'Код активации отправлен Вам в СМС!',
-	'activate_account_sms {activation_code}' => 'Код активации: {activation_code}',
+	'activate_account_sms {activation_code}' => 'Регистрация. Код активации: {activation_code}',
 	'login_not_valid' => 'Неверный формат логина',
 	'invalid_activation_code' => 'Неверный код активации',
 	'temp_user_not_found' => 'Временный аккаунт пользователя не найден',

@@ -2,6 +2,7 @@
 
 namespace yii2module\account\domain\v2\services;
 
+use yii\web\NotFoundHttpException;
 use yii2lab\domain\helpers\Helper;
 use yii2lab\misc\enums\TimeEnum;
 use yii2module\account\domain\v2\forms\RestorePasswordForm;
@@ -54,7 +55,13 @@ class RestorePasswordService extends BaseService implements RestorePasswordInter
 	}
 	
 	protected function verifyActivationCode($login, $activation_code) {
-		$isChecked = $this->repository->checkActivationCode($login, $activation_code);
+		try {
+			$isChecked = $this->repository->checkActivationCode($login, $activation_code);
+		} catch(NotFoundHttpException $e) {
+			$error = new ErrorCollection();
+			$error->add('login', 'account/restore-password', 'not_found_request');
+			throw new UnprocessableEntityHttpException($error);
+		}
 		if(!$isChecked) {
 			$error = new ErrorCollection();
 			$error->add('activation_code', 'account/restore-password', 'invalid_activation_code');
