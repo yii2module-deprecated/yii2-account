@@ -5,6 +5,7 @@ namespace yii2module\account\domain\v2\repositories\ar;
 use Yii;
 use yii2lab\misc\enums\TimeEnum;
 use yii2module\account\domain\v2\entities\LoginEntity;
+use yii2module\account\domain\v2\entities\SecurityEntity;
 use yii2module\account\domain\v2\helpers\LoginHelper;
 use yii2module\account\domain\v2\interfaces\repositories\RestorePasswordInterface;
 use yii2lab\domain\repositories\TpsRepository;
@@ -30,6 +31,7 @@ class RestorePasswordRepository extends TpsRepository implements RestorePassword
 		$login = LoginHelper::getPhone($login);
 		/** @var LoginEntity $loginEntity */
 		$loginEntity = $this->domain->login->oneByLogin($login);
+		/** @var SecurityEntity $securityEntity */
 		$securityEntity = $this->domain->security->oneById($loginEntity->id);
 		$securityEntity->password_hash = Yii::$app->security->generatePasswordHash($password);
 		$this->domain->security->updateById($securityEntity->id, $securityEntity);
