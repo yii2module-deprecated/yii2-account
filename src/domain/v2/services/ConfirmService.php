@@ -2,7 +2,6 @@
 
 namespace yii2module\account\domain\v2\services;
 
-use yii\db\IntegrityException;
 use yii\web\NotFoundHttpException;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2lab\domain\helpers\ErrorCollection;
@@ -40,17 +39,19 @@ class ConfirmService extends ActiveBaseService implements ConfirmInterface {
 		$this->cleanOld($login, $action, $smsCodeExpire);
 		return $this->repository->oneByLoginAndAction($login, $action);
 	}
+	
 	public function createNew($login, $action, $smsCodeExpire, $data = null) {
 		$login = LoginHelper::getPhone($login);
 		$this->cleanOld($login, $action, $smsCodeExpire);
 		$entityArray = compact(['login', 'action', 'data']);
 		$entityArray['code'] = ConfirmHelper::generateCode();
 		try {
-			return parent::create($entityArray);
-		} catch(IntegrityException $e) {
+			$this->repository->oneByLoginAndAction($login, $action);
 			$error = new ErrorCollection();
 			$error->add('login', 'account/auth', 'already_sended_code');
 			throw new UnprocessableEntityHttpException($error);
+		} catch(NotFoundHttpException $e) {
+			return parent::create($entityArray);
 		}
 	}
 	
