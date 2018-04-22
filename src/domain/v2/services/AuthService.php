@@ -7,6 +7,7 @@ use yii\base\InvalidConfigException;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\UnauthorizedHttpException;
+use yii2lab\domain\BaseEntity;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2lab\domain\helpers\ErrorCollection;
 use yii2lab\domain\helpers\Helper;
@@ -109,6 +110,12 @@ class AuthService extends BaseService implements AuthInterface {
 			Yii::$app->session->destroy();
 			Yii::$app->response->cookies->removeAll();
 			$this->loginRequired();
+		}
+	}
+	
+	public function checkOwnerId(BaseEntity $entity, $fieldName = 'user_id') {
+		if($entity->{$fieldName} != Yii::$domain->account->auth->identity->id) {
+			throw new ForbiddenHttpException();
 		}
 	}
 	

@@ -2,6 +2,8 @@
 
 namespace yii2module\account\domain\v2\interfaces\services;
 
+use yii2lab\domain\BaseEntity;
+
 /**
  * Interface AuthInterface
  *
@@ -20,5 +22,6 @@ interface AuthInterface {
 	public function denyAccess();
 	public function breakSession();
 	public function loginRequired();
-
+	public function checkOwnerId(BaseEntity $entity, $fieldName = 'user_id');
+	
 }
