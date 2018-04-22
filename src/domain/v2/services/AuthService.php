@@ -18,13 +18,6 @@ use yii2module\account\domain\v2\interfaces\services\AuthInterface;
 use yii\web\ServerErrorHttpException;
 use yii2module\account\domain\v2\entities\LoginEntity;
 
-/**
- * Class AuthService
- *
- * @package yii2module\account\domain\v2\services
- *
- * @property \yii2module\account\domain\v2\interfaces\repositories\AuthInterface $repository
- */
 class AuthService extends BaseService implements AuthInterface {
 
     public $rememberExpire = TimeEnum::SECOND_PER_DAY * 30;
@@ -55,6 +48,12 @@ class AuthService extends BaseService implements AuthInterface {
 	    }
 	}
 
+	public function getIdentity() {
+		if(Yii::$app->user->isGuest) {
+			Yii::$domain->account->auth->loginRequired();
+		}
+		return Yii::$app->user->identity;
+	}
 
 	public function authenticationFromWeb($login, $password, $rememberMe = false) {
 		$loginEntity = $this->authentication($login, $password);
