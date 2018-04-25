@@ -3,14 +3,14 @@
 namespace yii2module\account\domain\v2\repositories\ar;
 
 use Yii;
+use yii2lab\domain\repositories\BaseRepository;
 use yii2lab\misc\enums\TimeEnum;
 use yii2module\account\domain\v2\entities\LoginEntity;
 use yii2module\account\domain\v2\entities\SecurityEntity;
 use yii2module\account\domain\v2\helpers\LoginHelper;
 use yii2module\account\domain\v2\interfaces\repositories\RestorePasswordInterface;
-use yii2lab\domain\repositories\TpsRepository;
 
-class RestorePasswordRepository extends TpsRepository implements RestorePasswordInterface {
+class RestorePasswordRepository extends BaseRepository implements RestorePasswordInterface {
 
 	const CONFIRM_ACTION = 'restore-password';
 	
