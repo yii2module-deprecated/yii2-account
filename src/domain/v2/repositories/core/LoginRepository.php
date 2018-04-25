@@ -34,8 +34,19 @@ class LoginRepository extends BaseActiveCoreRepository implements LoginInterface
 		$headers[HttpHeaderEnum::AUTHORIZATION] = $token;
 		$response = RestHelper::get($url, [], $headers);
 		
-		// todo: crutch
-		if($response->data['type'] == "yii2woop\\generated\\exception\\tps\\NotAuthenticatedException") {
+		$data = $response->data;
+		
+		if(empty($data['id'])) {
+			if($response->status_code == 401) {
+				throw new NotFoundHttpException();
+			}
+			/*if(empty($response->data['id'])) {
+				throw new NotFoundHttpException();
+			}*/
+			// todo: crutch
+			if($data['type'] == "yii2woop\\generated\\exception\\tps\\NotAuthenticatedException") {
+				throw new NotFoundHttpException();
+			}
 			throw new NotFoundHttpException();
 		}
 		
