@@ -3,6 +3,7 @@
 namespace yii2module\account\domain\v2\interfaces\services;
 
 use yii2lab\domain\BaseEntity;
+use yii2module\account\domain\v2\entities\LoginEntity;
 
 /**
  * Interface AuthInterface
@@ -13,7 +14,13 @@ use yii2lab\domain\BaseEntity;
  * @property \yii2module\account\domain\v2\entities\LoginEntity $identity
  */
 interface AuthInterface {
-
+	
+	/**
+	 * @param $login
+	 * @param $password
+	 *
+	 * @return LoginEntity
+	 */
 	public function authentication($login, $password);
 	public function authenticationFromWeb($login, $password, $rememberMe = false);
 	public function authenticationByToken($token, $type = null);

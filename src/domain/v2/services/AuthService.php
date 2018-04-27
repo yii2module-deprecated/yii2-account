@@ -19,10 +19,17 @@ use yii2module\account\domain\v2\interfaces\services\AuthInterface;
 use yii\web\ServerErrorHttpException;
 use yii2module\account\domain\v2\entities\LoginEntity;
 
+/**
+ * Class AuthService
+ *
+ * @package yii2module\account\domain\v2\services
+ *
+ * @property \yii2module\account\domain\v2\interfaces\repositories\AuthInterface $repository
+ */
 class AuthService extends BaseService implements AuthInterface {
 
     public $rememberExpire = TimeEnum::SECOND_PER_DAY * 30;
-
+	
 	public function authentication($login, $password) {
 		$body = compact(['login', 'password']);
 		$body = Helper::validateForm(LoginForm::class, $body);

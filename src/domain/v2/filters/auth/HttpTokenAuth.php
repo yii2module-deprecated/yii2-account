@@ -4,6 +4,8 @@ namespace yii2module\account\domain\v2\filters\auth;
 
 use Yii;
 use yii\filters\auth\AuthMethod;
+use yii\web\Request;
+use yii\web\Response;
 
 class HttpTokenAuth extends AuthMethod
 {
@@ -18,6 +20,7 @@ class HttpTokenAuth extends AuthMethod
 	 */
 	public function authenticate($user, $request, $response)
 	{
+		/** @var Request $request */
 		$authHeader = $request->getHeaders()->get('Authorization');
 		if ($authHeader !== null) {
 			$identity = Yii::$domain->account->auth->authenticationByToken($authHeader, get_class($this));
@@ -35,6 +38,7 @@ class HttpTokenAuth extends AuthMethod
 	 */
 	public function challenge($response)
 	{
+		/** @var Response $response */
 		$response->getHeaders()->set('WWW-Authenticate', "Bearer realm=\"{$this->realm}\"");
 	}
 }
