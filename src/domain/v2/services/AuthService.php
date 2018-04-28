@@ -3,6 +3,7 @@
 namespace yii2module\account\domain\v2\services;
 
 use Yii;
+use yii\base\InvalidArgumentException;
 use yii\base\InvalidConfigException;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
@@ -73,6 +74,9 @@ class AuthService extends BaseService implements AuthInterface {
 	}
 	
 	public function authenticationByToken($token, $type = null) {
+		if(empty($token)) {
+			throw new InvalidArgumentException('Empty token');
+		}
 		AuthHelper::setToken($token);
 		try {
 			$loginEntity = $this->domain->repositories->login->oneByToken($token, $type);

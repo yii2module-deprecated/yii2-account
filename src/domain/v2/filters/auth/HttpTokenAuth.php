@@ -22,6 +22,9 @@ class HttpTokenAuth extends AuthMethod
 	{
 		/** @var Request $request */
 		$authHeader = $request->getHeaders()->get('Authorization');
+		if(empty($authHeader)) {
+			return null;
+		}
 		if ($authHeader !== null) {
 			$identity = Yii::$domain->account->auth->authenticationByToken($authHeader, get_class($this));
 			if ($identity === null) {
