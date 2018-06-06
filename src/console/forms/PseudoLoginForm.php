@@ -14,11 +14,11 @@ use yii\web\ServerErrorHttpException;
 use yii\web\NotFoundHttpException;
 use common\helpers\RBACRoles;
 
-class LoginForm extends Model
+class PseudoLoginForm extends Model
 {
     public $login;
-    public $password;
-    public $rememberMe = true;
+    public $email;
+	public $parentLogin;
 
     /**
      * @inheritdoc
@@ -26,8 +26,8 @@ class LoginForm extends Model
     public function rules()
     {
         return [
-            [['login', 'password',], 'trim'],
-            [['login', 'password',], 'required'],
+            [['login', 'email', 'parentLogin'], 'trim'],
+            [['login', 'email', 'parentLogin'], 'required'],
         ];
     }
     
@@ -38,23 +38,8 @@ class LoginForm extends Model
     {
         return [
             'login'         => Yii::t('main', 'login'),
-            'rememberMe'        => Yii::t('main', 'remember_me'),
-            'password'        => Yii::t('main', 'password'),
         ];
     }
-
-    public function normalizeLogin($attribute)
-    {
-        $this->$attribute = LoginHelper::getPhone($this->$attribute);
-    }
-    
-    public function addErrorsFromException($e) {
-        foreach($e->getErrors() as $error) {
-            if(!empty($error)) {
-                $this->addError($error['field'], $error['message']);
-            }
-        }
-    }
-    
+ 
  
 }
