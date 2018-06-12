@@ -53,6 +53,7 @@ class User extends \yii\web\User
 
 	protected function getIdentityAndDurationFromCookie()
 	{
+		$identity = null;
 		$value = Yii::$app->getRequest()->getCookies()->getValue($this->identityCookie['name']);
 		if ($value === null) {
 			return null;
@@ -60,10 +61,10 @@ class User extends \yii\web\User
 		$data = json_decode($value, true);
 		if (count($data) == 3) {
 			list ($id, $authKey, $duration) = $data;
-			try {
-				$identity = Yii::$domain->account->login->oneById($id);
-			} catch(NotFoundHttpException $e) {
-				$identity = null;
+			if(!empty($id)) {
+				try {
+					$identity = Yii::$domain->account->login->oneById($id);
+				} catch(NotFoundHttpException $e) {}
 			}
 			if ($identity !== null) {
 				if (!$identity instanceof IdentityInterface) {
@@ -81,18 +82,14 @@ class User extends \yii\web\User
 
 	protected function renewAuthStatus()
 	{
+		$identity = null;
 		$session = Yii::$app->getSession();
 		$id = $session->getHasSessionId() || $session->getIsActive() ? $session->get($this->idParam) : null;
-
-		if ($id === null) {
-			$identity = null;
-		} else {
+		if (!empty($id)) {
 			try {
 				$identity = Yii::$domain->account->login->oneById($id);
 				Registry::set('authToken', Yii::$app->session['token']);
-			} catch(NotFoundHttpException $e) {
-				$identity = null;
-			}
+			} catch(NotFoundHttpException $e) {}
 		}
 
 		$this->setIdentity($identity);
