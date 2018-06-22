@@ -6,12 +6,17 @@ use Yii;
 use yii\web\NotFoundHttpException;
 use yii2lab\core\domain\helpers\CoreHelper;
 use yii2lab\core\domain\repositories\base\BaseActiveCoreRepository;
+use yii2lab\domain\data\Query;
+use yii2lab\domain\traits\CacheTrait;
 use yii2lab\misc\enums\HttpHeaderEnum;
+use yii2lab\misc\enums\TimeEnum;
 use yii2lab\rest\domain\helpers\RestHelper;
 use yii2module\account\domain\v2\entities\LoginEntity;
 use yii2module\account\domain\v2\interfaces\repositories\LoginInterface;
 
 class LoginRepository extends BaseActiveCoreRepository implements LoginInterface {
+	
+	use CacheTrait;
 	
 	public $point = 'user';
 	
@@ -22,6 +27,11 @@ class LoginRepository extends BaseActiveCoreRepository implements LoginInterface
 		} catch(NotFoundHttpException $e) {
 			return false;
 		}
+	}
+	
+	public function oneById($id, Query $query = null) {
+		$userEntity = $this->cacheMethod(__FUNCTION__, func_get_args(), TimeEnum::SECOND_PER_HOUR);
+		return $userEntity;
 	}
 	
 	public function oneByLogin($login) {
