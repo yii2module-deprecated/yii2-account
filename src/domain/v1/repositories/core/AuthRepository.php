@@ -24,7 +24,11 @@ class AuthRepository extends CoreRepository implements AuthInterface {
 		$response = $this->post(null, compact('login','ip','email', 'parentLogin'));
 		return $this->forgeEntity($response->data);
 	}
-
+	
+	/**
+	 * @param $token
+	 * @deprecated
+	 */
 	public function setToken($token) {
 		if (Yii::$app->user->enableSession) {
 			Yii::$app->session['token'] = $token;

@@ -4,6 +4,7 @@ namespace yii2module\account\domain\v2\helpers;
 
 use Yii;
 use yii2lab\extension\registry\helpers\Registry;
+use yii2lab\misc\enums\HttpHeaderEnum;
 use yii2module\account\domain\v2\entities\LoginEntity;
 
 class AuthHelper {
@@ -26,7 +27,11 @@ class AuthHelper {
 		if(!Yii::$app->user->getIsGuest() && Yii::$app->user->identity instanceof LoginEntity && Yii::$app->user->identity->getAuthKey()) {
 			return Yii::$app->user->identity->getAuthKey();
 		}
-		$token = Yii::$app->request->headers->get('Authorization');
+		$token = Yii::$app->request->headers->get(HttpHeaderEnum::AUTHORIZATION);
+		if(!empty($token)) {
+			return $token;
+		}
+		$token = Yii::$app->request->get(HttpHeaderEnum::AUTHORIZATION);
 		if(!empty($token)) {
 			return $token;
 		}
