@@ -7,7 +7,7 @@ use yii\web\NotFoundHttpException;
 use yii2lab\core\domain\helpers\CoreHelper;
 use yii2lab\core\domain\repositories\base\BaseActiveCoreRepository;
 use yii2lab\domain\data\Query;
-use yii2lab\domain\traits\CacheTrait;
+use yii2lab\domain\traits\repository\CacheTrait;
 use yii2lab\misc\enums\HttpHeaderEnum;
 use yii2lab\misc\enums\TimeEnum;
 use yii2lab\rest\domain\helpers\RestHelper;
