@@ -1,0 +1,15 @@
+description: "Пользователи"
+/{id}:
+    uriParameters:
+        id:
+            description: "ID пользователя"
+            type: integer
+    get:
+        description: "Возвращает пользователя"
+        is: !include /../../../vendor/yii2lab/yii2-rest/src/domain/docs/is/get-details.raml
+        responses:
+            200:
+                body:
+                    application/json:
+                        #type: !include schema/details.json
+                        example: !include example/details.json

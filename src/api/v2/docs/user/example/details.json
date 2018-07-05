@@ -1,0 +1,34 @@
+{
+  "id": 361660,
+  "parent_id": 0,
+  "name": "sdfd",
+  "login": "77004163092",
+  "email": "example44444@yandex.ru",
+  "roles": [
+    "rAdministrator",
+    "rFinanceSpecialist",
+    "rLandingPagesManager",
+    "rMarketolog",
+    "rModerator",
+    "rOperatorSPP",
+    "rTechSpecialist",
+    "rTester",
+    "rTextPagesManager",
+    "rUnknownUser",
+    "rWPFinanceSpecialist"
+  ],
+  "creation_date": null,
+  "subject_type": 3000,
+  "sex": false,
+  "birth_date": "1989-12-19T12:12:02O",
+  "city": 62,
+  "country": 0,
+  "iin_fixed": false,
+  "balance": {
+    "blocked": 0,
+    "active": 0,
+    "pay_delayed": 0,
+    "acc_base": 0,
+    "acc_commission": 0
+  }
+}

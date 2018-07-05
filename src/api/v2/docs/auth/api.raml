@@ -1,0 +1,29 @@
+description: "Аутентификация"
+post:
+    description: "Получение токена"
+    is: [lang, code200, code400, code415, code422, code429, code500]
+    body:
+        application/json:
+            #type: !include schema/login.json
+            example: !include example/login.json
+    responses:
+        200:
+            description: "Аутентификация прошла успешно"
+            body:
+                application/json:
+                    #type: !include schema/access-token.json
+                    example: !include example/access-token.json
+
+get:
+    securedBy: [TPSAuth]
+    description: |
+        Получение информации текущего пользователя
+
+        gender: false – муж, true - жен
+    is: !include /../../../vendor/yii2lab/yii2-rest/src/domain/docs/is/get-details.raml
+    responses:
+        200:
+            body:
+                application/json:
+                    #type: !include schema/info.json
+                    example: !include example/info.json

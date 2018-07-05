@@ -1,0 +1,26 @@
+{
+  "id": 361008,
+  "parent_id": 0,
+  "name": "Жанабай",
+  "login": "77778891622",
+  "subject_type": 5000,
+  "creation_date": "2014-10-21T16:03:00Z",
+  "sex": false,
+  "birth_date": "1987-06-23T00:00:00Z",
+  "city": 0,
+  "country": 1,
+  "email": "szhanabay@wooppay.com",
+  "iin_fixed": false,
+  "balance": {
+    "blocked": 27294.37,
+    "active": 301466.28,
+    "pay_delayed": 0,
+    "acc_base": 328760.65,
+    "acc_commission": 328760.65
+  },
+  "roles": [
+    "rUnknownUser",
+    "rWPFinanceSpecialist"
+  ],
+  "token": "77601cd446c5f721d1e757f31f7365b8"
+}
