@@ -1,5 +1,4 @@
-description: "Аутентификация"
-
+description: "Восстановление пароля"
 /request:
 	post:
 		description: "Запрос на восстановление пароля"
@@ -10,14 +9,14 @@ description: "Аутентификация"
 /check-code:
 	post:
 		description: "Проверка кода активации"
-		is: !include /../../../vendor/yii2lab/yii2-rest/src/domain/docs/is/post204.raml
+		is: !include /../../../vendor/yii2lab/yii2-rest/src/domain/docs/is/put.raml
 		body:
 			application/json:
 				example: !include example/check-code.json
 /confirm:
 	post:
 		description: "Назначение нового пароля"
-		is: !include /../../../vendor/yii2lab/yii2-rest/src/domain/docs/is/post204.raml
+		is: !include /../../../vendor/yii2lab/yii2-rest/src/domain/docs/is/put.raml
 		body:
 			application/json:
 				example: !include example/confirm.json

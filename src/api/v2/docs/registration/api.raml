@@ -5,7 +5,6 @@ description: "Регистрация пользователей"
         is: !include /../../../vendor/yii2lab/yii2-rest/src/domain/docs/is/post.raml
         body:
             application/json:
-                #type: !include schema/create-account.json
                 example: !include example/create-account.json
 /activate-account:
     post:
@@ -13,7 +12,6 @@ description: "Регистрация пользователей"
         is: !include /../../../vendor/yii2lab/yii2-rest/src/domain/docs/is/post.raml
         body:
             application/json:
-                #type: !include schema/activate-account.json
                 example: !include example/activate-account.json
 /set-password:
     post:
@@ -21,5 +19,4 @@ description: "Регистрация пользователей"
         is: !include /../../../vendor/yii2lab/yii2-rest/src/domain/docs/is/post.raml
         body:
             application/json:
-                #type: !include schema/set-password.json
                 example: !include example/set-password.json

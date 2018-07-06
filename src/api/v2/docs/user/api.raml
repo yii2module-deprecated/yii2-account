@@ -6,10 +6,9 @@ description: "Пользователи"
             type: integer
     get:
         description: "Возвращает пользователя"
-        is: !include /../../../vendor/yii2lab/yii2-rest/src/domain/docs/is/get-details.raml
+        is: !include /../../../vendor/yii2lab/yii2-rest/src/domain/docs/is/simple/one.raml
         responses:
             200:
                 body:
                     application/json:
-                        #type: !include schema/details.json
-                        example: !include example/details.json
+                        example: !include example/one-reponse-body.json
