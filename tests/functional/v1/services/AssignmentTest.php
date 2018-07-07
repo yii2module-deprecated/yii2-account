@@ -24,7 +24,7 @@ class AssignmentTest extends Unit
 		/** @var AssignmentEntity[] $collection */
 		$query = Query::forge();
 		$query->where('user_id', LoginEnum::ID_ADMIN);
-		$collection = Yii::$domain->account->assignment->all($query);
+		$collection = Yii::$domain->rbac->assignment->all($query);
 		$this->tester->assertCollection([
 			[
 				'user_id' => LoginEnum::ID_ADMIN,
@@ -39,7 +39,7 @@ class AssignmentTest extends Unit
 		/** @var AssignmentEntity[] $collection */
 		$query = Query::forge();
 		$query->where('user_id', LoginEnum::ID_USER_2);
-		$collection = Yii::$domain->account->assignment->all($query);
+		$collection = Yii::$domain->rbac->assignment->all($query);
 		$this->tester->assertCollection([
 			[
 				'user_id' => LoginEnum::ID_USER_2,
@@ -56,7 +56,7 @@ class AssignmentTest extends Unit
 	public function testAllAssignments()
 	{
 		/** @var AssignmentEntity[] $collection */
-		$collection = Yii::$domain->account->assignment->allAssignments(LoginEnum::ID_USER_2);
+		$collection = Yii::$domain->rbac->assignment->allAssignments(LoginEnum::ID_USER_2);
 		$this->tester->assertEquals([
 			'rUnknownUser' => new yii\rbac\Assignment([
 				'userId' => LoginEnum::ID_USER_2,
@@ -74,22 +74,22 @@ class AssignmentTest extends Unit
 	
 	public function testIsHasRole()
 	{
-		$isHas = Yii::$domain->account->assignment->isHasRole(LoginEnum::ID_USER_2, 'rUnknownUser');
+		$isHas = Yii::$domain->rbac->assignment->isHasRole(LoginEnum::ID_USER_2, 'rUnknownUser');
 		$this->tester->assertTrue($isHas);
 		
-		$isHas = Yii::$domain->account->assignment->isHasRole(LoginEnum::ID_USER_2, 'rResmiUnknownUser');
+		$isHas = Yii::$domain->rbac->assignment->isHasRole(LoginEnum::ID_USER_2, 'rResmiUnknownUser');
 		$this->tester->assertTrue($isHas);
 	}
 	
 	public function testIsHasRoleNegative()
 	{
-		$isHas = Yii::$domain->account->assignment->isHasRole(LoginEnum::ID_USER_2, 'rAdministrator');
+		$isHas = Yii::$domain->rbac->assignment->isHasRole(LoginEnum::ID_USER_2, 'rAdministrator');
 		$this->tester->assertFalse($isHas);
 	}
 	
 	public function testAllUserIdsByRole()
 	{
-		$ids = Yii::$domain->account->assignment->allUserIdsByRole('rUnknownUser');
+		$ids = Yii::$domain->rbac->assignment->allUserIdsByRole('rUnknownUser');
 		$this->tester->assertEquals([
 			381069,
 			381070,
@@ -99,7 +99,7 @@ class AssignmentTest extends Unit
 			381075,
 		], $ids);
 		
-		$ids = Yii::$domain->account->assignment->allUserIdsByRole('rAdministrator');
+		$ids = Yii::$domain->rbac->assignment->allUserIdsByRole('rAdministrator');
 		$this->tester->assertEquals([
 			0 => 381949,
 			1 => 381076,

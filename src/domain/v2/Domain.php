@@ -47,9 +47,9 @@ class Domain extends \yii2lab\domain\Domain {
 				'restorePassword' => $this->primaryDriver,
 				'security' => $this->primaryDriver,
 				'test' => Driver::FILEDB,
-				'rbac' => Driver::MEMORY,
+				//'rbac' => Driver::MEMORY,
 				'confirm' => Driver::ACTIVE_RECORD,
-				'assignment' => $this->primaryDriver,
+				//'assignment' => $this->primaryDriver,
 			],
 			'services' => [
 				'auth' => [
@@ -66,9 +66,9 @@ class Domain extends \yii2lab\domain\Domain {
 				'restorePassword' => $serviceNamespace . '\RestorePasswordService',
 				'security',
 				'test',
-				'rbac',
+				//'rbac',
 				'confirm',
-				'assignment',
+				//'assignment',
 			],
 		];
 	}
