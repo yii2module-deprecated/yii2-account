@@ -14,7 +14,7 @@ class BaseAuthRepository extends BaseRepository implements AuthInterface {
 	public function authentication($login, $password) {
 		try {
 			/** @var LoginEntity $loginEntity */
-			$loginEntity = $this->domain->getRepositories()->login->oneByLogin($login);
+			$loginEntity = $this->domain->repositories->login->oneByLogin($login);
 		} catch(NotFoundHttpException $e) {
 			return false;
 		}

@@ -27,7 +27,7 @@ class LoginRepository extends ActiveArRepository implements LoginInterface {
 	}
 	
 	public function oneByRole($role) {
-		$collection = $this->domain->repositories->assignment->allByRole($role);
+		$collection = Yii::$domain->rbac->assignment->allByRole($role);
 		if(count($collection) < 1) {
 			return null;
 		}
@@ -35,7 +35,7 @@ class LoginRepository extends ActiveArRepository implements LoginInterface {
 	}
 	
 	public function allByRole($role) {
-		$collection = $this->domain->repositories->assignment->allByRole($role);
+		$collection = Yii::$domain->rbac->assignment->allByRole($role);
 		$ids = ArrayHelper::getColumn($collection, 'user_id');
 		return $this->allById($ids);
 	}
@@ -97,7 +97,7 @@ class LoginRepository extends ActiveArRepository implements LoginInterface {
 			return $collection;
 		}
 		$user = ArrayHelper::toArray($user);
-		$user['roles'] = $this->domain->repositories->assignment->allRoleNamesByUserId($user['id']);
+		$user['roles'] = Yii::$domain->rbac->assignment->allRoleNamesByUserId($user['id']);
 		$user = $this->alias->decode($user);
 		if(empty($user['token'])) {
 			$user['token'] = $this->generateToken($user['id']);
