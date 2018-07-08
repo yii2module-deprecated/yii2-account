@@ -2,6 +2,7 @@
 
 namespace yii2module\account\domain\v2\services;
 
+use Yii;
 use yii\helpers\ArrayHelper;
 use yii2lab\domain\helpers\Helper;
 use yii2module\account\domain\v2\interfaces\services\LoginInterface;
@@ -64,10 +65,10 @@ class LoginService extends ActiveBaseService implements LoginInterface {
 				if (!empty($data['role'])){
 					$role = ArrayHelper::toArray($data['role']);
 					foreach ($role as $item){
-						$this->domain->assignment->assignRole($loginEntity->id, $item);
+						Yii::$domain->rbac->assignment->assign($item, $loginEntity->id);
 					}
 				} else {
-					$this->domain->assignment->assignRole($loginEntity->id, $this->defaultRole);
+					Yii::$domain->rbac->assignment->assign($this->defaultRole, $loginEntity->id);
 				}
 			}
 			return $loginEntity;

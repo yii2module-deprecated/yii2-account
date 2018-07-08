@@ -56,7 +56,7 @@ class AssignmentTest extends Unit
 	public function testAllAssignments()
 	{
 		/** @var AssignmentEntity[] $collection */
-		$collection = Yii::$domain->rbac->assignment->allAssignments(LoginEnum::ID_USER_2);
+		$collection = Yii::$domain->rbac->assignment->getAssignments(LoginEnum::ID_USER_2);
 		$this->tester->assertEquals([
 			'rUnknownUser' => new yii\rbac\Assignment([
 				'userId' => LoginEnum::ID_USER_2,
@@ -89,7 +89,7 @@ class AssignmentTest extends Unit
 	
 	public function testAllUserIdsByRole()
 	{
-		$ids = Yii::$domain->rbac->assignment->allUserIdsByRole('rUnknownUser');
+		$ids = Yii::$domain->rbac->assignment->getUserIdsByRole('rUnknownUser');
 		$this->tester->assertEquals([
 			381069,
 			381070,
@@ -99,7 +99,7 @@ class AssignmentTest extends Unit
 			381075,
 		], $ids);
 		
-		$ids = Yii::$domain->rbac->assignment->allUserIdsByRole('rAdministrator');
+		$ids = Yii::$domain->rbac->assignment->getUserIdsByRole('rAdministrator');
 		$this->tester->assertEquals([
 			0 => 381949,
 			1 => 381076,

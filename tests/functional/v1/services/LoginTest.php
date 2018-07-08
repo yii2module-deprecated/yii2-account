@@ -38,7 +38,7 @@ class LoginTest extends Unit
 	public function testOneWithRelation()
 	{
 		$query = Query::forge();
-		$query->with('assignments');
+		//$query->with('assignments');
 		$query->with('security');
 		/** @var LoginEntity $entity */
 		$entity = Yii::$domain->account->login->oneById(LoginEnum::ID_ADMIN, $query);
@@ -50,12 +50,9 @@ class LoginTest extends Unit
 			'roles' => [
 				'rAdministrator',
 			],
-			'assignments' => [
-				[
-					'user_id' => '381949',
-					'item_name' => 'rAdministrator',
-				],
-			],
+			/*'assignments' => [
+				'rAdministrator',
+			],*/
 			'token' => LoginEnum::TOKEN_ADMIN,
 			'email' => '',
 			'created_at' => '2018-03-28 21:00:13',
