@@ -17,11 +17,11 @@ class AuthHelper {
 	}
 	
 	public static function getToken() {
-		$token = self::getTokenFromSession();
+		$token = Registry::get(self::KEY);
 		if($token) {
 			return $token;
 		}
-		$token = Registry::get(self::KEY);
+		$token = self::getTokenFromSession();
 		if($token) {
 			return $token;
 		}
