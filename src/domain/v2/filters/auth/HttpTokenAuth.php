@@ -6,6 +6,7 @@ use Yii;
 use yii\filters\auth\AuthMethod;
 use yii\web\Request;
 use yii\web\Response;
+use yii2module\account\domain\v2\helpers\AuthHelper;
 
 class HttpTokenAuth extends AuthMethod
 {
@@ -21,12 +22,9 @@ class HttpTokenAuth extends AuthMethod
 	public function authenticate($user, $request, $response)
 	{
 		/** @var Request $request */
-		$authHeader = $request->getHeaders()->get('Authorization');
-		if(empty($authHeader)) {
-			return null;
-		}
-		if ($authHeader !== null) {
-			$identity = Yii::$domain->account->auth->authenticationByToken($authHeader, get_class($this));
+		$token = AuthHelper::getTokenFromQuery();
+		if ($token) {
+			$identity = Yii::$domain->account->auth->authenticationByToken($token, get_class($this));
 			if ($identity === null) {
 				$this->handleFailure($response);
 			}

@@ -89,7 +89,7 @@ class User extends \yii\web\User
 		if (!empty($id)) {
 			try {
 				$identity = Yii::$domain->account->login->oneById($id);
-				AuthHelper::setToken(Yii::$app->session['token']);
+				AuthHelper::updateTokenViaSession();
 			} catch(NotFoundHttpException $e) {}
 		}
 

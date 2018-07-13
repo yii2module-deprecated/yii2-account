@@ -12,29 +12,75 @@ class AuthHelper {
 	const KEY = 'authToken';
 	
 	public static function setToken($token) {
-		if (Yii::$app->user->enableSession) {
-			Yii::$app->session['token'] = $token;
-		}
 		Registry::set(self::KEY, $token);
+		self::setTokenToSession($token);
 	}
 	
 	public static function getToken() {
-		if(Yii::$app->user->enableSession && !empty(Yii::$app->session['token'])) {
-			return Yii::$app->session['token'];
-		}
-		$token = Registry::get(self::KEY, false);
+		$token = self::getTokenFromSession();
 		if($token) {
 			return $token;
 		}
-		if(!Yii::$app->user->getIsGuest() && Yii::$app->user->identity instanceof LoginEntity && Yii::$app->user->identity->getAuthKey()) {
-			return Yii::$app->user->identity->getAuthKey();
+		$token = Registry::get(self::KEY);
+		if($token) {
+			return $token;
 		}
+		$token = self::getTokenFromQuery();
+		if($token) {
+			return $token;
+		}
+		return null;
+		//return self::getTokenFromIdentity();
+	}
+	
+	public static function updateTokenViaSession() {
+		if(Yii::$app->user->enableSession) {
+			AuthHelper::setToken(AuthHelper::getTokenFromSession());
+		}
+		return null;
+	}
+	
+	public static function getTokenFromSession() {
+		if(Yii::$app->user->enableSession) {
+			return Yii::$app->session->get(self::KEY);
+		}
+		return null;
+	}
+	
+	public static function setTokenToSession($token) {
+		if(Yii::$app->user->enableSession) {
+			$tokenFromSession = self::getTokenFromSession();
+			if ($tokenFromSession !== $token) {
+				Yii::$app->session->set(self::KEY, $token);
+			}
+		}
+	}
+	
+	public static function getTokenFromQuery() {
 		$token = Yii::$app->request->headers->get(HttpHeaderEnum::AUTHORIZATION);
 		if(!empty($token)) {
 			return $token;
 		}
-		$token = Yii::$app->request->get(HttpHeaderEnum::AUTHORIZATION);
+		$token = Yii::$app->request->getQueryParam(strtolower(HttpHeaderEnum::AUTHORIZATION));
 		if(!empty($token)) {
+			return $token;
+		}
+		$token = Yii::$app->request->getQueryParam(HttpHeaderEnum::AUTHORIZATION);
+		if(!empty($token)) {
+			return $token;
+		}
+		return null;
+	}
+	
+	public static function getTokenFromIdentity() {
+		if(Yii::$app->user->getIsGuest()) {
+			return null;
+		}
+		if(!Yii::$app->user->identity instanceof LoginEntity) {
+			return null;
+		}
+		$token = Yii::$app->user->identity->getAuthKey();
+		if($token) {
 			return $token;
 		}
 		return null;
