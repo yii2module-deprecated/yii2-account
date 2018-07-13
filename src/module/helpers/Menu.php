@@ -5,6 +5,8 @@ namespace yii2module\account\module\helpers;
 use Yii;
 use yii2lab\extension\menu\interfaces\MenuInterface;
 use yii2lab\helpers\yii\Html;
+use yii2module\account\domain\v2\helpers\LoginHelper;
+use yii2module\profile\domain\v2\entities\PersonEntity;
 use yii2module\profile\widget\Avatar;
 
 class Menu implements MenuInterface {
@@ -15,7 +17,7 @@ class Menu implements MenuInterface {
 	
 	public static function menu($items) {
 		return $menu = [
-			'label' => self::getTitle(),
+			'label' => self::getLabel(),
 			'module' => 'user',
 			'encode' => false,
 			'items' => self::getItems($items),
@@ -33,12 +35,28 @@ class Menu implements MenuInterface {
 		}
 	}
 	
-	private static function getTitle() {
+	private static function getLabel() {
 		if(Yii::$app->user->isGuest) {
 			return Html::fa('user') . NBSP . Yii::t('account/auth', 'title');
 		} else {
-			return Avatar::widget() . NBSP . Yii::$app->user->identity->username;
+			return Avatar::widget() . NBSP . self::getUseName();
 		}
+	}
+	
+	public static function getUseName() {
+		$title = null;
+		if(Yii::$domain->has('profile')) {
+			/** @var PersonEntity $personEntity */
+			$personEntity = Yii::$domain->profile->person->getSelf();
+			$title = $personEntity->title;
+		}
+		if(!$title) {
+			$title = Yii::$domain->account->auth->identity->login;
+			if(LoginHelper::validate($title)) {
+				$title = LoginHelper::format($title);
+			}
+		}
+		return $title;
 	}
 	
 	private static function getGuestMenu()
