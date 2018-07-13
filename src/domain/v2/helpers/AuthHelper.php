@@ -9,18 +9,20 @@ use yii2module\account\domain\v2\entities\LoginEntity;
 
 class AuthHelper {
 
+	const KEY = 'authToken';
+	
 	public static function setToken($token) {
 		if (Yii::$app->user->enableSession) {
 			Yii::$app->session['token'] = $token;
 		}
-		Registry::set('authToken', $token);
+		Registry::set(self::KEY, $token);
 	}
 	
 	public static function getToken() {
 		if(Yii::$app->user->enableSession && !empty(Yii::$app->session['token'])) {
 			return Yii::$app->session['token'];
 		}
-		$token = Registry::get('authToken', false);
+		$token = Registry::get(self::KEY, false);
 		if($token) {
 			return $token;
 		}

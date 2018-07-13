@@ -14,6 +14,7 @@ use yii2lab\extension\registry\helpers\Registry;
 use yii2lab\misc\enums\TimeEnum;
 use yii2module\account\domain\v1\forms\LoginForm;
 use yii2module\account\domain\v1\interfaces\services\AuthInterface;
+use yii2module\account\domain\v2\helpers\AuthHelper;
 use yii2woop\generated\enums\SubjectType;
 use yii\web\ServerErrorHttpException;
 use yii2module\account\domain\v1\entities\LoginEntity;
@@ -76,7 +77,7 @@ class AuthService extends BaseService implements AuthInterface {
 			$error->add('password', 'account/auth', 'incorrect_login_or_password');
 			throw new UnprocessableEntityHttpException($error);
 		}
-		Registry::set('authToken', $user->token);
+		AuthHelper::setToken($user->token);
 		$user->showToken();
 		return $user;
 	}
@@ -89,7 +90,7 @@ class AuthService extends BaseService implements AuthInterface {
 			$error->add('password', 'account/auth', 'incorrect_login_or_password');
 			throw new UnprocessableEntityHttpException($error);
 		}
-		Registry::set('authToken', $user->token);
+		AuthHelper::setToken($user->token);
 		$user->showToken();
 		return $user;
 	}
@@ -175,7 +176,7 @@ class AuthService extends BaseService implements AuthInterface {
 		if(Yii::$app->user->enableSession && !empty(Yii::$app->session['token'])) {
 			return Yii::$app->session['token'];
 		}
-		$authToken = Registry::get('authToken', false);
+		$authToken = AuthHelper::getToken();
 		if($authToken) {
 			return $authToken;
 		}

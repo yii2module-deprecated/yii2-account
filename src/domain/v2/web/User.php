@@ -12,6 +12,7 @@ use yii\base\InvalidConfigException;
 use yii\base\InvalidValueException;
 use yii\filters\auth\AuthMethod;
 use yii\web\IdentityInterface;
+use yii2module\account\domain\v2\helpers\AuthHelper;
 
 /**
  * @property-read User $model
@@ -88,7 +89,7 @@ class User extends \yii\web\User
 		if (!empty($id)) {
 			try {
 				$identity = Yii::$domain->account->login->oneById($id);
-				Registry::set('authToken', Yii::$app->session['token']);
+				AuthHelper::setToken(Yii::$app->session['token']);
 			} catch(NotFoundHttpException $e) {}
 		}
 

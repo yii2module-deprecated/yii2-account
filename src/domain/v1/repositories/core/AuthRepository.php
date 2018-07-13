@@ -9,6 +9,7 @@ use yii2lab\extension\registry\helpers\Registry;
 use yii2module\account\domain\v1\entities\LoginEntity;
 use yii2module\account\domain\v1\helpers\LoginEntityFactory;
 use yii2module\account\domain\v1\interfaces\repositories\AuthInterface;
+use yii2module\account\domain\v2\helpers\AuthHelper;
 
 class AuthRepository extends CoreRepository implements AuthInterface {
 	
@@ -33,7 +34,7 @@ class AuthRepository extends CoreRepository implements AuthInterface {
 		if (Yii::$app->user->enableSession) {
 			Yii::$app->session['token'] = $token;
 		}
-		Registry::set('authToken', $token);
+		AuthHelper::setToken($token);
 	}
 	
 	protected function forgeLoginEntity($user, $class = null)
