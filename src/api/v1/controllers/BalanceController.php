@@ -2,13 +2,13 @@
 
 namespace yii2module\account\api\v1\controllers;
 
-use yii2lab\domain\rest\Controller;
+use yii2lab\rest\domain\rest\Controller;
 use yii2lab\helpers\Behavior;
 
 class BalanceController extends Controller
 {
 
-	public $serviceName = 'account.balance';
+	public $service = 'account.balance';
 
 	/**
 	 * @inheritdoc

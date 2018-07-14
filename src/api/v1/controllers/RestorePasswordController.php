@@ -2,11 +2,11 @@
 
 namespace yii2module\account\api\v1\controllers;
 
-use yii2lab\domain\rest\Controller;
+use yii2lab\rest\domain\rest\Controller;
 
 class RestorePasswordController extends Controller
 {
-	public $serviceName = 'account.restorePassword';
+	public $service = 'account.restorePassword';
 	
 	/**
 	 * @inheritdoc

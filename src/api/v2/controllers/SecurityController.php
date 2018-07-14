@@ -2,13 +2,13 @@
 
 namespace yii2module\account\api\v2\controllers;
 
-use yii2lab\domain\rest\Controller as Controller;
+use yii2lab\rest\domain\rest\Controller;
 use yii2lab\helpers\Behavior;
 
 class SecurityController extends Controller
 {
 
-	public $serviceName = 'account.security';
+	public $service = 'account.security';
 
 	/**
 	 * @inheritdoc

@@ -4,14 +4,14 @@ namespace yii2module\account\api\v1\controllers;
 
 use Yii;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
-use yii2lab\domain\rest\Controller;
+use yii2lab\rest\domain\rest\Controller;
 use yii2lab\helpers\Behavior;
 use yii2lab\helpers\ClientHelper;
 use yii2woop\common\components\TpsTransport;
 
 class AuthController extends Controller {
 	
-	public $serviceName = 'account.auth';
+	public $service = 'account.auth';
 	
 	public function format() {
 		return [

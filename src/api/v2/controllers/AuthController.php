@@ -5,7 +5,7 @@ namespace yii2module\account\api\v2\controllers;
 use Yii;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2lab\domain\helpers\Helper;
-use yii2lab\domain\rest\Controller;
+use yii2lab\rest\domain\rest\Controller;
 use yii2lab\helpers\Behavior;
 use yii2lab\helpers\ClientHelper;
 use yii2module\account\console\forms\LoginForm;
@@ -20,7 +20,7 @@ use yii2module\account\domain\v2\interfaces\services\AuthInterface;
  */
 class AuthController extends Controller {
 	
-	public $serviceName = 'account.auth';
+	public $service = 'account.auth';
 	
 	/**
 	 * @inheritdoc
