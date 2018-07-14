@@ -11,7 +11,7 @@ class AuthRepository extends BaseCoreRepository implements AuthInterface {
 	
 	public $point = 'auth';
 	
-	public function authentication($login, $password) {
+	public function authentication($login, $password, $ip = null) {
 		$response = $this->post(null, compact('login', 'password'));
 		return $this->forgeEntity($response, LoginEntity::class);
 	}
