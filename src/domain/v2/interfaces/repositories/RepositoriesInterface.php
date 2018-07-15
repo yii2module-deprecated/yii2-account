@@ -15,6 +15,7 @@ namespace yii2module\account\domain\v2\interfaces\repositories;
  * @property-read \yii2module\account\domain\v2\interfaces\repositories\SecurityInterface $security
  * @property-read \yii2module\account\domain\v2\interfaces\repositories\TempInterface $temp
  * @property-read \yii2module\account\domain\v2\interfaces\repositories\TestInterface $test
+ * @property-read \yii2module\account\domain\v2\interfaces\repositories\TokenInterface $token
  */
 interface RepositoriesInterface {
 
