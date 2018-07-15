@@ -59,7 +59,8 @@ class AuthController extends Controller {
 		$body = Yii::$app->request->getBodyParams();
 		try {
 			Helper::validateForm(LoginForm::class,$body);
-			$entity = $this->service->authentication($body['login'], $body['password']);
+			$ip = ClientHelper::ip();
+			$entity = $this->service->authentication($body['login'], $body['password'], $ip);
 			Yii::$app->response->headers->set('Authorization', $entity->token);
 			return $entity;
 		} catch(UnprocessableEntityHttpException $e) {

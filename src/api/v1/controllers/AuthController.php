@@ -7,8 +7,16 @@ use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2lab\rest\domain\rest\Controller;
 use yii2lab\helpers\Behavior;
 use yii2lab\helpers\ClientHelper;
+use yii2module\account\domain\v2\services\AuthService;
 use yii2woop\common\components\TpsTransport;
 
+/**
+ * Class AuthController
+ *
+ * @package yii2module\account\api\v1\controllers
+ *
+ * @property AuthService $service
+ */
 class AuthController extends Controller {
 	
 	public $service = 'account.auth';
@@ -57,7 +65,8 @@ class AuthController extends Controller {
 	public function actionLogin() {
 		$body = Yii::$app->request->getBodyParams();
 		try {
-			$entity = $this->service->authentication($body['login'], $body['password']);
+			$ip = ClientHelper::ip();
+			$entity = $this->service->authentication($body['login'], $body['password'], $ip);
 			Yii::$app->response->headers->set('Authorization', $entity->token);
 			return $entity;
 		} catch(UnprocessableEntityHttpException $e) {

@@ -16,12 +16,14 @@ use yii2module\account\domain\v2\entities\LoginEntity;
 interface AuthInterface {
 	
 	/**
-	 * @param $login
-	 * @param $password
+	 * @param      $login
+	 * @param      $password
+	 *
+	 * @param null $ip
 	 *
 	 * @return LoginEntity
 	 */
-	public function authentication($login, $password);
+	public function authentication($login, $password, $ip = null);
 	public function authenticationFromWeb($login, $password, $rememberMe = false);
 	public function authenticationByToken($token, $type = null);
 	public function getIdentity();

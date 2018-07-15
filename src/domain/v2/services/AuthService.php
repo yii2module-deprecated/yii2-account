@@ -13,6 +13,7 @@ use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2lab\domain\helpers\ErrorCollection;
 use yii2lab\domain\helpers\Helper;
 use yii2lab\domain\services\BaseService;
+use yii2lab\helpers\ClientHelper;
 use yii2lab\misc\enums\TimeEnum;
 use yii2module\account\domain\v2\forms\LoginForm;
 use yii2module\account\domain\v2\helpers\AuthHelper;
@@ -31,11 +32,14 @@ class AuthService extends BaseService implements AuthInterface {
 
     public $rememberExpire = TimeEnum::SECOND_PER_DAY * 30;
 	
-	public function authentication($login, $password) {
+	public function authentication($login, $password, $ip = null) {
+		if(empty($ip)) {
+			$ip = ClientHelper::ip();
+		}
 		$body = compact(['login', 'password']);
 		$body = Helper::validateForm(LoginForm::class, $body);
 		try {
-			$loginEntity = $this->repository->authentication($body['login'], $body['password']);
+			$loginEntity = $this->repository->authentication($body['login'], $body['password'], $ip);
 		} catch(NotFoundHttpException $e) {
 			$loginEntity = false;
 		}
