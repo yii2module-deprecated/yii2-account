@@ -2,6 +2,12 @@
 
 namespace yii2module\account\domain\v2\services;
 
+use Yii;
+use yii\web\NotFoundHttpException;
+use yii2lab\helpers\ClientHelper;
+use yii2lab\misc\enums\TimeEnum;
+use yii2module\account\domain\v2\entities\TokenEntity;
+use yii2module\account\domain\v2\exceptions\InvalidIpAddressException;
 use yii2module\account\domain\v2\interfaces\services\TokenInterface;
 use yii2lab\domain\services\base\BaseActiveService;
 
@@ -14,5 +20,123 @@ use yii2lab\domain\services\base\BaseActiveService;
  * @property-read \yii2module\account\domain\v2\interfaces\repositories\TokenInterface $repository
  */
 class TokenService extends BaseActiveService implements TokenInterface {
-
+	
+	public $defaultExpire = TimeEnum::SECOND_PER_HOUR;
+	public $tokenLength = 64;
+	public $autoRefresh = true;
+	
+	public function forge($userId, $ip, $expire = null) {
+		if(empty($expire)) {
+			$expire = $this->defaultExpire;
+		}
+		try {
+			$tokenEntity = $this->oneByIp($ip);
+			if($this->autoRefresh) {
+				$tokenEntity->expire_at = TIMESTAMP + $expire;
+				$this->repository->update($tokenEntity);
+			}
+			return $tokenEntity->token;
+		} catch(NotFoundHttpException $e) {
+			return $this->generate($userId, $ip, $expire);
+		}
+	}
+	
+	public function validate($token, $ip) {
+		$tokenEntity = $this->oneByToken($token);
+		$isValidIp = $tokenEntity->ip === $ip;
+		if(!$isValidIp) {
+			throw new InvalidIpAddressException();
+		}
+		return $tokenEntity;
+	}
+	
+	public function deleteAllExpired() {
+		$this->repository->deleteAllExpired();
+	}
+	
+	public function deleteOneByToken($token) {
+		$this->repository->deleteOneByToken($token);
+	}
+	
+	private function oneByToken($token) {
+		$tokenEntity = $this->repository->oneByToken($token);
+		$isValid = $this->validateExpire($tokenEntity);
+		if(!$isValid) {
+			throw new NotFoundHttpException();
+		}
+		return $tokenEntity;
+	}
+	
+	private function existsByToken($token) {
+		try {
+			$this->oneByToken($token);
+			return true;
+		} catch(NotFoundHttpException $e) {
+			return false;
+		}
+	}
+	
+	private function allByIp($ip) {
+		$collection = $this->repository->allByIp($ip);
+		$collection = $this->filterCollectionByExpire($collection);
+		return $collection;
+	}
+	
+	private function generateUniqueToken() {
+		$isExists = true;
+		$token = null;
+		while($isExists) {
+			$token = Yii::$app->security->generateRandomString($this->tokenLength);
+			$isExists = $this->existsByToken($token);
+		}
+		return $token;
+	}
+	
+	private function generate($userId, $ip, $expire) {
+		$token = $this->generateUniqueToken();
+		$agentInfo = ClientHelper::getAgentInfo(1);
+		$agentInfo['user_id'] = $userId;
+		$agentInfo['ip'] = $ip;
+		$agentInfo['token'] = $token;
+		$agentInfo['expire_at'] = TIMESTAMP + $expire;
+		$tokenEntity = new TokenEntity();
+		$tokenEntity->load($agentInfo);
+		$this->repository->insert($tokenEntity);
+		return $token;
+	}
+	
+	private function oneByIp($ip) {
+		$collection = $this->allByIp($ip);
+		if(empty($collection)) {
+			throw new NotFoundHttpException();
+		}
+		return $collection[0];
+	}
+	
+	private function filterCollectionByExpire($collection) {
+		foreach($collection as $index => $tokenEntity) {
+			if(!$this->isValidateExpire($tokenEntity)) {
+				$this->repository->delete($tokenEntity);
+				unset($collection[$index]);
+			}
+		}
+		$collection = array_values($collection);
+		return $collection;
+	}
+	
+	private function validateExpire(TokenEntity $tokenEntity) {
+		if($this->isValidateExpire($tokenEntity)) {
+			return true;
+		}
+		$this->repository->delete($tokenEntity);
+		return false;
+	}
+	
+	private function isValidateExpire(TokenEntity $tokenEntity) {
+		$isValidExpire = TIMESTAMP < $tokenEntity->expire_at;
+		if($isValidExpire) {
+			return true;
+		}
+		return false;
+	}
 }

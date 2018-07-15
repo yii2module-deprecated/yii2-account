@@ -16,6 +16,8 @@ use yii2lab\domain\BaseEntity;
  * @property $browser
  * @property $version
  * @property $created_at
+ * @property $expire_at
+ * @property $expire
  */
 class TokenEntity extends BaseEntity {
 
@@ -25,6 +27,16 @@ class TokenEntity extends BaseEntity {
 	protected $platform;
 	protected $browser;
 	protected $version;
-	protected $created_at;
-
+	protected $created_at = TIMESTAMP;
+	protected $expire_at;
+	
+	public function rules() {
+		return [
+			[['token', 'ip', 'platform', 'browser', 'version'], 'trim'],
+			[['user_id', 'token', 'ip', 'created_at', 'expire_at'], 'required'],
+			[['user_id', 'created_at', 'expire_at'], 'integer'],
+			['expire_at', 'compare', 'compareAttribute' => 'created_at', 'operator' => '>'],
+		];
+	}
+	
 }

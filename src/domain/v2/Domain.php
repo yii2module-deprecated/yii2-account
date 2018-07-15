@@ -49,6 +49,7 @@ class Domain extends \yii2lab\domain\Domain {
 				//'rbac' => Driver::MEMORY,
 				'confirm' => Driver::ACTIVE_RECORD,
 				//'assignment' => $this->primaryDriver,
+				'token' => Driver::primary(),
 			],
 			'services' => [
 				'auth' => [
@@ -68,6 +69,7 @@ class Domain extends \yii2lab\domain\Domain {
 				//'rbac',
 				'confirm',
 				//'assignment',
+				'token',
 			],
 		];
 	}

@@ -18,12 +18,13 @@ class m180715_094956_create_user_token_table extends Migration {
 	{
 		return [
 			'user_id' => $this->integer(11)->notNull(),
-			'token' => $this->primaryKey(255)->notNull(),
+			'token' => $this->string(255)->notNull(),
 			'ip' => $this->string(40)->notNull(),
 			'platform' => $this->string(32)->notNull(),
 			'browser' => $this->string(32)->notNull(),
 			'version' => $this->string(10)->notNull(),
-			'created_at' => $this->string()->notNull(),
+			'created_at' => $this->integer()->notNull(),
+			'expire_at' => $this->integer()->notNull(),
 		];
 	}
 
