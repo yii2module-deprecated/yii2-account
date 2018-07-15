@@ -7,6 +7,7 @@ use UnitTester;
 use Yii;
 use yii\web\NotFoundHttpException;
 use yii2module\account\domain\v2\exceptions\InvalidIpAddressException;
+use yii2module\account\domain\v2\exceptions\NotFoundLoginException;
 
 /**
  * Class TokenTest
@@ -19,13 +20,23 @@ class TokenTest extends Unit
 {
 	
 	const IP = '192.168.44.92';
-	const USER_ID = 111;
+	const USER_ID = 381069;
+	const USER_ID_2 = 381949;
 	const INVALID_TOKEN = 'invalid_token';
 	const INVALID_IP = '111.111.111.111';
 	
 	protected function _before() {
 		parent::_before();
 		Yii::$domain->account->token->deleteAll();
+	}
+	
+	public function testForgeNotFoundLogin() {
+		try {
+			Yii::$domain->account->token->forge(999999, self::IP);
+			$this->tester->assertTrue(false);
+		} catch(NotFoundLoginException $e) {
+			$this->tester->assertTrue(true);
+		}
 	}
 	
 	public function testDoubleForge() {
@@ -36,7 +47,7 @@ class TokenTest extends Unit
 		$token3 = Yii::$domain->account->token->forge(self::USER_ID, self::INVALID_IP);
 		$this->tester->assertNotEquals($token1, $token3);
 		
-		$token4 = Yii::$domain->account->token->forge(222, self::IP);
+		$token4 = Yii::$domain->account->token->forge(self::USER_ID_2, self::IP);
 		$this->tester->assertNotEquals($token1, $token4);
 	}
 	

@@ -8,6 +8,7 @@ use yii2lab\helpers\ClientHelper;
 use yii2lab\misc\enums\TimeEnum;
 use yii2module\account\domain\v2\entities\TokenEntity;
 use yii2module\account\domain\v2\exceptions\InvalidIpAddressException;
+use yii2module\account\domain\v2\exceptions\NotFoundLoginException;
 use yii2module\account\domain\v2\interfaces\services\TokenInterface;
 use yii2lab\domain\services\base\BaseActiveService;
 
@@ -26,12 +27,16 @@ class TokenService extends BaseActiveService implements TokenInterface {
 	public $autoRefresh = true;
 	
 	public function forge($userId, $ip, $expire = null) {
+		try {
+			$this->domain->login->oneById($userId);
+		} catch(NotFoundHttpException $e) {
+			throw new NotFoundLoginException();
+		}
 		if(empty($expire)) {
 			$expire = $this->defaultExpire;
 		}
 		try {
 			$tokenEntity = $this->oneByUserIdAndIp($userId, $ip);
-			//prr($tokenEntity,1,1);
 			if($this->autoRefresh) {
 				$tokenEntity->expire_at = TIMESTAMP + $expire;
 				$this->repository->update($tokenEntity);
