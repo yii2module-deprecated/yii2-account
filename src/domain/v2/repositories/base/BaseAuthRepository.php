@@ -9,6 +9,12 @@ use yii2module\account\domain\v2\entities\SecurityEntity;
 use yii2module\account\domain\v2\interfaces\repositories\AuthInterface;
 use yii2lab\domain\repositories\BaseRepository;
 
+/**
+ * Class BaseAuthRepository
+ *
+ * @package yii2module\account\domain\v2\repositories\base
+ * @property \yii2module\account\domain\v2\Domain $domain
+ */
 class BaseAuthRepository extends BaseRepository implements AuthInterface {
 	
 	public function authentication($login, $password, $ip = null) {
