@@ -56,26 +56,6 @@ trait SecurityTrait {
 		$this->update($securityEntity);
 	}
 	
-	public function generateTokenById($userId) {
-		$securityEntity = $this->oneById($userId);
-		$securityEntity->token = $this->generateUniqueToken();
-		$this->update($securityEntity);
-		return $securityEntity;
-	}
-	
-	public function generateUniqueToken() {
-		do {
-			$token = Yii::$app->security->generateRandomString(64);
-			$isExists = true;
-			try {
-				$this->oneByToken($token);
-			} catch(NotFoundHttpException $e) {
-				$isExists = false;
-			}
-		} while($isExists);
-		return $token;
-	}
-	
 	/**
 	 * @param $userId
 	 * @param $password

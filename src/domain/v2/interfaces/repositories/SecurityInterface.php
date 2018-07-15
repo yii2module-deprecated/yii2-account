@@ -51,8 +51,4 @@ interface SecurityInterface extends CrudInterface {
 	 */
 	//public function generateTokenById($userId);
 	
-	/**
-	 * @return string
-	 */
-	public function generateUniqueToken();
 }

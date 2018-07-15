@@ -36,6 +36,7 @@ class TokenEntity extends BaseEntity {
 			[['user_id', 'token', 'ip', 'created_at', 'expire_at'], 'required'],
 			[['user_id', 'created_at', 'expire_at'], 'integer'],
 			['expire_at', 'compare', 'compareAttribute' => 'created_at', 'operator' => '>'],
+			['token', 'string', 'length' => [32, 255]],
 		];
 	}
 	

@@ -23,10 +23,4 @@ class SecurityRepository extends BaseActiveCoreRepository implements SecurityInt
 		]);
 	}
 	
-	/**
-	 * @return string
-	 */
-	public function generateUniqueToken() {
-		// TODO: Implement generateUniqueToken() method.
-	}
 }

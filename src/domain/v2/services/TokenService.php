@@ -22,7 +22,7 @@ use yii2lab\domain\services\base\BaseActiveService;
 class TokenService extends BaseActiveService implements TokenInterface {
 	
 	public $defaultExpire = TimeEnum::SECOND_PER_HOUR;
-	public $tokenLength = 64;
+	public $tokenLength = 128;
 	public $autoRefresh = true;
 	
 	public function forge($userId, $ip, $expire = null) {
@@ -30,7 +30,8 @@ class TokenService extends BaseActiveService implements TokenInterface {
 			$expire = $this->defaultExpire;
 		}
 		try {
-			$tokenEntity = $this->oneByIp($ip);
+			$tokenEntity = $this->oneByUserIdAndIp($userId, $ip);
+			//prr($tokenEntity,1,1);
 			if($this->autoRefresh) {
 				$tokenEntity->expire_at = TIMESTAMP + $expire;
 				$this->repository->update($tokenEntity);
@@ -52,6 +53,10 @@ class TokenService extends BaseActiveService implements TokenInterface {
 	
 	public function deleteAllExpired() {
 		$this->repository->deleteAllExpired();
+	}
+	
+	public function deleteAll() {
+		$this->repository->truncate();
 	}
 	
 	public function deleteOneByToken($token) {
@@ -78,6 +83,12 @@ class TokenService extends BaseActiveService implements TokenInterface {
 	
 	private function allByIp($ip) {
 		$collection = $this->repository->allByIp($ip);
+		$collection = $this->filterCollectionByExpire($collection);
+		return $collection;
+	}
+	
+	private function allByUserId($userId) {
+		$collection = $this->repository->allByUserId($userId);
 		$collection = $this->filterCollectionByExpire($collection);
 		return $collection;
 	}
@@ -113,6 +124,17 @@ class TokenService extends BaseActiveService implements TokenInterface {
 		return $collection[0];
 	}
 	
+	private function oneByUserIdAndIp($userId, $ip) {
+		$collection = $this->allByUserId($userId);
+		//prr($collection,1,1);
+		/** @var TokenEntity $tokenEntity */
+		$tokenEntity = $this->findByIp($collection, $ip);
+		if(empty($tokenEntity)) {
+			throw new NotFoundHttpException();
+		}
+		return $tokenEntity;
+	}
+	
 	private function filterCollectionByExpire($collection) {
 		foreach($collection as $index => $tokenEntity) {
 			if(!$this->isValidateExpire($tokenEntity)) {
@@ -122,6 +144,15 @@ class TokenService extends BaseActiveService implements TokenInterface {
 		}
 		$collection = array_values($collection);
 		return $collection;
+	}
+	
+	private function findByIp($collection, $ip) {
+		foreach($collection as $index => $tokenEntity) {
+			if($tokenEntity->ip == $ip) {
+				return $tokenEntity;
+			}
+		}
+		return null;
 	}
 	
 	private function validateExpire(TokenEntity $tokenEntity) {
@@ -139,4 +170,5 @@ class TokenService extends BaseActiveService implements TokenInterface {
 		}
 		return false;
 	}
+	
 }

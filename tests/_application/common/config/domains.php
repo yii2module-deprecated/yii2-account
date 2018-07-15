@@ -21,6 +21,7 @@ $config = [
 			'rbac' => Driver::MEMORY,
 			'confirm' => Driver::ACTIVE_RECORD,
 			'assignment' => Driver::FILEDB,
+			'token' => Driver::ACTIVE_RECORD,
 		],
 		'services' => [
 			'auth',
@@ -39,6 +40,7 @@ $config = [
 			'rbac',
 			'confirm',
 			'assignment',
+			'token',
 		],
 	],
 ];

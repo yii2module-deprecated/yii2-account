@@ -25,7 +25,7 @@ class SecurityTest extends Unit
 		$this->tester->assertEntity([
 			'id' => LoginEnum::ID_ADMIN,
 			'email' => '',
-			'token' => LoginEnum::TOKEN_ADMIN,
+			//'token' => LoginEnum::TOKEN_ADMIN,
 			'password_hash' => LoginEnum::PASSWORD_HASH,
 		], $entity);
 	}

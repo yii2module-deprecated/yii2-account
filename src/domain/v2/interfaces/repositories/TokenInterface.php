@@ -28,6 +28,7 @@ interface TokenInterface extends CrudInterface {
 	 * @return TokenEntity[]
 	 */
 	public function allByIp($ip);
+	public function allByUserId($userId);
 	//public function deleteByIp($ip);
 	public function deleteOneByToken($token);
 	//public function deleteAllExpiredByIp($ip);

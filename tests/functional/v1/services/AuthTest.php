@@ -28,7 +28,7 @@ class AuthTest extends Unit
 		$entity = Yii::$domain->account->auth->authentication(LoginEnum::LOGIN_ADMIN, LoginEnum::PASSWORD);
 		$this->tester->assertEntity(LoginEnum::getUser(LoginEnum::ID_ADMIN), $entity);
 		$this->tester->assertEntityFormat(LoginEnum::getEntityFormat(), $entity);
-		$this->tester->assertEquals(LoginEnum::TOKEN_ADMIN, $entity->token);
+		//$this->tester->assertEquals(LoginEnum::TOKEN_ADMIN, $entity->token);
 	}
 	
 	public function testAuthenticationBadPassword()
@@ -53,8 +53,10 @@ class AuthTest extends Unit
 	
 	public function testAuthenticationByToken()
 	{
+		/** @var LoginEntity $loginEntity */
+		$loginEntity = Yii::$domain->account->auth->authentication(LoginEnum::LOGIN_ADMIN, LoginEnum::PASSWORD);
 		/** @var LoginEntity $entity */
-		$entity = Yii::$domain->account->auth->authenticationByToken(LoginEnum::TOKEN_ADMIN);
+		$entity = Yii::$domain->account->auth->authenticationByToken($loginEntity->token);
 		$this->tester->assertEntity(LoginEnum::getUser(LoginEnum::ID_ADMIN), $entity);
 		$array = $entity->toArray();
 		$this->tester->assertTrue(empty($array['token']));

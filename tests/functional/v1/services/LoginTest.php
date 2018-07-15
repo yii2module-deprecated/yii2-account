@@ -53,7 +53,7 @@ class LoginTest extends Unit
 			/*'assignments' => [
 				'rAdministrator',
 			],*/
-			'token' => LoginEnum::TOKEN_ADMIN,
+			//'token' => LoginEnum::TOKEN_ADMIN,
 			'email' => '',
 			'created_at' => '2018-03-28 21:00:13',
 		];

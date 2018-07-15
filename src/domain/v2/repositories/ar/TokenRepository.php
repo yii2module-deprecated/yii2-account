@@ -28,6 +28,12 @@ class TokenRepository extends BaseActiveArRepository implements TokenInterface {
 		return $this->one($query);
 	}
 	
+	public function allByUserId($userId) {
+		$query = Query::forge();
+		$query->where(['user_id' => $userId]);
+		return $this->all($query);
+	}
+	
 	public function allByIp($ip) {
 		$query = Query::forge();
 		$query->where(['ip' => $ip]);

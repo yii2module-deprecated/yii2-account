@@ -55,7 +55,7 @@ class AuthController extends Controller {
 		return [
 			'info' => [
 				'class' => 'yii2lab\domain\rest\UniAction',
-				'service' => Yii::$app->user,
+				'service' => 'account.auth',
 				'successStatusCode' => 200,
 				'serviceMethod' => 'getIdentity',
 			],

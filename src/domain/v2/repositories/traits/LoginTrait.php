@@ -2,6 +2,7 @@
 
 namespace yii2module\account\domain\v2\repositories\traits;
 
+use Codeception\Module\Cli;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\db\ActiveRecordInterface;
@@ -9,8 +10,11 @@ use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
 use yii2lab\domain\Alias;
 use yii2lab\domain\BaseEntity;
+use yii2lab\helpers\ClientHelper;
 use yii2module\account\domain\v2\entities\LoginEntity;
 use yii2module\account\domain\v2\entities\SecurityEntity;
+use yii2module\account\domain\v2\entities\TokenEntity;
+use yii2module\cleaner\domain\helpers\ClearHelper;
 
 /**
  * Trait LoginTrait
@@ -18,6 +22,7 @@ use yii2module\account\domain\v2\entities\SecurityEntity;
  * @package yii2module\account\domain\v2\repositories\traits
  * @property Alias $alias
  * @property ActiveRecordInterface $model
+ * @property \yii2module\account\domain\v2\Domain $domain
  */
 trait LoginTrait {
 	
@@ -39,9 +44,10 @@ trait LoginTrait {
 	}
 	
 	public function oneByToken($token, $type = null) {
-		/** @var SecurityEntity $securityEntity */
-		$securityEntity = $this->domain->repositories->security->oneByToken($token, $type);
-		return $this->oneById($securityEntity->id);
+		/** @var TokenEntity $tokenEntity */
+		$ip = ClientHelper::ip();
+		$tokenEntity = $this->domain->token->validate($token, $ip);
+		return $this->oneById($tokenEntity->user_id);
 	}
 	
 	public function insert(BaseEntity $loginEntity) {
