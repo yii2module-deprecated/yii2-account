@@ -30,6 +30,7 @@ use yii2lab\misc\enums\TimeEnum;
  * @property-read \yii2module\account\domain\v2\interfaces\services\SecurityInterface $security
  * @property-read \yii2module\account\domain\v2\interfaces\services\TempInterface $temp
  * @property-read \yii2module\account\domain\v2\interfaces\services\TestInterface $test
+ * @property-read \yii2module\account\domain\v2\interfaces\repositories\RepositoriesInterface $repositories
  */
 class Domain extends \yii2lab\domain\Domain {
 	
