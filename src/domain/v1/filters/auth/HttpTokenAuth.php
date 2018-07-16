@@ -3,6 +3,7 @@
 namespace yii2module\account\domain\v1\filters\auth;
 
 use yii\filters\auth\AuthMethod;
+use yii2module\account\domain\v2\helpers\AuthHelper;
 
 class HttpTokenAuth extends AuthMethod
 {
@@ -17,9 +18,9 @@ class HttpTokenAuth extends AuthMethod
 	 */
 	public function authenticate($user, $request, $response)
 	{
-		$authHeader = $request->getHeaders()->get('Authorization');
-		if ($authHeader !== null) {
-			$identity = $user->loginByAccessToken($authHeader, get_class($this));
+		$token = AuthHelper::getTokenFromQuery();
+		if ($token !== null) {
+			$identity = $user->loginByAccessToken($token, get_class($this));
 			if ($identity === null) {
 				$this->handleFailure($response);
 			}
