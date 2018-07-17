@@ -30,7 +30,7 @@ class UserConfirm extends ActiveRecord
 	
 	public static function primaryKey()
 	{
-		return ['login'];
+		return ['login', 'action'];
 	}
 	
 	public function behaviors()

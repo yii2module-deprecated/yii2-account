@@ -6,6 +6,7 @@ use yii\helpers\ArrayHelper;
 use yii2lab\domain\BaseEntity;
 use yii\web\IdentityInterface;
 use yii2lab\domain\values\TimeValue;
+use yii2lab\rbac\domain\entities\AssignmentEntity;
 use yii2module\account\domain\v2\helpers\LoginHelper;
 
 /**
@@ -23,6 +24,7 @@ use yii2module\account\domain\v2\helpers\LoginHelper;
  * @property SecurityEntity $security
  * @property AssignmentEntity $assignments
  * @property-read string $email
+ * @property string $password
  */
 class LoginEntity extends BaseEntity implements IdentityInterface {
 
@@ -35,6 +37,7 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 	protected $token;
 	protected $email;
 	protected $created_at;
+	protected $password;
 	
 	public function init() {
 		parent::init();
@@ -118,6 +121,9 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 		$fields = parent::fields();
 		unset($fields['security']);
 		$fields['token'] = 'token';
+		if(empty($this->password)) {
+			unset($fields['password']);
+		}
 		return $fields;
 	}
 }

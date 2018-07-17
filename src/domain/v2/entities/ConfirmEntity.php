@@ -5,6 +5,7 @@ namespace yii2module\account\domain\v2\entities;
 use paulzi\jsonBehavior\JsonValidator;
 use yii2lab\domain\BaseEntity;
 use yii2lab\domain\values\TimeValue;
+use yii2module\account\domain\v2\exceptions\ConfirmIncorrectCodeException;
 use yii2module\account\domain\v2\helpers\ConfirmHelper;
 use yii2module\account\domain\v2\helpers\LoginHelper;
 use yii2module\account\domain\v2\validators\LoginValidator;
@@ -17,6 +18,7 @@ use yii2module\account\domain\v2\validators\LoginValidator;
  * @property $login
  * @property $action
  * @property $code
+ * @property $is_activated
  * @property $data
  * @property $expire
  * @property $created_at
@@ -26,6 +28,7 @@ class ConfirmEntity extends BaseEntity {
 	protected $login;
 	protected $action;
 	protected $code;
+	protected $is_activated = null;
 	protected $data;
 	protected $expire;
 	protected $created_at;
@@ -34,6 +37,23 @@ class ConfirmEntity extends BaseEntity {
 		return [
 			'created_at' => TimeValue::class,
 		];
+	}
+	
+	public function setIsActivated($value) {
+		if($this->is_activated == null) {
+			$this->is_activated = $value;
+		}
+	}
+	
+	public function getIsActivated() {
+		return $this->is_activated;
+	}
+	
+	public function activate($code) {
+		if($code != $this->code) {
+			throw new ConfirmIncorrectCodeException();
+		}
+		$this->is_activated = true;
 	}
 	
 	public function rules()

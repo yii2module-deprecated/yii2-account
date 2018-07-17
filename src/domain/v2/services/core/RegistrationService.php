@@ -3,8 +3,8 @@
 namespace yii2module\account\domain\v2\services\core;
 
 use yii2lab\core\domain\repositories\base\BaseCoreRepository;
+use yii2lab\core\domain\services\base\BaseCoreService;
 use yii2lab\domain\helpers\Helper;
-use yii2lab\domain\services\CoreBaseService;
 use yii2module\account\domain\v2\forms\RegistrationForm;
 use yii2module\account\domain\v2\interfaces\services\RegistrationInterface;
 
@@ -15,9 +15,10 @@ use yii2module\account\domain\v2\interfaces\services\RegistrationInterface;
  *
  * @property-read BaseCoreRepository $repository
  */
-class RegistrationService extends CoreBaseService implements RegistrationInterface {
+class RegistrationService extends BaseCoreService implements RegistrationInterface {
 	
 	public $point = 'registration';
+	public $version = 1;
 	
 	public function createTempAccount($login, $email = null) {
 		$body = compact('login', 'email');

@@ -51,6 +51,7 @@ class TempService extends ActiveBaseService implements TempInterface {
 		$entity->login = $data['login'];
 		$entity->email = $data['email'];
 		$entity->activation_code = $data['activation_code'];
+		//prr($entity,1,1);
 		return $this->repository->insert($entity);
 	}
 	

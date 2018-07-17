@@ -5,6 +5,7 @@ namespace yii2module\account\domain\v2\services;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii2lab\domain\helpers\Helper;
+use yii2module\account\domain\v2\entities\LoginEntity;
 use yii2module\account\domain\v2\interfaces\services\LoginInterface;
 use yii2module\account\domain\v2\forms\LoginForm;
 use yii2lab\domain\helpers\ErrorCollection;
@@ -47,16 +48,26 @@ class LoginService extends ActiveBaseService implements LoginInterface {
 		//$data['role'] = !empty($data['role']) ? $data['role'] : RoleEnum::UNKNOWN_USER;
 		$data['email'] = !empty($data['email']) ? $data['email'] : 'api@wooppay.com';
         Helper::validateForm(LoginForm::class, $data);
+		
 		try {
 			$user = $this->repository->oneByLogin($data['login']);
 			$error = new ErrorCollection();
 			$error->add('login', 'account/registration', 'user_already_exists_and_activated');
 			throw new UnprocessableEntityHttpException($error);
 		} catch(NotFoundHttpException $e) {
+			
 			//$data['roles'] = $data['role'];
+			/** @var LoginEntity $loginEntity */
 			$loginEntity = $this->domain->factory->entity->create($this->id, $data);
+			if(empty($loginEntity->roles)) {
+				$loginEntity->roles = [
+					$this->defaultRole
+				];
+			}
 			$this->repository->insert($loginEntity);
-			if(!empty($loginEntity->id)) {
+			
+			/*if(!empty($loginEntity->id)) {
+				
 				$this->domain->security->create([
 					'id' => $loginEntity->id,
 					'email' => $data['email'],
@@ -70,7 +81,7 @@ class LoginService extends ActiveBaseService implements LoginInterface {
 				} else {
 					Yii::$domain->rbac->assignment->assign($this->defaultRole, $loginEntity->id);
 				}
-			}
+			}*/
 			return $loginEntity;
 		}
 	}

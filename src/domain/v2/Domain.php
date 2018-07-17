@@ -33,7 +33,7 @@ class Domain extends \yii2lab\domain\Domain {
 			'repositories' => [
 				'auth' => $this->primaryDriver,
 				'login' => $this->primaryDriver,
-				'temp' => Driver::ACTIVE_RECORD,
+				//'temp' => Driver::ACTIVE_RECORD,
 				'restorePassword' => $this->primaryDriver,
 				'security' => $this->primaryDriver,
 				'test' => Driver::FILEDB,
@@ -53,7 +53,7 @@ class Domain extends \yii2lab\domain\Domain {
 					'forbiddenStatusList' => [0],
 				],
 				'registration' => $remoteServiceDriver, //$serviceNamespace . '\RegistrationService',
-				'temp',
+				//'temp',
 				'restorePassword' => $serviceNamespace . '\RestorePasswordService',
 				'security',
 				'test',

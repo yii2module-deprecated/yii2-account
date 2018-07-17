@@ -34,19 +34,19 @@ class RegistrationController extends Controller
 		return [
 			'create-account' => [
 				'class' => 'yii2lab\domain\rest\UniAction',
-				'successStatusCode' => 201,
+				'successStatusCode' => 204,
 				'serviceMethod' => 'createTempAccount',
 				'serviceMethodParams' => ['login', 'email'],
 			],
 			'activate-account' => [
 				'class' => 'yii2lab\domain\rest\UniAction',
-				'successStatusCode' => 201,
-				'serviceMethod' => 'checkActivationCode',
+				'successStatusCode' => 204,
+				'serviceMethod' => 'activateAccount',
 				'serviceMethodParams' => ['login', 'activation_code'],
 			],
 			'set-password' => [
 				'class' => 'yii2lab\domain\rest\UniAction',
-				'successStatusCode' => 201,
+				'successStatusCode' => 204,
 				'serviceMethod' => 'createTpsAccount',
 				'serviceMethodParams' => ['login', 'activation_code', 'password'],
 			],

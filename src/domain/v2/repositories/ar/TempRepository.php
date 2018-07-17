@@ -7,7 +7,7 @@ use yii2module\account\domain\v2\interfaces\repositories\TempInterface;
 
 class TempRepository extends ActiveArRepository implements TempInterface {
 	
-	protected $primaryKey = 'login';
+	protected $primaryKey = null;
 	
 	public function tableName() {
 		return 'user_registration';

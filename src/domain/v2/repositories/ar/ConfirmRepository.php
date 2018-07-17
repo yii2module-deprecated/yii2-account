@@ -37,7 +37,7 @@ class ConfirmRepository extends ActiveArRepository implements ConfirmInterface {
 			'action' => $action,
 		])->all();
 		foreach($all as $model) {
-			if(time() - strtotime($model->created_at) > $model->expire) {
+			if(TIMESTAMP > $model->expire) {
 				$model->delete();
 			}
 		}
