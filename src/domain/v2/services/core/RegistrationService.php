@@ -5,6 +5,7 @@ namespace yii2module\account\domain\v2\services\core;
 use yii2lab\core\domain\repositories\base\BaseCoreRepository;
 use yii2lab\core\domain\services\base\BaseCoreService;
 use yii2lab\domain\helpers\Helper;
+use yii2module\account\domain\v2\exceptions\ConfirmAlreadyExistsException;
 use yii2module\account\domain\v2\forms\RegistrationForm;
 use yii2module\account\domain\v2\interfaces\services\RegistrationInterface;
 
@@ -23,7 +24,10 @@ class RegistrationService extends BaseCoreService implements RegistrationInterfa
 	public function createTempAccount($login, $email = null) {
 		$body = compact('login', 'email');
 		Helper::validateForm(RegistrationForm::class, $body, RegistrationForm::SCENARIO_REQUEST);
-		$this->repository->post('create-account', $body);
+		$response = $this->repository->post('create-account', $body);
+		if($response->status_code == 202) {
+			throw new ConfirmAlreadyExistsException();
+		}
 	}
 	
 	public function checkActivationCode($login, $activation_code) {
