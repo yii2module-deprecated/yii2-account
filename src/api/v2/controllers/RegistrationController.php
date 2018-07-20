@@ -4,6 +4,7 @@ namespace yii2module\account\api\v2\controllers;
 
 use yii2lab\rest\domain\rest\Controller;
 use yii2lab\helpers\Behavior;
+use yii2module\account\api\v2\actions\registration\CreateAccountAction;
 
 class RegistrationController extends Controller
 {
@@ -33,7 +34,7 @@ class RegistrationController extends Controller
 	public function actions() {
 		return [
 			'create-account' => [
-				'class' => 'yii2lab\domain\rest\UniAction',
+				'class' => CreateAccountAction::class,
 				'successStatusCode' => 204,
 				'serviceMethod' => 'createTempAccount',
 				'serviceMethodParams' => ['login', 'email'],

@@ -31,13 +31,14 @@ class RegistrationService extends BaseService implements RegistrationInterface {
 		$body = compact(['login', 'email']);
         Helper::validateForm(RegistrationForm::class, $body, RegistrationForm::SCENARIO_REQUEST);
 		$this->checkLoginExistsInTps($login);
-		try {
-			Yii::$domain->account->confirm->send($login, self::CONFIRM_ACTION, $this->expire, ArrayHelper::toArray($body));
+		Yii::$domain->account->confirm->send($login, self::CONFIRM_ACTION, $this->expire, ArrayHelper::toArray($body));
+		/*try {
+		
 		} catch(ConfirmAlreadyExistsException $e) {
 			$error = new ErrorCollection();
 			$error->add('login', 'account/confirm', 'already_sended_code {phone}', ['phone' => LoginHelper::format($login)]);
 			throw new UnprocessableEntityHttpException($error);
-		}
+		}*/
 	}
 	
 	public function checkActivationCode($login, $activation_code) {
