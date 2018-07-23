@@ -58,7 +58,8 @@ class AuthService extends BaseService implements AuthInterface {
 	        throw new ServerErrorHttpException(Yii::t('account/login', 'user_status_forbidden'));
 	    }
 	}
-	
+
+	// todo: перенести псевдо-авторизацию в доменное имя "pseudoAuth" в пакет "yii2woop/common/domain/account..."
 	/**
 	 * @param string      $login
 	 * @param string      $ip

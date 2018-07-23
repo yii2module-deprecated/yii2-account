@@ -8,7 +8,6 @@ use yii2lab\rest\domain\rest\Controller;
 use yii2lab\helpers\Behavior;
 use yii2lab\helpers\ClientHelper;
 use yii2module\account\domain\v2\services\AuthService;
-use yii2woop\common\components\TpsTransport;
 
 /**
  * Class AuthController
