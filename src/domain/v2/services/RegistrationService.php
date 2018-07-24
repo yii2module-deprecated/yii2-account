@@ -23,7 +23,7 @@ class RegistrationService extends BaseService implements RegistrationInterface {
 	
 	const CONFIRM_ACTION = 'registration';
 	
-	public $expire = TimeEnum::SECOND_PER_MINUTE * 20;
+	public $expire = TimeEnum::SECOND_PER_MINUTE * 1;
 	
 	//todo: изменить путь чтения временного аккаунта для ригистрации. Инкапсулировать все в ядро. Сейчас запрос идет на прямую.
 	public function createTempAccount($login, $email = null) {
