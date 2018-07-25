@@ -13,7 +13,6 @@ namespace yii2module\account\domain\v2\interfaces\repositories;
  * @property-read \yii2module\account\domain\v2\interfaces\repositories\RbacInterface $rbac
  * @property-read \yii2module\account\domain\v2\interfaces\repositories\RestorePasswordInterface $restorePassword
  * @property-read \yii2module\account\domain\v2\interfaces\repositories\SecurityInterface $security
- * @property-read \yii2module\account\domain\v2\interfaces\repositories\TempInterface $temp
  * @property-read \yii2module\account\domain\v2\interfaces\repositories\TestInterface $test
  * @property-read \yii2module\account\domain\v2\interfaces\repositories\TokenInterface $token
  */
