@@ -4,6 +4,7 @@
 /* @var $model \yii2module\account\module\forms\LoginForm */
 
 use yii\helpers\Html;
+use yii2lab\app\domain\helpers\EnvService;
 
 $this->title = Yii::t('account/auth', 'login_title');
 //Yii::$domain->navigation->breadcrumbs->create($this->title);
@@ -22,7 +23,7 @@ $loginForm = $this->render('helpers/_loginForm.php', [
 		</div>
 		<div class="login-box-body">
 			<?= $loginForm ?>
-			<?= Html::a(Yii::t('main', 'go_to_frontend'), env('url.frontend')) ?>
+			<?= Html::a(Yii::t('main', 'go_to_frontend'), EnvService::getUrl(FRONTEND)) ?>
 		</div>
 	</div>
 

@@ -3,6 +3,7 @@
 namespace yii2module\account\domain\v2\entities;
 
 use yii\helpers\ArrayHelper;
+use yii2lab\app\domain\helpers\EnvService;
 use yii2lab\domain\BaseEntity;
 use yii\web\IdentityInterface;
 use yii2lab\domain\values\TimeValue;
@@ -64,7 +65,7 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 	}
 	
 	public function getAvatar() {
-		$avatar = env('url.frontend') . '/images/avatars/_default.jpg';
+		$avatar = EnvService::getUrl('frontend', 'images/avatars/_default.jpg');
 		return $avatar;
 	}
 	
