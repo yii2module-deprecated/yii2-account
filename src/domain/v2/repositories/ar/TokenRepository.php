@@ -16,10 +16,17 @@ use yii2module\account\domain\v2\interfaces\repositories\TokenInterface;
 class TokenRepository extends BaseActiveArRepository implements TokenInterface {
 
 	protected $schemaClass;
-	protected $primaryKey = null;
+	protected $primaryKey = 'token';
 
 	public function tableName() {
 		return 'user_token';
+	}
+	
+	/**
+	 * @return null
+	 */
+	public function getPrimaryKey() {
+		return 'token';
 	}
 	
 	public function oneByToken($token) {
