@@ -7,8 +7,8 @@ $config = [
 	'servers' => [
 		'db' => [
 			'test' => [
-				'driver' => null,
-				'dsn' => 'sqlite:@common/runtime/sqlite/test-package.db',
+				'driver' => 'sqlite',
+				'dbname' => TestHelper::PACKAGE_TEST_DB_FILE,
 			],
 		],
 	],
