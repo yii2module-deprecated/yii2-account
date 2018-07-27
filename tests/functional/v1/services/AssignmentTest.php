@@ -2,20 +2,12 @@
 
 namespace tests\functional\v1\services;
 
-use Codeception\Test\Unit;
-use UnitTester;
+use yii2lab\test\Test\Unit;
 use Yii;
 use yii2lab\domain\data\Query;
 use tests\functional\v1\enums\LoginEnum;
 use yii2module\account\domain\v2\entities\AssignmentEntity;
 
-/**
- * Class LoginTest
- *
- * @package tests\unit\services
- *
- *  @property UnitTester $tester
- */
 class AssignmentTest extends Unit
 {
 	

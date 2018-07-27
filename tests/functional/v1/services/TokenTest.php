@@ -2,20 +2,12 @@
 
 namespace tests\functional\v1\services;
 
-use Codeception\Test\Unit;
-use UnitTester;
+use yii2lab\test\Test\Unit;
 use Yii;
 use yii\web\NotFoundHttpException;
 use yii2module\account\domain\v2\exceptions\InvalidIpAddressException;
 use yii2module\account\domain\v2\exceptions\NotFoundLoginException;
 
-/**
- * Class TokenTest
- *
- * @package tests\unit\services
- *
- *  @property UnitTester $tester
- */
 class TokenTest extends Unit
 {
 	

@@ -2,7 +2,7 @@
 
 namespace tests\functional\v1\services;
 
-use Codeception\Test\Unit;
+use yii2lab\test\Test\Unit;
 use tests\functional\v1\enums\LoginEnum;
 use UnitTester;
 use Yii;
@@ -12,13 +12,6 @@ use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2module\account\domain\v2\entities\LoginEntity;
 use yii2module\account\domain\v2\helpers\TestAuthHelper;
 
-/**
- * Class AuthTest
- *
- * @package tests\unit\services
- *
- *  @property UnitTester $tester
- */
 class AuthTest extends Unit
 {
 	

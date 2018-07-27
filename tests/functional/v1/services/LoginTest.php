@@ -2,8 +2,7 @@
 
 namespace tests\functional\v1\services;
 
-use Codeception\Test\Unit;
-use UnitTester;
+use yii2lab\test\Test\Unit;
 use Yii;
 use yii\web\NotFoundHttpException;
 use yii2lab\domain\BaseEntity;
@@ -11,13 +10,6 @@ use yii2lab\domain\data\Query;
 use yii2module\account\domain\v2\entities\LoginEntity;
 use tests\functional\v1\enums\LoginEnum;
 
-/**
- * Class LoginTest
- *
- * @package tests\unit\services
- *
- *  @property UnitTester $tester
- */
 class LoginTest extends Unit
 {
 	
