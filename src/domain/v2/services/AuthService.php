@@ -43,8 +43,7 @@ class AuthService extends BaseService implements AuthInterface {
 		} catch(NotFoundHttpException $e) {
 			$loginEntity = false;
 		}
-		
-		if(empty($loginEntity)) {
+		if(!$loginEntity instanceof LoginEntity || empty($loginEntity->id)) {
 			$error = new ErrorCollection();
 			$error->add('password', 'account/auth', 'incorrect_login_or_password');
 			throw new UnprocessableEntityHttpException($error);
