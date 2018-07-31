@@ -5,15 +5,6 @@ namespace yii2module\account\console\forms;
 use Yii;
 use yii2module\account\domain\v2\helpers\LoginHelper;
 use yii\base\Model;
-use yii2module\account\domain\v2\validators\LoginValidator;
-use domain\v1\account\models\Subjects;
-use domain\v1\account\models\User;
-use domain\v1\account\models\TypeSubject;
-use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
-use yii\web\ServerErrorHttpException;
-use yii\web\NotFoundHttpException;
-use common\helpers\RBACRoles;
-
 class LoginForm extends Model
 {
     public $login;
@@ -48,13 +39,4 @@ class LoginForm extends Model
         $this->$attribute = LoginHelper::getPhone($this->$attribute);
     }
     
-    public function addErrorsFromException($e) {
-        foreach($e->getErrors() as $error) {
-            if(!empty($error)) {
-                $this->addError($error['field'], $error['message']);
-            }
-        }
-    }
-    
- 
 }
