@@ -25,8 +25,7 @@ class TestAuthHelper {
 	}
 	
 	public static function defineAccountDomain() {
-		$domainDefinition = DomainHelper::getClassConfig('account', self::DOMAIN_CLASS);
-		DomainHelper::define('account', $domainDefinition);
+		DomainHelper::defineDomain('account', self::DOMAIN_CLASS);
 	}
 	
 }
