@@ -11,6 +11,9 @@ $config = [
 				'dbname' => TestHelper::PACKAGE_TEST_DB_FILE,
 			],
 		],
+		'filedb' => [
+			'path' => '@yii2module/account/domain/v2/fixtures/data',
+		],
 	],
 ];
 
