@@ -10,57 +10,57 @@ class LoginHelperTest extends Unit
 	
 	public function testPregMatchLoginInternationalFormat()
 	{
-		expect(LoginHelper::pregMatchLogin('77758889900'))->equals('77758889900');
-		expect(LoginHelper::pregMatchLogin('+7 (775) (888)-(99)-(00)'))->equals('77758889900');
-		expect(LoginHelper::pregMatchLogin('+7 (775) (888)-(9900)'))->equals('77758889900');
-		expect(LoginHelper::pregMatchLogin('+77758889900'))->equals('77758889900');
-		expect(LoginHelper::pregMatchLogin('+7-775-888-99-00'))->equals('77758889900');
-		expect(LoginHelper::pregMatchLogin('+7 775 888 99 00'))->equals('77758889900');
+		$this->tester->assertEquals(LoginHelper::pregMatchLogin('77758889900'), '77758889900');
+		$this->tester->assertEquals(LoginHelper::pregMatchLogin('+7 (775) (888)-(99)-(00)'), '77758889900');
+		$this->tester->assertEquals(LoginHelper::pregMatchLogin('+7 (775) (888)-(9900)'), '77758889900');
+		$this->tester->assertEquals(LoginHelper::pregMatchLogin('+77758889900'), '77758889900');
+		$this->tester->assertEquals(LoginHelper::pregMatchLogin('+7-775-888-99-00'), '77758889900');
+		$this->tester->assertEquals(LoginHelper::pregMatchLogin('+7 775 888 99 00'), '77758889900');
 	}
 	
 	public function testPregMatchLoginKzFormat()
 	{
-		expect(LoginHelper::pregMatchLogin('87758889900'))->equals('77758889900');
-		expect(LoginHelper::pregMatchLogin('8 (775) (888)-(99)-(00)'))->equals('77758889900');
-		expect(LoginHelper::pregMatchLogin('8 (775) (888)-(9900)'))->equals('77758889900');
-		expect(LoginHelper::pregMatchLogin('87758889900'))->equals('77758889900');
-		expect(LoginHelper::pregMatchLogin('8-775-888-99-00'))->equals('77758889900');
-		expect(LoginHelper::pregMatchLogin('8 775 888 99 00'))->equals('77758889900');
+		$this->tester->assertEquals(LoginHelper::pregMatchLogin('87758889900'), '77758889900');
+		$this->tester->assertEquals(LoginHelper::pregMatchLogin('8 (775) (888)-(99)-(00)'), '77758889900');
+		$this->tester->assertEquals(LoginHelper::pregMatchLogin('8 (775) (888)-(9900)'), '77758889900');
+		$this->tester->assertEquals(LoginHelper::pregMatchLogin('87758889900'), '77758889900');
+		$this->tester->assertEquals(LoginHelper::pregMatchLogin('8-775-888-99-00'), '77758889900');
+		$this->tester->assertEquals(LoginHelper::pregMatchLogin('8 775 888 99 00'), '77758889900');
 	}
 	
 	public function testPregMatchLoginWithPrefix()
 	{
-		expect(LoginHelper::pregMatchLogin('R87758889900'))->equals('R77758889900');
-		expect(LoginHelper::pregMatchLogin('R8 (775) (888)-(99)-(00)'))->equals('R77758889900');
-		expect(LoginHelper::pregMatchLogin('R+7 (775) (888)-(99)-(00)'))->equals('R77758889900');
-		expect(LoginHelper::pregMatchLogin('BS8 775 888 99 00'))->equals('BS77758889900');
+		$this->tester->assertEquals(LoginHelper::pregMatchLogin('R87758889900'), 'R77758889900');
+		$this->tester->assertEquals(LoginHelper::pregMatchLogin('R8 (775) (888)-(99)-(00)'), 'R77758889900');
+		$this->tester->assertEquals(LoginHelper::pregMatchLogin('R+7 (775) (888)-(99)-(00)'), 'R77758889900');
+		$this->tester->assertEquals(LoginHelper::pregMatchLogin('BS8 775 888 99 00'), 'BS77758889900');
 	}
 
 	public function testPregMatchLoginNonStandardFormat()
 	{
-		expect(LoginHelper::pregMatchLogin('+7   775  888  99  00'))->equals('77758889900');
-		expect(LoginHelper::pregMatchLogin('+++++7------775----888----99-----00'))->equals('77758889900');
+		$this->tester->assertEquals(LoginHelper::pregMatchLogin('+7   775  888  99  00'), '77758889900');
+		$this->tester->assertEquals(LoginHelper::pregMatchLogin('+++++7------775----888----99-----00'), '77758889900');
 	}
 	
 	public function testSplitLogin()
 	{
-		expect(LoginHelper::splitLogin('R77758889900'))->equals([
+		$this->tester->assertEquals(LoginHelper::splitLogin('R77758889900'), [
 			'prefix' => 'R',
 			'phone' => '77758889900',
 		]);
-		expect(LoginHelper::splitLogin('R+77758889900'))->equals([
+		$this->tester->assertEquals(LoginHelper::splitLogin('R+77758889900'), [
 			'prefix' => 'R',
 			'phone' => '+77758889900',
 		]);
-		expect(LoginHelper::splitLogin('77758889900'))->equals([
+		$this->tester->assertEquals(LoginHelper::splitLogin('77758889900'), [
 			'prefix' => '',
 			'phone' => '77758889900',
 		]);
-		expect(LoginHelper::splitLogin('R8 (775) (888)-(99)-(00)'))->equals([
+		$this->tester->assertEquals(LoginHelper::splitLogin('R8 (775) (888)-(99)-(00)'), [
 			'prefix' => 'R',
 			'phone' => '8 (775) (888)-(99)-(00)',
 		]);
-		expect(LoginHelper::splitLogin('BS77758889900'))->equals([
+		$this->tester->assertEquals(LoginHelper::splitLogin('BS77758889900'), [
 			'prefix' => 'BS',
 			'phone' => '77758889900',
 		]);
@@ -68,50 +68,50 @@ class LoginHelperTest extends Unit
 	
 	public function testValidateFormatSuccess()
 	{
-		expect(LoginHelper::validate('+7   775  888  99  00'))->equals(true);
-		expect(LoginHelper::validate('R8 (775) (888)-(99)-(00)'))->equals(true);
-		expect(LoginHelper::validate('R+77758889900'))->equals(true);
-		expect(LoginHelper::validate('77758889900'))->equals(true);
-		expect(LoginHelper::validate('+++++7------775----888----99-----00'))->equals(true);
-		expect(LoginHelper::validate('+7 (775) (888)-(99)-(00)'))->equals(true);
+		$this->tester->assertEquals(LoginHelper::validate('+7   775  888  99  00'), true);
+		$this->tester->assertEquals(LoginHelper::validate('R8 (775) (888)-(99)-(00)'), true);
+		$this->tester->assertEquals(LoginHelper::validate('R+77758889900'), true);
+		$this->tester->assertEquals(LoginHelper::validate('77758889900'), true);
+		$this->tester->assertEquals(LoginHelper::validate('+++++7------775----888----99-----00'), true);
+		$this->tester->assertEquals(LoginHelper::validate('+7 (775) (888)-(99)-(00)'), true);
 	}
 	
 	public function testValidatePrefixSuccess()
 	{
-		expect(LoginHelper::validate('R77758889900'))->equals(true);
-		expect(LoginHelper::validate('B77758889900'))->equals(true);
-		expect(LoginHelper::validate('BS77758889900'))->equals(true);
+		$this->tester->assertEquals(LoginHelper::validate('R77758889900'), true);
+		$this->tester->assertEquals(LoginHelper::validate('B77758889900'), true);
+		$this->tester->assertEquals(LoginHelper::validate('BS77758889900'), true);
 	}
 	
 	public function testValidateFormatFail()
 	{
-		expect(LoginHelper::validate('+7 775'))->equals(false);
-		expect(LoginHelper::validate('R8 (775) (888)-(99)'))->equals(false);
-		expect(LoginHelper::validate('R+7775888'))->equals(false);
-		expect(LoginHelper::validate('777588899008'))->equals(false);
-		expect(LoginHelper::validate('7775888990'))->equals(false);
-		expect(LoginHelper::validate('(775) (888)-(99)-(00)'))->equals(false);
+		$this->tester->assertEquals(LoginHelper::validate('+7 775'), false);
+		$this->tester->assertEquals(LoginHelper::validate('R8 (775) (888)-(99)'), false);
+		$this->tester->assertEquals(LoginHelper::validate('R+7775888'), false);
+		$this->tester->assertEquals(LoginHelper::validate('777588899008'), false);
+		$this->tester->assertEquals(LoginHelper::validate('7775888990'), false);
+		$this->tester->assertEquals(LoginHelper::validate('(775) (888)-(99)-(00)'), false);
 	}
 	
 	public function testValidatePrefixFail()
 	{
-		expect(LoginHelper::validate('G77758889900'))->equals(false);
-		expect(LoginHelper::validate('BR77758889900'))->equals(false);
-		expect(LoginHelper::validate('SR77758889900'))->equals(false);
-		expect(LoginHelper::validate('RB77758889900'))->equals(false);
+		$this->tester->assertEquals(LoginHelper::validate('G77758889900'), false);
+		$this->tester->assertEquals(LoginHelper::validate('BR77758889900'), false);
+		$this->tester->assertEquals(LoginHelper::validate('SR77758889900'), false);
+		$this->tester->assertEquals(LoginHelper::validate('RB77758889900'), false);
 	}
 	
 	public function testParse()
 	{
-		expect(LoginHelper::parse('BS77758889900'))->equals([
+		$this->tester->assertEquals(LoginHelper::parse('BS77758889900'), [
 			'prefix' => 'BS',
 			'phone' => '77758889900',
 		]);
-		expect(LoginHelper::parse('R8 (775) (888)-(99)-(00)'))->equals([
+		$this->tester->assertEquals(LoginHelper::parse('R8 (775) (888)-(99)-(00)'), [
 			'prefix' => 'R',
 			'phone' => '77758889900',
 		]);
-		expect(LoginHelper::parse('8 (775) (888)-(99)-(00)'))->equals([
+		$this->tester->assertEquals(LoginHelper::parse('8 (775) (888)-(99)-(00)'), [
 			'prefix' => '',
 			'phone' => '77758889900',
 		]);
