@@ -1,10 +1,10 @@
 <?php
 namespace yii2module\account\module\controllers;
 
-use common\enums\rbac\PermissionEnum;
 use Yii;
 use yii\web\Controller;
 use yii\filters\AccessControl;
+use yii2lab\applicationTemplate\common\enums\ApplicationPermissionEnum;
 use yii2lab\helpers\Behavior;
 use yii2module\account\domain\v2\forms\LoginForm;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
@@ -91,7 +91,7 @@ class AuthController extends Controller
 		if(APP != BACKEND) {
 			return true;
 		}
-		if (Yii::$app->user->can(PermissionEnum::BACKEND_ALL)) {
+		if (Yii::$app->user->can(ApplicationPermissionEnum::BACKEND_ALL)) {
 			return true;
 		}
 		return false;

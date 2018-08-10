@@ -2,7 +2,7 @@
 
 namespace yii2module\account\domain\v2;
 
-use common\enums\rbac\RoleEnum;
+use yii2module\account\domain\v2\enums\AccountRoleEnum;
 use yii2lab\domain\enums\Driver;
 use yii2lab\misc\enums\TimeEnum;
 
@@ -48,7 +48,7 @@ class Domain extends \yii2lab\domain\Domain {
 				],
 				'login' => [
 					'prefixList' => ['B', 'BS', 'R', 'QRS'],
-					'defaultRole' => RoleEnum::UNKNOWN_USER,
+					'defaultRole' => AccountRoleEnum::UNKNOWN_USER,
 					'defaultStatus' => 1,
 					'forbiddenStatusList' => [0],
 				],
