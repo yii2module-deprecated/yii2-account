@@ -9,6 +9,8 @@ use yii2lab\helpers\Behavior;
 use yii2module\account\domain\v2\forms\LoginForm;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2lab\navigation\domain\widgets\Alert;
+use yii2module\account\domain\v2\helpers\AuthHelper;
+use yii\web\Response;
 
 /**
  * AuthController controller
@@ -27,7 +29,7 @@ class AuthController extends Controller
 				'class' => AccessControl::class,
 				'rules' => [
 					[
-						'actions' => ['logout'],
+						'actions' => ['logout', 'get-token'],
 						'allow' => true,
 						'roles' => ['@'],
 					],
@@ -46,8 +48,6 @@ class AuthController extends Controller
 
 	/**
 	 * Logs in a user.
-	 *
-	 * @return mixed
 	 */
 	public function actionLogin()
 	{
@@ -76,8 +76,6 @@ class AuthController extends Controller
 
 	/**
 	 * Logs out the current user.
-	 *
-	 * @return mixed
 	 */
 	public function actionLogout()
 	{
@@ -85,7 +83,13 @@ class AuthController extends Controller
 		Yii::$domain->navigation->alert->create(['account/auth', 'logout_success'], Alert::TYPE_SUCCESS);
 		return $this->goHome();
 	}
-	
+
+    public function actionGetToken()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return AuthHelper::getToken();
+    }
+
 	private function isBackendAccessAllowed()
 	{
 		if(APP != BACKEND) {
