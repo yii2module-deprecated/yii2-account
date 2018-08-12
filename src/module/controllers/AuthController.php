@@ -77,11 +77,15 @@ class AuthController extends Controller
 	/**
 	 * Logs out the current user.
 	 */
-	public function actionLogout()
+	public function actionLogout($redirect = null)
 	{
 		Yii::$domain->account->auth->logout();
 		Yii::$domain->navigation->alert->create(['account/auth', 'logout_success'], Alert::TYPE_SUCCESS);
-		return $this->goHome();
+		if($redirect) {
+            return $this->redirect([SL . $redirect]);
+        } else {
+            return $this->goHome();
+        }
 	}
 
     public function actionGetToken()

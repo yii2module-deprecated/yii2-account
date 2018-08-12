@@ -11,6 +11,7 @@ use yii2lab\helpers\ClientHelper;
 use yii2module\account\console\forms\LoginForm;
 use yii2module\account\console\forms\PseudoLoginForm;
 use yii2module\account\domain\v2\interfaces\services\AuthInterface;
+use yii\filters\Cors;
 
 /**
  * Class AuthController
@@ -27,6 +28,7 @@ class AuthController extends Controller {
 	 */
 	public function behaviors() {
 		return [
+            'cors' => Behavior::cors(),
 			'authenticator' => Behavior::apiAuth(['info']),
 		];
 	}
@@ -52,6 +54,9 @@ class AuthController extends Controller {
 				'successStatusCode' => 200,
 				'serviceMethod' => 'getIdentity',
 			],
+            'options' => [
+                'class' => 'yii\rest\OptionsAction',
+            ],
 		];
 	}
 	
