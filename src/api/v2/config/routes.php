@@ -13,5 +13,5 @@ return [
 
 	"{$version}/security/<action:(password|email)>" => "account/security/<action>",
 
-    ["class" => "yii\\rest\UrlRule", "controller" => ["{$version}/user" => "account/user"]],
+    // ["class" => "yii\\rest\UrlRule", "controller" => ["{$version}/user" => "account/user"]],
 ];
