@@ -48,16 +48,6 @@ class LoginService extends ActiveBaseService implements LoginInterface {
 		return $this->repository->oneByLogin($login);
 	}
 	
-	public function oneById($id, Query $query = null) {
-		if(Yii::$app->user->isGuest || UserHelper::oneCurrent() == null) {
-			throw new UnauthorizedHttpException();
-		}
-		if($id != UserHelper::oneCurrent()->id) {
-			throw new ForbiddenHttpException();
-		}
-		return parent::oneById($id, $query);
-	}
-	
 	public function create($data) {
 		//$data['role'] = !empty($data['role']) ? $data['role'] : RoleEnum::UNKNOWN_USER;
 		$data['email'] = !empty($data['email']) ? $data['email'] : 'api@wooppay.com';

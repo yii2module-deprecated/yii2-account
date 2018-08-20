@@ -2,6 +2,7 @@
 
 namespace yii2module\account\api\v2\controllers;
 
+use yii2lab\helpers\Behavior;
 use yii2lab\rest\domain\rest\ActiveController as Controller;
 
 class UserController extends Controller
@@ -9,6 +10,16 @@ class UserController extends Controller
 
 	public $service = 'account.login';
 
+	/**
+	 * @inheritdoc
+	 */
+	public function behaviors() {
+		return [
+			//'cors' => Behavior::cors(),
+			'authenticator' => Behavior::apiAuth(['view']),
+		];
+	}
+	
 	/**
 	 * @inheritdoc
 	 */
