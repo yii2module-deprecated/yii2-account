@@ -4,6 +4,9 @@ namespace yii2module\account\domain\v2\services;
 
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\web\ForbiddenHttpException;
+use yii\web\UnauthorizedHttpException;
+use yii2lab\domain\data\Query;
 use yii2lab\domain\helpers\Helper;
 use yii2module\account\domain\v2\entities\LoginEntity;
 use yii2module\account\domain\v2\interfaces\services\LoginInterface;
@@ -12,6 +15,7 @@ use yii2lab\domain\helpers\ErrorCollection;
 use yii2lab\domain\services\ActiveBaseService;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii\web\NotFoundHttpException;
+use yii2woop\common\domain\account\v2\helpers\UserHelper;
 
 /**
  * Class LoginService
@@ -42,6 +46,16 @@ class LoginService extends ActiveBaseService implements LoginInterface {
 	 */
 	public function oneByLogin($login) {
 		return $this->repository->oneByLogin($login);
+	}
+	
+	public function oneById($id, Query $query = null) {
+		if(Yii::$app->user->isGuest || UserHelper::oneCurrent() == null) {
+			throw new UnauthorizedHttpException();
+		}
+		if($id != UserHelper::oneCurrent()->id) {
+			throw new ForbiddenHttpException();
+		}
+		return parent::oneById($id, $query);
 	}
 	
 	public function create($data) {
