@@ -4,14 +4,12 @@ namespace yii2module\account\domain\v2\services;
 
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
-use yii\web\ServerErrorHttpException;
 use yii2lab\domain\helpers\Helper;
+use yii2lab\domain\services\base\BaseService;
 use yii2lab\misc\enums\TimeEnum;
 use yii2module\account\domain\v2\entities\ConfirmEntity;
-use yii2module\account\domain\v2\exceptions\ConfirmAlreadyExistsException;
 use yii2module\account\domain\v2\exceptions\ConfirmIncorrectCodeException;
 use yii2module\account\domain\v2\helpers\LoginHelper;
-use yii2lab\domain\services\BaseService;
 use Yii;
 use yii2module\account\domain\v2\forms\RegistrationForm;
 use yii2lab\domain\helpers\ErrorCollection;
@@ -24,12 +22,17 @@ class RegistrationService extends BaseService implements RegistrationInterface {
 	const CONFIRM_ACTION = 'registration';
 	
 	public $expire = TimeEnum::SECOND_PER_MINUTE * 1;
+	public $requiredEmail = false;
 	
 	//todo: изменить путь чтения временного аккаунта для ригистрации. Инкапсулировать все в ядро. Сейчас запрос идет на прямую.
 	public function createTempAccount($login, $email = null) {
 		$login = LoginHelper::pregMatchLogin($login);
 		$body = compact(['login', 'email']);
-        Helper::validateForm(RegistrationForm::class, $body, RegistrationForm::SCENARIO_REQUEST);
+		$scenario = RegistrationForm::SCENARIO_REQUEST;
+		if($this->requiredEmail) {
+			$scenario = RegistrationForm::SCENARIO_REQUEST_WITH_EMAIL;
+		}
+        Helper::validateForm(RegistrationForm::class, $body, $scenario);
 		$this->checkLoginExistsInTps($login);
 		Yii::$domain->account->confirm->send($login, self::CONFIRM_ACTION, $this->expire, ArrayHelper::toArray($body));
 		/*try {

@@ -11,6 +11,7 @@ class RegistrationForm extends RestorePasswordForm {
 	public $password;
 	public $email;
 	
+	const SCENARIO_REQUEST_WITH_EMAIL = 'request_with_email';
 	const SCENARIO_REQUEST = 'request';
 	const SCENARIO_CHECK = 'check';
 	const SCENARIO_CONFIRM = 'confirm';
@@ -18,7 +19,7 @@ class RegistrationForm extends RestorePasswordForm {
 	public function rules() {
 		return [
 			[['login', 'password', 'activation_code', 'email'], 'trim'],
-			[['login', 'password', 'activation_code'], 'required'],
+			[['login', 'password', 'activation_code', 'email'], 'required'],
 			//['login', LoginValidator::class],
 			['email', 'email'],
 			[['activation_code'], 'integer'],
@@ -29,7 +30,8 @@ class RegistrationForm extends RestorePasswordForm {
 	
 	public function scenarios() {
 		return [
-			self::SCENARIO_REQUEST => ['login', 'email'],
+			self::SCENARIO_REQUEST_WITH_EMAIL => ['login', 'email'],
+			self::SCENARIO_REQUEST => ['login'],
 			self::SCENARIO_CHECK => ['login', 'activation_code'],
 			self::SCENARIO_CONFIRM => ['login', 'activation_code', 'password'],
 		];

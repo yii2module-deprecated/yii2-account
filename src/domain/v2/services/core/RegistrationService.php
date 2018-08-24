@@ -20,10 +20,15 @@ class RegistrationService extends BaseCoreService implements RegistrationInterfa
 	
 	public $point = 'registration';
 	public $version = 1;
+	public $requiredEmail = false;
 	
 	public function createTempAccount($login, $email = null) {
 		$body = compact('login', 'email');
-		Helper::validateForm(RegistrationForm::class, $body, RegistrationForm::SCENARIO_REQUEST);
+		$scenario = RegistrationForm::SCENARIO_REQUEST;
+		if($this->requiredEmail) {
+			$scenario = RegistrationForm::SCENARIO_REQUEST_WITH_EMAIL;
+		}
+		Helper::validateForm(RegistrationForm::class, $body, $scenario);
 		$response = $this->repository->post('create-account', $body);
 		if($response->status_code == 202) {
 			throw new ConfirmAlreadyExistsException();
