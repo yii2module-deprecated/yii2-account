@@ -66,3 +66,19 @@ class JwtHelper {
 	}
 	
 }
+
+
+/**
+ * Docs
+ *
+ * $jwtEntity = new JwtEntity();
+$jwtEntity->issuer_url = "http://api.core.yii/v1/auth";
+$jwtEntity->audience = ["http://api.wooppay.yii"];
+$jwtEntity->subject_id = \Dii::$domain->account->auth->identity->id;
+$jwtEntity->subject_url = "http://api.core.yii/v1/user/" . $jwtEntity->subject_id;
+$jwtEntity->expiration = TIMESTAMP + TimeEnum::SECOND_PER_MINUTE * 20;
+
+$jwt = JwtHelper::encode($jwtEntity);
+
+$decoded = JwtHelper::decode($jwt);
+ */
