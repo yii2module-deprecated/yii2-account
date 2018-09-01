@@ -18,6 +18,7 @@
 	},
 	"require": {
 		"yiisoft/yii2": "*",
+		"firebase/php-jwt": "^5.0",
 		"php": ">=5.3.0"
 	}
 }
