@@ -23,6 +23,7 @@ use yii2lab\misc\enums\TimeEnum;
  * @property-read \yii2module\account\domain\v2\interfaces\services\ConfirmInterface $confirm
  * @property-read \yii2module\account\domain\v2\interfaces\repositories\RepositoriesInterface $repositories
  * @property-read \yii2module\account\domain\v2\interfaces\services\TokenInterface $token
+ * @property-read \yii2module\account\domain\v2\interfaces\services\JwtInterface $jwt
  */
 class Domain extends \yii2lab\domain\Domain {
 	
@@ -41,6 +42,7 @@ class Domain extends \yii2lab\domain\Domain {
 				'confirm' => Driver::ACTIVE_RECORD,
 				//'assignment' => $this->primaryDriver,
 				'token' => Driver::ACTIVE_RECORD,
+                'jwt' => 'jwt',
 			],
 			'services' => [
 				'auth' => [
@@ -61,6 +63,7 @@ class Domain extends \yii2lab\domain\Domain {
 				'confirm',
 				//'assignment',
 				'token',
+                'jwt',
 			],
 		];
 	}
