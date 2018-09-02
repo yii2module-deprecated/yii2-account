@@ -3,13 +3,13 @@
 namespace yii2module\account\domain\v2\services;
 
 use yii\base\InvalidConfigException;
+use yii\base\Object;
 use yii2lab\app\domain\helpers\EnvService;
-use yii2module\account\domain\v2\entities\JwtProfileEntity;
+use yii2lab\extension\jwt\entities\JwtEntity;
 use yii2module\account\domain\v2\interfaces\services\JwtInterface;
 use yii2lab\domain\services\base\BaseService;
 use yii2lab\domain\Alias;
 use yii2lab\helpers\yii\ArrayHelper;
-use yii2module\account\domain\v2\entities\JwtEntity;
 
 /**
  * Class JwtService
@@ -23,39 +23,16 @@ class JwtService extends BaseService implements JwtInterface {
 
     const DEFAULT_PROFILE = 'default';
 
-    private $profiles = null;
-
-    public function init() {
-        $this->profiles = EnvService::get('account.jwt.profiles');
-    }
-
-    private function getProfile($name) {
-        $profile = $this->profiles[$name];
-        if(empty($profile)) {
-            throw new InvalidConfigException("Profile \"{$name}\" not defined!");
-        }
-        $profileEntity = new JwtProfileEntity($profile);
-        $profileEntity->name = $name;
-        $profileEntity->validate();
-        return $profileEntity;
-    }
-
-    public function sign(JwtEntity $jwtEntity, $profileName = self::DEFAULT_PROFILE) {
+    public function forge($subject, $profileName = self::DEFAULT_PROFILE) {
+        $jwtEntity = new JwtEntity();
+        $jwtEntity->subject = $subject;
         $this->prepEntity($jwtEntity);
-        $profileEntity = $this->getProfile($profileName);
-        $this->repository->sign($jwtEntity, $profileEntity);
+        \Dii::$domain->jwt->jwt->sign($jwtEntity, $profileName);
         return $jwtEntity;
     }
 
-    public function encode(JwtEntity $jwtEntity, $profileName = self::DEFAULT_PROFILE) {
-        $this->sign($jwtEntity, $profileName);
-        return $jwtEntity->token;
-    }
-
     public function decode($token, $profileName = self::DEFAULT_PROFILE) {
-        $profileEntity = $this->getProfile($profileName);
-        $jwtEntity = $this->repository->decode($token, $profileEntity);
-        $jwtEntity->token = $token;
+        $jwtEntity = \Dii::$domain->jwt->jwt->decode($token, $profileName);
         return $jwtEntity;
     }
 
@@ -63,8 +40,11 @@ class JwtService extends BaseService implements JwtInterface {
         if(!$jwtEntity->issuer_url) {
             $jwtEntity->issuer_url = EnvService::getUrl(API, 'v1/auth');
         }
-        if(!$jwtEntity->subject_url && $jwtEntity->subject_id) {
-            $jwtEntity->subject_url = EnvService::getUrl(API, 'v1/user/' . $jwtEntity->subject_id);
+        $userId = ArrayHelper::getValue($jwtEntity, 'subject.id');
+        if($userId) {
+            if(!$jwtEntity->subject_url) {
+                $jwtEntity->subject_url = EnvService::getUrl(API, 'v1/user/' . $userId);
+            }
         }
     }
 

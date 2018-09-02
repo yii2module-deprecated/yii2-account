@@ -2,7 +2,8 @@
 
 namespace yii2module\account\domain\v2\interfaces\services;
 
-use yii2module\account\domain\v2\entities\JwtEntity;
+use yii2lab\extension\jwt\entities\JwtEntity;
+
 
 /**
  * Interface JwtInterface
@@ -14,8 +15,8 @@ use yii2module\account\domain\v2\entities\JwtEntity;
  */
 interface JwtInterface {
 
-    public function sign(JwtEntity $jwtEntity, $profileName = self::DEFAULT_PROFILE);
-    public function encode(JwtEntity $jwtEntity);
+    public function forge($subject, $profileName = self::DEFAULT_PROFILE);
+    //public function encode(JwtEntity $jwtEntity);
     public function decode($token);
 
 }
