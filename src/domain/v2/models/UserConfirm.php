@@ -3,7 +3,7 @@
 namespace yii2module\account\domain\v2\models;
 
 use yii\db\ActiveRecord;
-use paulzi\jsonBehavior\JsonBehavior;
+use yii2lab\db\domain\behaviors\json\JsonBehavior;
 
 /**
  * Class UserConfirm
