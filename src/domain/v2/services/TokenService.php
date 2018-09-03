@@ -72,7 +72,7 @@ class TokenService extends BaseActiveService implements TokenInterface {
 		$tokenEntity = $this->repository->oneByToken($token);
 		$isValid = $this->validateExpire($tokenEntity);
 		if(!$isValid) {
-			throw new NotFoundHttpException();
+			throw new NotFoundHttpException(__METHOD__ . ': ' . __LINE__);
 		}
 		return $tokenEntity;
 	}
@@ -124,7 +124,7 @@ class TokenService extends BaseActiveService implements TokenInterface {
 	private function oneByIp($ip) {
 		$collection = $this->allByIp($ip);
 		if(empty($collection)) {
-			throw new NotFoundHttpException();
+			throw new NotFoundHttpException(__METHOD__ . ': ' . __LINE__);
 		}
 		return $collection[0];
 	}
@@ -135,7 +135,7 @@ class TokenService extends BaseActiveService implements TokenInterface {
 		/** @var TokenEntity $tokenEntity */
 		$tokenEntity = $this->findByIp($collection, $ip);
 		if(empty($tokenEntity)) {
-			throw new NotFoundHttpException();
+			throw new NotFoundHttpException(__METHOD__ . ': ' . __LINE__);
 		}
 		return $tokenEntity;
 	}

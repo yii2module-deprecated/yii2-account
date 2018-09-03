@@ -51,16 +51,16 @@ class LoginRepository extends BaseActiveCoreRepository implements LoginInterface
 		
 		if(empty($data['id'])) {
 			if($response->status_code == 401) {
-				throw new NotFoundHttpException();
+				throw new NotFoundHttpException(__METHOD__ . ': ' . __LINE__);
 			}
 			/*if(empty($response->data['id'])) {
-				throw new NotFoundHttpException();
+				throw new NotFoundHttpException(__METHOD__ . ': ' . __LINE__);
 			}*/
 			// todo: crutch
 			if($data['type'] == "yii2woop\\generated\\exception\\tps\\NotAuthenticatedException") {
-				throw new NotFoundHttpException();
+				throw new NotFoundHttpException(__METHOD__ . ': ' . __LINE__);
 			}
-			throw new NotFoundHttpException();
+			throw new NotFoundHttpException(__METHOD__ . ': ' . __LINE__);
 		}
 		
 		return $this->forgeEntity($response);

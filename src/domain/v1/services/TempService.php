@@ -61,7 +61,7 @@ class TempService extends BaseService {
 		$user = $this->repository->oneByLogin($login);
 		if(empty($user)) {
 			return null;
-			//throw new NotFoundHttpException();
+			//throw new NotFoundHttpException(__METHOD__ . ': ' . __LINE__);
 		}
 		$created_at = strtotime($user->created_at);
 		if($this->isExpire($created_at)) {
