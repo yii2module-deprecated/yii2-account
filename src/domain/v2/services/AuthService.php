@@ -14,7 +14,7 @@ use yii2lab\domain\helpers\ErrorCollection;
 use yii2lab\domain\helpers\Helper;
 use yii2lab\domain\services\BaseService;
 use yii2lab\helpers\ClientHelper;
-use yii2lab\misc\enums\TimeEnum;
+use yii2lab\extension\enum\enums\TimeEnum;
 use yii2module\account\domain\v2\forms\LoginForm;
 use yii2module\account\domain\v2\helpers\AuthHelper;
 use yii2module\account\domain\v2\interfaces\services\AuthInterface;

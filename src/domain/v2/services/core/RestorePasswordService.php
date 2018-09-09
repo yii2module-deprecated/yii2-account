@@ -2,7 +2,7 @@
 
 namespace yii2module\account\domain\v2\services\core;
 
-use yii2lab\core\domain\repositories\base\BaseCoreRepository;
+use yii2lab\extension\core\domain\repositories\base\BaseCoreRepository;
 use yii2lab\domain\helpers\Helper;
 use yii2module\account\domain\v2\forms\RestorePasswordForm;
 use yii2lab\domain\services\CoreBaseService;

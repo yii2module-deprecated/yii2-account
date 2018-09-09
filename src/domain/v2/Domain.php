@@ -4,7 +4,7 @@ namespace yii2module\account\domain\v2;
 
 use yii2module\account\domain\v2\enums\AccountRoleEnum;
 use yii2lab\domain\enums\Driver;
-use yii2lab\misc\enums\TimeEnum;
+use yii2lab\extension\enum\enums\TimeEnum;
 
 // todo: описание докблоков в руководство
 

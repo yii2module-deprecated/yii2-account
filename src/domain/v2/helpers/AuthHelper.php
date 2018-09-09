@@ -4,7 +4,7 @@ namespace yii2module\account\domain\v2\helpers;
 
 use Yii;
 use yii2lab\extension\registry\helpers\Registry;
-use yii2lab\misc\enums\HttpHeaderEnum;
+use yii2lab\extension\web\enums\HttpHeaderEnum;
 use yii2module\account\domain\v2\entities\LoginEntity;
 
 class AuthHelper {

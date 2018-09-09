@@ -6,7 +6,7 @@ use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii2lab\domain\helpers\Helper;
 use yii2lab\domain\services\base\BaseService;
-use yii2lab\misc\enums\TimeEnum;
+use yii2lab\extension\enum\enums\TimeEnum;
 use yii2module\account\domain\v2\entities\ConfirmEntity;
 use yii2module\account\domain\v2\exceptions\ConfirmIncorrectCodeException;
 use yii2module\account\domain\v2\helpers\LoginHelper;

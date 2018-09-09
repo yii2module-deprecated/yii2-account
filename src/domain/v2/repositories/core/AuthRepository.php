@@ -3,7 +3,7 @@
 namespace yii2module\account\domain\v2\repositories\core;
 
 use Yii;
-use yii2lab\core\domain\repositories\base\BaseCoreRepository;
+use yii2lab\extension\core\domain\repositories\base\BaseCoreRepository;
 use yii2lab\helpers\ClientHelper;
 use yii2module\account\domain\v2\entities\LoginEntity;
 use yii2module\account\domain\v2\interfaces\repositories\AuthInterface;

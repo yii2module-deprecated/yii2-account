@@ -59,7 +59,7 @@ class JwtService extends BaseService implements JwtInterface {
 'profiles' => [
 'default' => [
 'key' => 'qwerty123',
-'life_time' => \yii2lab\misc\enums\TimeEnum::SECOND_PER_MINUTE * 20,
+'life_time' => \yii2lab\extension\enum\enums\TimeEnum::SECOND_PER_MINUTE * 20,
 'allowed_algs' => ['HS256', 'SHA512', 'HS384'],
 'default_alg' => 'HS256',
 'audience' => ["http://api.core.yii"],

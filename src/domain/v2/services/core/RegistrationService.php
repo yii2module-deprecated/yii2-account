@@ -2,8 +2,8 @@
 
 namespace yii2module\account\domain\v2\services\core;
 
-use yii2lab\core\domain\repositories\base\BaseCoreRepository;
-use yii2lab\core\domain\services\base\BaseCoreService;
+use yii2lab\extension\core\domain\repositories\base\BaseCoreRepository;
+use yii2lab\extension\core\domain\services\base\BaseCoreService;
 use yii2lab\domain\helpers\Helper;
 use yii2module\account\domain\v2\exceptions\ConfirmAlreadyExistsException;
 use yii2module\account\domain\v2\forms\RegistrationForm;

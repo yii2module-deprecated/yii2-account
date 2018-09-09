@@ -5,7 +5,7 @@ namespace yii2module\account\domain\v2\services;
 use Yii;
 use yii\web\NotFoundHttpException;
 use yii2lab\helpers\ClientHelper;
-use yii2lab\misc\enums\TimeEnum;
+use yii2lab\extension\enum\enums\TimeEnum;
 use yii2module\account\domain\v2\entities\TokenEntity;
 use yii2module\account\domain\v2\exceptions\InvalidIpAddressException;
 use yii2module\account\domain\v2\exceptions\NotFoundLoginException;
