@@ -9,7 +9,7 @@ use yii2lab\extension\jwt\entities\JwtEntity;
 use yii2module\account\domain\v2\interfaces\services\JwtInterface;
 use yii2lab\domain\services\base\BaseService;
 use yii2lab\domain\Alias;
-use yii2lab\helpers\yii\ArrayHelper;
+use yii2lab\extension\yii\helpers\ArrayHelper;
 
 /**
  * Class JwtService
