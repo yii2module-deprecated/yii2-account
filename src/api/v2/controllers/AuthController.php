@@ -80,7 +80,7 @@ class AuthController extends Controller {
 		try {
 			Helper::validateForm(PseudoLoginForm::class,$body);
 			$address = ClientHelper::ip();
-			$entity = Yii::$domain->account->authPseudo->pseudoAuthentication($body['login'], $address, $body['email'], $body['parentLogin']);
+			$entity = Yii::$domain->account->authPseudo->authentication($body['login'], $address, $body['email'], $body['parentLogin']);
 			return ['token'=> $entity->token];
 		} catch(UnprocessableEntityHttpException $e) {
 			Yii::$app->response->setStatusCode(422);
