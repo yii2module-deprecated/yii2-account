@@ -5,13 +5,11 @@ namespace yii2module\account\api\v2\controllers;
 use Yii;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2lab\domain\helpers\Helper;
-use yii2lab\rest\domain\rest\Controller;
 use yii2lab\helpers\Behavior;
 use yii2lab\helpers\ClientHelper;
-use yii2module\account\console\forms\LoginForm;
+use yii2lab\rest\domain\rest\Controller;
 use yii2module\account\console\forms\PseudoLoginForm;
 use yii2module\account\domain\v2\interfaces\services\AuthInterface;
-use yii\filters\Cors;
 
 /**
  * Class AuthController
@@ -19,16 +17,18 @@ use yii\filters\Cors;
  * @package yii2module\account\api\v2\controllers
  * @property AuthInterface $service
  */
-class AuthController extends Controller {
+class AuthController extends Controller
+{
 	
 	public $service = 'account.auth';
 	
 	/**
 	 * @inheritdoc
 	 */
-	public function behaviors() {
+	public function behaviors()
+	{
 		return [
-            'cors' => Behavior::cors(),
+			'cors' => Behavior::cors(),
 			'authenticator' => Behavior::apiAuth(['info']),
 		];
 	}
@@ -36,7 +36,8 @@ class AuthController extends Controller {
 	/**
 	 * @inheritdoc
 	 */
-	protected function verbs() {
+	protected function verbs()
+	{
 		return [
 			'login' => ['POST'],
 			'info' => ['GET'],
@@ -46,7 +47,8 @@ class AuthController extends Controller {
 	/**
 	 * @inheritdoc
 	 */
-	public function actions() {
+	public function actions()
+	{
 		return [
 			'info' => [
 				'class' => 'yii2lab\domain\rest\UniAction',
@@ -54,13 +56,14 @@ class AuthController extends Controller {
 				'successStatusCode' => 200,
 				'serviceMethod' => 'getIdentity',
 			],
-            'options' => [
-                'class' => 'yii\rest\OptionsAction',
-            ],
+			'options' => [
+				'class' => 'yii\rest\OptionsAction',
+			],
 		];
 	}
 	
-	public function actionLogin() {
+	public function actionLogin()
+	{
 		$body = Yii::$app->request->getBodyParams();
 		try {
 			//Helper::validateForm(LoginForm::class,$body);
@@ -74,14 +77,15 @@ class AuthController extends Controller {
 			return $response;
 		}
 	}
-
-	public function actionPseudo() {
+	
+	public function actionPseudo()
+	{
 		$body = Yii::$app->request->getBodyParams();
 		try {
-			Helper::validateForm(PseudoLoginForm::class,$body);
+			Helper::validateForm(PseudoLoginForm::class, $body);
 			$address = ClientHelper::ip();
-			$entity = Yii::$domain->account->authPseudo->authentication($body['login'], $address, $body['email'], $body['parentLogin']);
-			return ['token'=> $entity->token];
+			$entity = Yii::$domain->account->authPseudo->authentication($body['login'], $address, $body['email'], !empty($body['parentLogin']) ? $body['parentLogin'] : null);
+			return ['token' => $entity->token];
 		} catch(UnprocessableEntityHttpException $e) {
 			Yii::$app->response->setStatusCode(422);
 			$response = $e->getErrors();
