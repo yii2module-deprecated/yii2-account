@@ -17,6 +17,7 @@ use yii2lab\helpers\ClientHelper;
 use yii2lab\extension\enum\enums\TimeEnum;
 use yii2module\account\domain\v2\forms\LoginForm;
 use yii2module\account\domain\v2\helpers\AuthHelper;
+use yii2module\account\domain\v2\helpers\TokenHelper;
 use yii2module\account\domain\v2\interfaces\services\AuthInterface;
 use yii\web\ServerErrorHttpException;
 use yii2module\account\domain\v2\entities\LoginEntity;
@@ -80,9 +81,10 @@ class AuthService extends BaseService implements AuthInterface {
 		if(empty($token)) {
 			throw new InvalidArgumentException('Empty token');
 		}
-		AuthHelper::setToken($token);
+        $tokenArray = TokenHelper::splitToken($token);
+		AuthHelper::setToken($tokenArray['token']);
 		try {
-			$loginEntity = $this->domain->repositories->login->oneByToken($token, $type);
+            $loginEntity = TokenHelper::authByToken($tokenArray['token'], $tokenArray['type']);
 		} catch(NotFoundHttpException $e) {
 			throw new UnauthorizedHttpException();
 		}
