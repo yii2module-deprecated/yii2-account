@@ -19,12 +19,12 @@ class TokenTest extends Unit
 	
 	protected function _before() {
 		parent::_before();
-		Yii::$domain->account->token->deleteAll();
+		\App::$domain->account->token->deleteAll();
 	}
 	
 	public function testForgeNotFoundLogin() {
 		try {
-			Yii::$domain->account->token->forge(999999, self::IP);
+			\App::$domain->account->token->forge(999999, self::IP);
 			$this->tester->assertTrue(false);
 		} catch(NotFoundLoginException $e) {
 			$this->tester->assertTrue(true);
@@ -32,19 +32,19 @@ class TokenTest extends Unit
 	}
 	
 	public function testDoubleForge() {
-		$token1 = Yii::$domain->account->token->forge(self::USER_ID, self::IP);
-		$token2 = Yii::$domain->account->token->forge(self::USER_ID, self::IP);
+		$token1 = \App::$domain->account->token->forge(self::USER_ID, self::IP);
+		$token2 = \App::$domain->account->token->forge(self::USER_ID, self::IP);
 		$this->tester->assertEquals($token1, $token2);
 		
-		$token3 = Yii::$domain->account->token->forge(self::USER_ID, self::INVALID_IP);
+		$token3 = \App::$domain->account->token->forge(self::USER_ID, self::INVALID_IP);
 		$this->tester->assertNotEquals($token1, $token3);
 		
-		$token4 = Yii::$domain->account->token->forge(self::USER_ID_2, self::IP);
+		$token4 = \App::$domain->account->token->forge(self::USER_ID_2, self::IP);
 		$this->tester->assertNotEquals($token1, $token4);
 	}
 	
 	public function testExpire() {
-		$token = Yii::$domain->account->token->forge(self::USER_ID, self::IP, 1);
+		$token = \App::$domain->account->token->forge(self::USER_ID, self::IP, 1);
 		
 		$this->tester->assertTrue($this->isValidateToken(self::USER_ID, $token, self::IP));
 		$this->tester->assertTrue($this->isValidateToken(self::USER_ID, $token, self::IP));
@@ -54,18 +54,18 @@ class TokenTest extends Unit
 	
 	public function testException()
 	{
-		$token = Yii::$domain->account->token->forge(self::USER_ID, self::IP);
+		$token = \App::$domain->account->token->forge(self::USER_ID, self::IP);
 		$this->tester->assertTrue($this->isValidateToken(self::USER_ID, $token, self::IP));
 		
 		try {
-			Yii::$domain->account->token->validate($token, self::INVALID_IP);
+			\App::$domain->account->token->validate($token, self::INVALID_IP);
 			$this->tester->assertTrue(false);
 		} catch(InvalidIpAddressException $e) {
 			$this->tester->assertTrue(true);
 		}
 		
 		try {
-			Yii::$domain->account->token->validate(self::INVALID_TOKEN, self::IP);
+			\App::$domain->account->token->validate(self::INVALID_TOKEN, self::IP);
 			$this->tester->assertTrue(false);
 		} catch(NotFoundHttpException $e) {
 			$this->tester->assertTrue(true);
@@ -75,8 +75,8 @@ class TokenTest extends Unit
 	
 	public function testDeleteOneByToken()
 	{
-		$token = Yii::$domain->account->token->forge(self::USER_ID, self::IP);
-		Yii::$domain->account->token->deleteOneByToken($token);
+		$token = \App::$domain->account->token->forge(self::USER_ID, self::IP);
+		\App::$domain->account->token->deleteOneByToken($token);
 		$this->tester->assertFalse($this->isValidateToken(self::USER_ID, $token, self::IP));
 	}
 	
@@ -84,7 +84,7 @@ class TokenTest extends Unit
 		$this->tester->assertNotEmpty($token);
 		$this->tester->assertNotEmpty($ip);
 		try {
-			$tokenEntity = Yii::$domain->account->token->validate($token, $ip);
+			$tokenEntity = \App::$domain->account->token->validate($token, $ip);
 			$this->tester->assertEquals($tokenEntity->user_id, $userId);
 			return true;
 		} catch(InvalidIpAddressException $e) {

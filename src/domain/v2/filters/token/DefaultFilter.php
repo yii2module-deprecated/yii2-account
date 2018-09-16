@@ -11,7 +11,7 @@ class DefaultFilter extends BaseScenario {
     public $token;
 
 	public function run() {
-	    $loginEntity = \Dii::$domain->account->repositories->login->oneByToken($this->token);
+	    $loginEntity = \App::$domain->account->repositories->login->oneByToken($this->token);
 	    $this->setData($loginEntity);
 	}
 

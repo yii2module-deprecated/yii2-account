@@ -10,8 +10,8 @@ class JwtFilter extends BaseScenario {
     public $token;
 
 	public function run() {
-        $tokenEntity = \Dii::$domain->jwt->token->decode($this->token);
-        $loginEntity = \Dii::$domain->account->login->oneById($tokenEntity->subject['id']);
+        $tokenEntity = \App::$domain->jwt->token->decode($this->token);
+        $loginEntity = \App::$domain->account->login->oneById($tokenEntity->subject['id']);
         $this->setData($loginEntity);
 	}
 

@@ -10,7 +10,7 @@ use yii\widgets\ActiveForm;
 use yii2lab\extension\menu\helpers\MenuHelper;
 
 $this->title = Yii::t('account/security', 'email');
-Yii::$domain->navigation->breadcrumbs->create($this->title);
+\App::$domain->navigation->breadcrumbs->create($this->title);
 
 ?>
 

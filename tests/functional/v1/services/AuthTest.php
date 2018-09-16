@@ -18,7 +18,7 @@ class AuthTest extends Unit
 	public function testAuthentication()
 	{
 		/** @var LoginEntity $entity */
-		$entity = Yii::$domain->account->auth->authentication(LoginEnum::LOGIN_ADMIN, LoginEnum::PASSWORD);
+		$entity = \App::$domain->account->auth->authentication(LoginEnum::LOGIN_ADMIN, LoginEnum::PASSWORD);
 		$this->tester->assertEntity(LoginEnum::getUser(LoginEnum::ID_ADMIN), $entity);
 		$this->tester->assertEntityFormat(LoginEnum::getEntityFormat(), $entity);
 		//$this->tester->assertEquals(LoginEnum::TOKEN_ADMIN, $entity->token);
@@ -27,7 +27,7 @@ class AuthTest extends Unit
 	public function testAuthenticationBadPassword()
 	{
 		try {
-			Yii::$domain->account->auth->authentication(LoginEnum::LOGIN_ADMIN, LoginEnum::PASSWORD_INCORRECT);
+			\App::$domain->account->auth->authentication(LoginEnum::LOGIN_ADMIN, LoginEnum::PASSWORD_INCORRECT);
 			$this->tester->assertTrue(false);
 		} catch(UnprocessableEntityHttpException $e) {
 			$this->tester->assertUnprocessableEntityHttpException(['password' => 'Incorrect login or password'], $e);
@@ -37,7 +37,7 @@ class AuthTest extends Unit
 	public function testAuthenticationNotFoundUser()
 	{
 		try {
-			Yii::$domain->account->auth->authentication(LoginEnum::LOGIN_NOT_EXISTS, LoginEnum::PASSWORD);
+			\App::$domain->account->auth->authentication(LoginEnum::LOGIN_NOT_EXISTS, LoginEnum::PASSWORD);
 			$this->tester->assertTrue(false);
 		} catch(UnprocessableEntityHttpException $e) {
 			$this->tester->assertUnprocessableEntityHttpException(['password' => 'Incorrect login or password'], $e);
@@ -47,9 +47,9 @@ class AuthTest extends Unit
 	public function testAuthenticationByToken()
 	{
 		/** @var LoginEntity $loginEntity */
-		$loginEntity = Yii::$domain->account->auth->authentication(LoginEnum::LOGIN_ADMIN, LoginEnum::PASSWORD);
+		$loginEntity = \App::$domain->account->auth->authentication(LoginEnum::LOGIN_ADMIN, LoginEnum::PASSWORD);
 		/** @var LoginEntity $entity */
-		$entity = Yii::$domain->account->auth->authenticationByToken($loginEntity->token);
+		$entity = \App::$domain->account->auth->authenticationByToken($loginEntity->token);
 		$this->tester->assertEntity(LoginEnum::getUser(LoginEnum::ID_ADMIN), $entity);
 		$array = $entity->toArray();
 		$this->tester->assertTrue(empty($array['token']));
@@ -60,7 +60,7 @@ class AuthTest extends Unit
 	{
 		try {
 			/** @var LoginEntity $entity */
-			Yii::$domain->account->auth->authenticationByToken(LoginEnum::TOKEN_NOT_INCORRECT);
+			\App::$domain->account->auth->authenticationByToken(LoginEnum::TOKEN_NOT_INCORRECT);
 			$this->tester->assertTrue(false);
 		} catch(UnauthorizedHttpException $e) {
 			$this->tester->assertTrue(true);
@@ -71,7 +71,7 @@ class AuthTest extends Unit
 	{
 		TestAuthHelper::authById(LoginEnum::ID_USER);
 		try {
-			Yii::$domain->account->auth->denyAccess();
+			\App::$domain->account->auth->denyAccess();
 			$this->tester->assertTrue(false);
 		} catch(ForbiddenHttpException $e) {
 			$this->tester->assertTrue(true);
@@ -80,13 +80,13 @@ class AuthTest extends Unit
 	
 	public function testDenyAccessForGuest()
 	{
-		Yii::$domain->account->auth->denyAccess();
+		\App::$domain->account->auth->denyAccess();
 		// for console
 	}
 	
 	public function testLoginRequired()
 	{
-		Yii::$domain->account->auth->loginRequired();
+		\App::$domain->account->auth->loginRequired();
 		// for console
 	}
 	

@@ -27,12 +27,12 @@ class JwtService extends BaseService implements JwtInterface {
         $jwtEntity = new JwtEntity();
         $jwtEntity->subject = $subject;
         $this->prepEntity($jwtEntity);
-        \Dii::$domain->jwt->jwt->sign($jwtEntity, $profileName);
+        \App::$domain->jwt->jwt->sign($jwtEntity, $profileName);
         return $jwtEntity;
     }
 
     public function decode($token, $profileName = self::DEFAULT_PROFILE) {
-        $jwtEntity = \Dii::$domain->jwt->jwt->decode($token, $profileName);
+        $jwtEntity = \App::$domain->jwt->jwt->decode($token, $profileName);
         return $jwtEntity;
     }
 
@@ -71,12 +71,12 @@ class JwtService extends BaseService implements JwtInterface {
  *
  * $jwtEntity = new JwtEntity();
 //$jwtEntity->audience = ["http://api.wooppay.yii"];
-$jwtEntity->subject_id = \Dii::$domain->account->auth->identity->id;
+$jwtEntity->subject_id = \App::$domain->account->auth->identity->id;
 //$jwtEntity->subject_url = "http://api.core.yii/v1/user/" . $jwtEntity->subject_id;
 
-\Dii::$domain->account->jwt->sign($jwtEntity);
+\App::$domain->account->jwt->sign($jwtEntity);
 $jwt = $jwtEntity->token;
-$decodedEntity = \Dii::$domain->account->jwt->decode($jwt);
+$decodedEntity = \App::$domain->account->jwt->decode($jwt);
 
 if($decodedEntity->toArray() != $jwtEntity->toArray()) {
 prr('Not equaled!',1,1);

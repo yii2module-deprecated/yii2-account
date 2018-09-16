@@ -16,14 +16,14 @@ class LoginTest extends Unit
 	public function testOneByLogin()
 	{
 		/** @var LoginEntity $entity */
-		$entity = Yii::$domain->account->login->oneByLogin(LoginEnum::LOGIN_ADMIN);
+		$entity = \App::$domain->account->login->oneByLogin(LoginEnum::LOGIN_ADMIN);
 		$this->tester->assertEntity(LoginEnum::getUser(LoginEnum::ID_ADMIN), $entity);
 	}
 	
 	public function testOne()
 	{
 		/** @var LoginEntity $entity */
-		$entity = Yii::$domain->account->login->oneById(LoginEnum::ID_ADMIN);
+		$entity = \App::$domain->account->login->oneById(LoginEnum::ID_ADMIN);
 		$this->tester->assertEntity(LoginEnum::getUser(LoginEnum::ID_ADMIN), $entity);
 	}
 	
@@ -33,7 +33,7 @@ class LoginTest extends Unit
 		//$query->with('assignments');
 		$query->with('security');
 		/** @var LoginEntity $entity */
-		$entity = Yii::$domain->account->login->oneById(LoginEnum::ID_ADMIN, $query);
+		$entity = \App::$domain->account->login->oneById(LoginEnum::ID_ADMIN, $query);
 		
 		$oo = [
 			'id' => '381949',
@@ -56,7 +56,7 @@ class LoginTest extends Unit
 	public function testOneByLoginNotFound()
 	{
 		try {
-			Yii::$domain->account->login->oneByLogin(LoginEnum::LOGIN_NOT_EXISTS);
+			\App::$domain->account->login->oneByLogin(LoginEnum::LOGIN_NOT_EXISTS);
 			$this->tester->assertTrue(false);
 		} catch(NotFoundHttpException $e) {
 			$this->tester->assertTrue(true);
@@ -66,7 +66,7 @@ class LoginTest extends Unit
 	public function testOneByIdNotFound()
 	{
 		try {
-			Yii::$domain->account->login->oneById(LoginEnum::ID_NOT_EXISTS);
+			\App::$domain->account->login->oneById(LoginEnum::ID_NOT_EXISTS);
 			$this->tester->assertTrue(false);
 		} catch(NotFoundHttpException $e) {
 			$this->tester->assertTrue(true);
@@ -77,7 +77,7 @@ class LoginTest extends Unit
 	{
 		/** @var BaseEntity[] $collection */
 		$query = Query::forge();
-		$collection = Yii::$domain->account->login->all($query);
+		$collection = \App::$domain->account->login->all($query);
 		$this->tester->assertCollection([
 			0 => LoginEnum::getUser(LoginEnum::ID_ADMIN),
 			2 => LoginEnum::getUser(LoginEnum::ID_USER),

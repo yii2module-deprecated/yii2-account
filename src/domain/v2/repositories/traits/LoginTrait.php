@@ -80,7 +80,7 @@ trait LoginTrait {
 			}
 			return $collection;
 		}
-		$user['roles'] = Yii::$domain->rbac->assignment->allRoleNamesByUserId($user['id']);
+		$user['roles'] = \App::$domain->rbac->assignment->allRoleNamesByUserId($user['id']);
 		$user = $this->alias->decode($user);
 		return parent::forgeEntity($user);
 	}

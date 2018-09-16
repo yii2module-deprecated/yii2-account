@@ -7,7 +7,7 @@ use yii\helpers\Html;
 use yii2lab\app\domain\helpers\EnvService;
 
 $this->title = Yii::t('account/auth', 'login_title');
-//Yii::$domain->navigation->breadcrumbs->create($this->title);
+//\App::$domain->navigation->breadcrumbs->create($this->title);
 
 $loginForm = $this->render('helpers/_loginForm.php', [
 	'model' => $model,

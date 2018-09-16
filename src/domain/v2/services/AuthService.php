@@ -56,14 +56,14 @@ class AuthService extends BaseService implements AuthInterface {
 	
 	private function checkStatus(LoginEntity $entity)
 	{
-	    if (Yii::$domain->account->login->isForbiddenByStatus($entity->status)) {
+	    if (\App::$domain->account->login->isForbiddenByStatus($entity->status)) {
 	        throw new ServerErrorHttpException(Yii::t('account/login', 'user_status_forbidden'));
 	    }
 	}
 
 	public function getIdentity() {
 		if(Yii::$app->user->isGuest) {
-			Yii::$domain->account->auth->loginRequired();
+			\App::$domain->account->auth->loginRequired();
 		}
 		return Yii::$app->user->identity;
 	}
@@ -130,7 +130,7 @@ class AuthService extends BaseService implements AuthInterface {
 	}
 	
 	public function checkOwnerId(BaseEntity $entity, $fieldName = 'user_id') {
-		if($entity->{$fieldName} != Yii::$domain->account->auth->identity->id) {
+		if($entity->{$fieldName} != \App::$domain->account->auth->identity->id) {
 			throw new ForbiddenHttpException();
 		}
 	}

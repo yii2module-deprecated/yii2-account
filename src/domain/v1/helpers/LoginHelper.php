@@ -100,7 +100,7 @@ class LoginHelper {
 	
 	protected static function getPrefixExp()
 	{
-		$prefixList = Yii::$domain->account->login->prefixList;
+		$prefixList = \App::$domain->account->login->prefixList;
 		usort($prefixList, 'sortByLen');
 		return implode('|', $prefixList);
 	}

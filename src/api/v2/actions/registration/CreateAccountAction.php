@@ -13,7 +13,7 @@ class CreateAccountAction extends UniAction {
 		$email = Yii::$app->request->getBodyParam('email');
 		
 		try {
-			Yii::$domain->account->registration->createTempAccount($login, $email);
+			\App::$domain->account->registration->createTempAccount($login, $email);
 			Yii::$app->response->setStatusCode($this->successStatusCode);
 		} catch(ConfirmAlreadyExistsException $e) {
 			Yii::$app->response->setStatusCode(202);
