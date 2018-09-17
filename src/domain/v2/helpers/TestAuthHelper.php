@@ -27,7 +27,7 @@ class TestAuthHelper {
 	
 	public static function authPseudo($login, $email = null, $parentLogin = null) {
 		self::defineAccountDomain();
-		$userEntity = Yii::$domain->account->authPseudo->authentication($login, $address = ClientHelper::ip(), $email = null, $parentLogin = null);
+		$userEntity = \App::$domain->account->authPseudo->authentication($login, $address = ClientHelper::ip(), $email = null, $parentLogin = null);
 		Yii::$app->user->setIdentity($userEntity);
 	}
 	public static function defineAccountDomain() {
