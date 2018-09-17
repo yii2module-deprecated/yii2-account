@@ -14,14 +14,14 @@ class TestAuthHelper {
 	
 	public static function authByLogin($login, $password = self::ADMIN_PASSWORD) {
 		self::defineAccountDomain();
-		$userEntity = Yii::$domain->account->auth->authentication($login, $password);
+		$userEntity = \App::$domain->account->auth->authentication($login, $password);
 		Yii::$app->user->setIdentity($userEntity);
 	}
 	
 	public static function authById($id) {
 		self::defineAccountDomain();
 		/** @var LoginEntity $userEntity */
-		$userEntity = Yii::$domain->account->login->oneById($id);
+		$userEntity = \App::$domain->account->login->oneById($id);
 		Yii::$app->user->setIdentity($userEntity);
 	}
 	

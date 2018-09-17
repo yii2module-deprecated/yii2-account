@@ -35,7 +35,7 @@ class RegistrationController extends Controller
 		$model = new RegistrationForm();
 		$model->scenario = RegistrationForm::SCENARIO_CHECK;
 		$callback = function($model) {
-			Yii::$domain->account->registration->activateAccount($model->login, $model->activation_code);
+			\App::$domain->account->registration->activateAccount($model->login, $model->activation_code);
 			$session['login'] = $model->login;
 			$session['activation_code'] = $model->activation_code;
 			Yii::$app->session->set('registration', $session);
@@ -53,16 +53,16 @@ class RegistrationController extends Controller
 		if(empty($session['login']) || empty($session['activation_code'])) {
 			return $this->redirect(['/user/registration']);
 		}
-		$isExists = Yii::$domain->account->confirm->isHas($session['login'], RegistrationService::CONFIRM_ACTION);
+		$isExists = \App::$domain->account->confirm->isHas($session['login'], RegistrationService::CONFIRM_ACTION);
 		if(!$isExists) {
-			Yii::$domain->navigation->alert->create(['account/registration', 'temp_user_not_found'], Alert::TYPE_DANGER);
+			\App::$domain->navigation->alert->create(['account/registration', 'temp_user_not_found'], Alert::TYPE_DANGER);
 			return $this->redirect(['/user/registration']);
 		}
 		$model = new SetSecurityForm();
 		$callback = function($model) use ($session) {
-			Yii::$domain->account->registration->createTpsAccount($session['login'], $session['activation_code'], $model->password, $model->email);
-			Yii::$domain->account->auth->authenticationFromWeb($session['login'], $model->password, true);
-			Yii::$domain->navigation->alert->create(['account/registration', 'registration_success'], Alert::TYPE_SUCCESS);
+			\App::$domain->account->registration->createTpsAccount($session['login'], $session['activation_code'], $model->password, $model->email);
+			\App::$domain->account->auth->authenticationFromWeb($session['login'], $model->password, true);
+			\App::$domain->navigation->alert->create(['account/registration', 'registration_success'], Alert::TYPE_SUCCESS);
 			return $this->goHome();
 		};
 		$this->validateForm($model,$callback);

@@ -13,14 +13,14 @@ class LoginHelper {
 	public static function getLoginByQuery(Query $query = null) {
 		$query2 = Query::forge();
 		$query2->where($query->getParam('where'));
-		return Yii::$domain->account->login->one($query2);
+		return \App::$domain->account->login->one($query2);
 	}
 	
 	public static function getLogin($id) {
 		try {
-			return Yii::$domain->account->login->oneById($id);
+			return \App::$domain->account->login->oneById($id);
 		} catch(NotFoundHttpException $e) {}
-		return Yii::$domain->account->login->oneByLogin($id);
+		return \App::$domain->account->login->oneByLogin($id);
 	}
  
 	public static function format($login, $mask = null)
@@ -115,7 +115,7 @@ class LoginHelper {
 	
 	protected static function getPrefixExp()
 	{
-		$prefixList = Yii::$domain->account->login->prefixList;
+		$prefixList = \App::$domain->account->login->prefixList;
 		usort($prefixList, 'sortByLen');
 		return implode('|', $prefixList);
 	}

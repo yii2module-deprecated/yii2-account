@@ -13,7 +13,7 @@ class SecurityTest extends Unit
 	public function testOneById()
 	{
 		/** @var LoginEntity $entity */
-		$entity = Yii::$domain->account->security->oneById(LoginEnum::ID_ADMIN);
+		$entity = \App::$domain->account->security->oneById(LoginEnum::ID_ADMIN);
 		$this->tester->assertEntity([
 			'id' => LoginEnum::ID_ADMIN,
 			'email' => '',
@@ -24,7 +24,7 @@ class SecurityTest extends Unit
 	
 	public function testSecurityCheck()
 	{
-		$collection = Yii::$domain->account->security->all();
+		$collection = \App::$domain->account->security->all();
 		$this->tester->assertEquals([], $collection);
 	}
 	

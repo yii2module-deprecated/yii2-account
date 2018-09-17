@@ -17,6 +17,7 @@ use yii2lab\helpers\ClientHelper;
 use yii2lab\extension\enum\enums\TimeEnum;
 use yii2module\account\domain\v2\forms\LoginForm;
 use yii2module\account\domain\v2\helpers\AuthHelper;
+use yii2module\account\domain\v2\helpers\TokenHelper;
 use yii2module\account\domain\v2\interfaces\services\AuthInterface;
 use yii\web\ServerErrorHttpException;
 use yii2module\account\domain\v2\entities\LoginEntity;
@@ -55,14 +56,14 @@ class AuthService extends BaseService implements AuthInterface {
 	
 	private function checkStatus(LoginEntity $entity)
 	{
-	    if (Yii::$domain->account->login->isForbiddenByStatus($entity->status)) {
+	    if (\App::$domain->account->login->isForbiddenByStatus($entity->status)) {
 	        throw new ServerErrorHttpException(Yii::t('account/login', 'user_status_forbidden'));
 	    }
 	}
 
 	public function getIdentity() {
 		if(Yii::$app->user->isGuest) {
-			Yii::$domain->account->auth->loginRequired();
+			\App::$domain->account->auth->loginRequired();
 		}
 		return Yii::$app->user->identity;
 	}
@@ -80,9 +81,10 @@ class AuthService extends BaseService implements AuthInterface {
 		if(empty($token)) {
 			throw new InvalidArgumentException('Empty token');
 		}
-		AuthHelper::setToken($token);
+        $tokenArray = TokenHelper::splitToken($token);
+		AuthHelper::setToken($tokenArray['token']);
 		try {
-			$loginEntity = $this->domain->repositories->login->oneByToken($token, $type);
+            $loginEntity = TokenHelper::authByToken($tokenArray['token'], $tokenArray['type']);
 		} catch(NotFoundHttpException $e) {
 			throw new UnauthorizedHttpException();
 		}
@@ -128,7 +130,7 @@ class AuthService extends BaseService implements AuthInterface {
 	}
 	
 	public function checkOwnerId(BaseEntity $entity, $fieldName = 'user_id') {
-		if($entity->{$fieldName} != Yii::$domain->account->auth->identity->id) {
+		if($entity->{$fieldName} != \App::$domain->account->auth->identity->id) {
 			throw new ForbiddenHttpException();
 		}
 	}

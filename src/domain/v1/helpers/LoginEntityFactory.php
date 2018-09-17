@@ -14,7 +14,7 @@ class LoginEntityFactory {
 			return null;
 		}
 		$user = ArrayHelper::toArray($user);
-		foreach(Yii::$domain->account->login->relations as $propName => $serviceName) {
+		foreach(\App::$domain->account->login->relations as $propName => $serviceName) {
 			list($domain, $service) = explode(DOT, $serviceName);
 			$user[$domain][$service] = ServiceHelper::oneById($serviceName, $user['login']);
 		}
@@ -26,7 +26,7 @@ class LoginEntityFactory {
 			return [];
 		}
 		if(!ArrayHelper::isIndexed($data)) {
-			return Yii::$domain->account->factory->entity->create('login', $data);
+			return \App::$domain->account->factory->entity->create('login', $data);
 		}
 		$result = [];
 		foreach($data as $item) {

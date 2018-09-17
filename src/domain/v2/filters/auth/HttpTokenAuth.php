@@ -24,7 +24,7 @@ class HttpTokenAuth extends AuthMethod
 		/** @var Request $request */
 		$token = AuthHelper::getTokenFromQuery();
 		if ($token) {
-			$identity = Yii::$domain->account->auth->authenticationByToken($token, get_class($this));
+			$identity = \App::$domain->account->auth->authenticationByToken($token, get_class($this));
 			if ($identity === null) {
 				$this->handleFailure($response);
 			}

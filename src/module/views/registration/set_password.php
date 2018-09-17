@@ -8,8 +8,8 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 $this->title = Yii::t('account/registration', 'set_password_title');
-Yii::$domain->navigation->breadcrumbs->create(['account/registration', 'title']);
-Yii::$domain->navigation->breadcrumbs->create($this->title);
+\App::$domain->navigation->breadcrumbs->create(['account/registration', 'title']);
+\App::$domain->navigation->breadcrumbs->create($this->title);
 ?>
 <div class="user-create">
     <h1><?= Html::encode($this->title) ?></h1>

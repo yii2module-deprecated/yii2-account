@@ -10,8 +10,8 @@ use yii2lab\app\domain\helpers\EnvService;
 use yii2lab\rest\domain\helpers\ApiVersionConfig;
 
 $this->title = Yii::t('account/registration', 'create_title');
-//Yii::$domain->navigation->breadcrumbs->create(['account/registration', 'title']);
-Yii::$domain->navigation->breadcrumbs->create($this->title);
+//\App::$domain->navigation->breadcrumbs->create(['account/registration', 'title']);
+\App::$domain->navigation->breadcrumbs->create($this->title);
 ?>
 <div class="user-signup">
     <h1><?= Html::encode($this->title) ?></h1>

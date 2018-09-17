@@ -63,10 +63,10 @@ class LoginService extends ActiveBaseService implements LoginInterface {
 				if (!empty($data['role'])){
 					$role = ArrayHelper::toArray($data['role']);
 					foreach ($role as $item){
-						Yii::$domain->rbac->assignment->assign($item, $entity->id);
+						\App::$domain->rbac->assignment->assign($item, $entity->id);
 					}
 				} else {
-					Yii::$domain->rbac->assignment->assign($this->defaultRole, $entity->id);
+					\App::$domain->rbac->assignment->assign($this->defaultRole, $entity->id);
 				}
 			}
 			return $entity;

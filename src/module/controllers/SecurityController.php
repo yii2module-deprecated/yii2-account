@@ -40,15 +40,15 @@ class SecurityController extends Controller {
 			$model->setAttributes($body, false);
 			if($model->validate()) {
 				try {
-					Yii::$domain->account->security->changeEmail($model->getAttributes());
-					Yii::$domain->navigation->alert->create(['account/security', 'email_changed_success'], Alert::TYPE_SUCCESS);
+					\App::$domain->account->security->changeEmail($model->getAttributes());
+					\App::$domain->navigation->alert->create(['account/security', 'email_changed_success'], Alert::TYPE_SUCCESS);
 				} catch (UnprocessableEntityHttpException $e) {
 					$model->addErrorsFromException($e);
 				}
 			}
 		} else {
 			/** @var SecurityEntity $securityEntity */
-			$securityEntity = Yii::$domain->account->security->oneById(Yii::$app->user->id);
+			$securityEntity = \App::$domain->account->security->oneById(Yii::$app->user->id);
 			$model->email = $securityEntity->email;
 		}
 		return $this->render('email', [
@@ -65,8 +65,8 @@ class SecurityController extends Controller {
 			if($model->validate()) {
 				$bodyPassword = $model->getAttributes(['password', 'new_password']);
 				try {
-					Yii::$domain->account->security->changePassword($bodyPassword);
-					Yii::$domain->navigation->alert->create(['account/security', 'password_changed_success'], Alert::TYPE_SUCCESS);
+					\App::$domain->account->security->changePassword($bodyPassword);
+					\App::$domain->navigation->alert->create(['account/security', 'password_changed_success'], Alert::TYPE_SUCCESS);
 				} catch (UnprocessableEntityHttpException $e) {
 					$model->addErrorsFromException($e);
 				}

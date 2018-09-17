@@ -112,6 +112,6 @@ class ConfirmService extends BaseActiveService implements ConfirmInterface {
 		$login = LoginHelper::pregMatchLogin($login);
 		$loginParts = LoginHelper::splitLogin($login);
 		$message = Yii::t('account/confirm', 'confirmation_code {code}', ['code' => $activation_code]);
-		Yii::$domain->notify->sms->send($loginParts['phone'], $message);
+		\App::$domain->notify->sms->send($loginParts['phone'], $message);
 	}
 }

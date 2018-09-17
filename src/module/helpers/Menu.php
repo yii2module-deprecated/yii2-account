@@ -45,13 +45,13 @@ class Menu implements MenuInterface {
 	
 	public static function getUseName() {
 		$title = null;
-		if(Yii::$domain->has('profile')) {
+		if(\App::$domain->has('profile')) {
 			/** @var PersonEntity $personEntity */
-			$personEntity = Yii::$domain->profile->person->getSelf();
+			$personEntity = \App::$domain->profile->person->getSelf();
 			$title = $personEntity->title;
 		}
 		if(!$title) {
-			$title = Yii::$domain->account->auth->identity->login;
+			$title = \App::$domain->account->auth->identity->login;
 			if(LoginHelper::validate($title)) {
 				$title = LoginHelper::format($title);
 			}

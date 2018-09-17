@@ -24,8 +24,21 @@ interface AuthInterface {
 	 * @return LoginEntity
 	 */
 	public function authentication($login, $password, $ip = null);
+
+    /**
+     * @return LoginEntity
+     */
 	public function authenticationFromWeb($login, $password, $rememberMe = false);
+
+    /**
+     * @return LoginEntity
+     */
 	public function authenticationByToken($token, $type = null);
+
+
+    /**
+     * @return LoginEntity
+     */
 	public function getIdentity();
 	public function logout();
 	public function denyAccess();

@@ -34,7 +34,7 @@ class RegistrationService extends BaseService implements RegistrationInterface {
 		}
         Helper::validateForm(RegistrationForm::class, $body, $scenario);
 		$this->checkLoginExistsInTps($login);
-		Yii::$domain->account->confirm->send($login, self::CONFIRM_ACTION, $this->expire, ArrayHelper::toArray($body));
+		\App::$domain->account->confirm->send($login, self::CONFIRM_ACTION, $this->expire, ArrayHelper::toArray($body));
 		/*try {
 		
 		} catch(ConfirmAlreadyExistsException $e) {
@@ -54,7 +54,7 @@ class RegistrationService extends BaseService implements RegistrationInterface {
 	public function activateAccount($login, $activation_code) {
 		$login = LoginHelper::pregMatchLogin($login);
 		$this->checkActivationCode($login, $activation_code);
-		Yii::$domain->account->confirm->activate($login, self::CONFIRM_ACTION, $activation_code);
+		\App::$domain->account->confirm->activate($login, self::CONFIRM_ACTION, $activation_code);
 	}
 	
 	public function createTpsAccount($login, $activation_code, $password, $email = null) {
@@ -74,8 +74,8 @@ class RegistrationService extends BaseService implements RegistrationInterface {
 		}
 		
 		$data = compact('login','password','email');
-		Yii::$domain->account->login->create($data);
-		Yii::$domain->account->confirm->delete($login, self::CONFIRM_ACTION);
+		\App::$domain->account->login->create($data);
+		\App::$domain->account->confirm->delete($login, self::CONFIRM_ACTION);
 	}
 
 	private function checkLoginExistsInTps($login) {
@@ -93,7 +93,7 @@ class RegistrationService extends BaseService implements RegistrationInterface {
 	private function verifyActivationCode($login, $activation_code) {
 		$login = LoginHelper::pregMatchLogin($login);
 		try {
-			return Yii::$domain->account->confirm->verifyCode($login, self::CONFIRM_ACTION, $activation_code);
+			return \App::$domain->account->confirm->verifyCode($login, self::CONFIRM_ACTION, $activation_code);
 		} catch(ConfirmIncorrectCodeException $e) {
 			$error = new ErrorCollection();
 			$error->add('activation_code', 'account/confirm', 'incorrect_code');

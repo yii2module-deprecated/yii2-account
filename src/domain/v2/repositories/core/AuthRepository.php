@@ -22,7 +22,7 @@ class AuthRepository extends BaseCoreRepository implements AuthInterface {
 		/** @var LoginEntity $entity */
 		$entity = parent::forgeEntity($data, $class);
 		if(empty($entity->status)) {
-			$entity->status = Yii::$domain->account->login->defaultStatus;
+			$entity->status = \App::$domain->account->login->defaultStatus;
 		}
 		return $entity;
 	}

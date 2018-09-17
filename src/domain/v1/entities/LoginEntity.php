@@ -73,7 +73,7 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 		if(!empty($this->balance)) {
 			return $this->balance;
 		}
-		return Yii::$domain->account->auth->getBalance();
+		return \App::$domain->account->auth->getBalance();
 	}
 
 	public function getUsername() {
