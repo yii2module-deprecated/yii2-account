@@ -44,6 +44,15 @@ interface AuthInterface {
 	public function denyAccess();
 	public function breakSession();
 	public function loginRequired();
+	
+	/**
+	 * @param BaseEntity $entity
+	 * @param string     $fieldName
+	 *
+	 * @return mixed
+	 *
+	 * @deprecated
+	 */
 	public function checkOwnerId(BaseEntity $entity, $fieldName = 'user_id');
 	
 }
