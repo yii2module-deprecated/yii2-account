@@ -97,6 +97,7 @@ class AuthService extends BaseService implements AuthInterface {
 	
 	public function logout() {
 		Yii::$app->user->logout();
+		AuthHelper::setToken('');
 	}
 	
 	public function denyAccess() {
