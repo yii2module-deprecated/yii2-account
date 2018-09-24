@@ -1,14 +1,11 @@
 <?php
-/**
- * WebUser
- */
+
 namespace yii2module\account\domain\v2\web;
 
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\UnauthorizedHttpException;
 use yii2module\account\domain\v2\entities\LoginEntity;
-use yii2lab\extension\registry\helpers\Registry;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\InvalidValueException;
@@ -93,6 +90,7 @@ class User extends \yii\web\User
 
 	protected function renewAuthStatus()
 	{
+		/** @var LoginEntity|null $identity */
 		$identity = null;
 		$session = Yii::$app->getSession();
 		$id = $session->getHasSessionId() || $session->getIsActive() ? $session->get($this->idParam) : null;
