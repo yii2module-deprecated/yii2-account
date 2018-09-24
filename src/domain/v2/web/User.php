@@ -4,7 +4,9 @@
  */
 namespace yii2module\account\domain\v2\web;
 
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
+use yii\web\UnauthorizedHttpException;
 use yii2module\account\domain\v2\entities\LoginEntity;
 use yii2lab\extension\registry\helpers\Registry;
 use Yii;
@@ -27,6 +29,14 @@ class User extends \yii\web\User
 	{
 		if ($this->enableAutoLogin && !isset($this->identityCookie['name'])) {
 			throw new InvalidConfigException('User::identityCookie must contain the "name" element.');
+		}
+	}
+	
+	public function loginRequired($checkAjax = true, $checkAcceptHeader = true) {
+		try {
+			return parent::loginRequired($checkAjax, $checkAcceptHeader);
+		} catch(ForbiddenHttpException $e) {
+			throw new UnauthorizedHttpException();
 		}
 	}
 	
