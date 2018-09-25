@@ -110,6 +110,7 @@ class AuthService extends BaseService implements AuthInterface {
 	
 	public function loginRequired() {
 		try {
+
 			Yii::$app->user->loginRequired();
 		} catch(InvalidConfigException $e) {
 			return;
@@ -117,7 +118,7 @@ class AuthService extends BaseService implements AuthInterface {
 	}
 	
 	public function breakSession() {
-		if(APP != CONSOLE) {
+		if(APP == CONSOLE) {
 			return;
 		}
 		if(APP == API) {
