@@ -64,10 +64,12 @@ class LoginHelper {
 	public static function splitLogin($login)
 	{
 		$result['prefix'] = '';
+        $result['country_code'] = '';
 		$result['phone'] = $login;
-		if (preg_match('/^(' . self::getPrefixExp() . ')([\s\S]+)$/', $login, $match)){
+		if (preg_match('/^(' . self::getPrefixExp() . ')?([+]?[\d]{1,2})?([\d]{10})$/', $login, $match)){
 			$result['prefix'] = $match[1];
-			$result['phone'] = $match[2];
+            $result['country_code'] = $match[2];
+			$result['phone'] = $match[3];
 		}
 		return $result;
 	}
@@ -76,7 +78,7 @@ class LoginHelper {
 	{
 		$login = self::cleanLoginOfChar($login);
 		$login = self::replaceCountryCode($login);
-		return (boolean) preg_match('/^(' . self::getPrefixExp() . ')?([\d]{11})$/', $login);
+		return (boolean) preg_match('/^(' . self::getPrefixExp() . ')([+]?\d{1,2}?)?([\d]{10})$/', $login);
 	}
 	
 	protected static function cleanLoginOfChar($login)
