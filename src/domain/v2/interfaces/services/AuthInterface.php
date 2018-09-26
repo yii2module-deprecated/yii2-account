@@ -35,6 +35,7 @@ interface AuthInterface {
      */
 	public function authenticationByToken($token, $type = null);
 
+    public function login(LoginEntity $loginEntity, $rememberMe = false);
 
     /**
      * @return LoginEntity
