@@ -37,11 +37,27 @@ class User extends \yii\web\User
 		}
 	}
 
-	protected function regenerateCsrfToken() {
-		if(APP == CONSOLE) {
-			return;
+	public function login(IdentityInterface $identity, $duration = 0)
+	{
+		if ($this->beforeLogin($identity, false, $duration)) {
+			$this->switchIdentity($identity, $duration);
+			$id = $identity->getId();
+			if(APP != CONSOLE) {
+				$ip = Yii::$app->getRequest()->getUserIP();
+				if ($this->enableSession) {
+					$log = "User '$id' logged in from $ip with duration $duration.";
+				} else {
+					$log = "User '$id' logged in from $ip. Session not enabled.";
+				}
+				
+				$this->regenerateCsrfToken();
+				
+				Yii::info($log, __METHOD__);
+			}
+			$this->afterLogin($identity, false, $duration);
 		}
-		parent::regenerateCsrfToken();
+		
+		return !$this->getIsGuest();
 	}
 	
 	public function getIdentity($autoRenew = true)

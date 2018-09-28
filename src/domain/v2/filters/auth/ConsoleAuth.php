@@ -4,21 +4,41 @@ namespace yii2module\account\domain\v2\filters\auth;
 
 use Yii;
 use yii\filters\auth\AuthMethod;
+use yii\helpers\ArrayHelper;
+use yii\web\IdentityInterface;
 use yii\web\UnauthorizedHttpException;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
+use yii2lab\extension\console\helpers\Error;
 use yii2lab\extension\console\helpers\input\Enter;
-use yii2lab\extension\console\helpers\Output;
+use yii2lab\extension\enum\enums\TimeEnum;
+use yii2module\account\domain\v2\entities\LoginEntity;
 use yii2module\account\domain\v2\forms\LoginForm;
-use yii2module\account\domain\v2\helpers\AuthHelper;
-use yii2module\error\domain\helpers\UnProcessibleHelper;
 
 class ConsoleAuth extends AuthMethod
 {
+	
+	const IDENTITY_CACHE_KEY = 'SECURED_CONSOLE_IDENTITY_Ah1M9R8ai50uFDOdhfZHmEXK7mMZC641';
+	
 	/**
-	 * @var string the HTTP authentication realm
+	 * @inheritdoc
 	 */
-	public $realm = 'api';
-
+	public function authenticate($user, $request, $response)
+	{
+		$identity = null;
+		if(Yii::$app->user->isGuest) {
+			$identity = $this->getIdentity();
+			if(!$identity instanceof LoginEntity) {
+				$this->handleFailure(null);
+			}
+			\App::$domain->account->auth->login($identity, TimeEnum::SECOND_PER_MINUTE);
+		}
+		return $identity;
+	}
+	
+	public function handleFailure($response)
+	{
+		Error::fatal('You not authorized!');
+	}
 	
 	public function beforeAction($action) {
 		$response = $this->response ?: Yii::$app->getResponse();
@@ -31,11 +51,9 @@ class ConsoleAuth extends AuthMethod
 			);
 		} catch (UnauthorizedHttpException $e) {
 			
-			
 			if ($this->isOptional($action)) {
 				return true;
 			}
-			
 			throw $e;
 		}
 		
@@ -49,7 +67,7 @@ class ConsoleAuth extends AuthMethod
 		return false;
 	}
 	
-	private function auth() {
+	public function auth() {
 		$identity = null;
 		$default = null;
 		$form = new LoginForm;
@@ -57,35 +75,28 @@ class ConsoleAuth extends AuthMethod
 		try {
 			$identity = \App::$domain->account->auth->authentication($data['login'], $data['password']);
 		} catch(UnprocessableEntityHttpException $e) {
-			$errors = UnProcessibleHelper::getFirstErrors($e->getErrors());
-			Output::arr($errors, 'Validation error');
-			$this->auth();
+			$this->handleFailure(null);
 		}
-		Yii::$app->cache->set('identity', $identity);
 		return $identity;
 	}
 	
-	/**
-	 * @inheritdoc
-	 */
-	public function authenticate($user, $request, $response)
-	{
-		$identity = null;
-		if(Yii::$app->user->isGuest) {
-			//Yii::$app->cache->set('identity', null);
-			$identity = Yii::$app->cache->get('identity');
-			if(!$identity) {
-				$identity = $this->auth();
-			}
-			/*if(!$identity instanceof IdentityInterface) {
-				$identity = new LoginEntity($identity);
-			}*/
-			Yii::$app->user->setIdentity($identity);
-			AuthHelper::setToken($identity->token);
+	public function getIdentity() {
+		$identity = Yii::$app->cache->get(self::IDENTITY_CACHE_KEY);
+		if(!$identity) {
+			$identity = $this->auth();
+		} else {
+			//$identity = \App::$domain->account->auth->authenticationByToken($identity->token);
 		}
+		if($identity) {
+			if(!$identity instanceof IdentityInterface) {
+				$identity = ArrayHelper::toArray($identity);
+				$identity = new LoginEntity($identity);
+			}
+		}
+		Yii::$app->cache->set(self::IDENTITY_CACHE_KEY, $identity);
 		return $identity;
 	}
-
+	
 	/**
 	 * @inheritdoc
 	 */
