@@ -2,7 +2,6 @@
 
 namespace yii2module\account\domain\v2\filters\auth;
 
-use Yii;
 use yii\filters\auth\AuthMethod;
 use yii\web\Request;
 use yii\web\Response;
