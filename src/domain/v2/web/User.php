@@ -36,6 +36,13 @@ class User extends \yii\web\User
 			throw new UnauthorizedHttpException();
 		}
 	}
+
+	protected function regenerateCsrfToken() {
+		if(APP == CONSOLE) {
+			return;
+		}
+		parent::regenerateCsrfToken();
+	}
 	
 	public function getIdentity($autoRenew = true)
 	{

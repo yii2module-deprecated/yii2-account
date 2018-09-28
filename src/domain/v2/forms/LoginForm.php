@@ -9,6 +9,9 @@ use yii2module\account\domain\v2\validators\LoginValidator;
 
 class LoginForm extends Model
 {
+	
+	const SCENARIO_SIMPLE = 'SCENARIO_SIMPLE';
+	
 	public $login;
 	public $password;
 	public $email;
@@ -31,6 +34,23 @@ class LoginForm extends Model
 			[['password'], 'string', 'min' => 8],
 			['rememberMe', 'boolean'],
 		    [['status'], 'safe'],
+		];
+	}
+	
+	public function scenarios() {
+		return [
+			self::SCENARIO_DEFAULT => [
+				'login',
+				'password',
+				'email',
+				'role',
+				'status',
+				'rememberMe',
+			],
+			self::SCENARIO_SIMPLE => [
+				'login',
+				'password',
+			],
 		];
 	}
 	
