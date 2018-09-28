@@ -70,13 +70,18 @@ class AuthService extends BaseService implements AuthInterface {
 
 	public function authenticationFromWeb($login, $password, $rememberMe = false) {
 		$loginEntity = $this->authentication($login, $password);
-		if(empty($loginEntity)) {
-			return null;
-		}
-		$duration = $rememberMe ? $this->rememberExpire : 0;
-		Yii::$app->user->login($loginEntity, $duration);
+		$this->login($loginEntity, $rememberMe);
 	}
-	
+
+	public function login(LoginEntity $loginEntity, $rememberMe = false) {
+        if(empty($loginEntity)) {
+            return null;
+        }
+        $duration = $rememberMe ? $this->rememberExpire : 0;
+        Yii::$app->user->login($loginEntity, $duration);
+        AuthHelper::setToken($loginEntity->token);
+    }
+
 	public function authenticationByToken($token, $type = null) {
 		if(empty($token)) {
 			throw new InvalidArgumentException('Empty token');
@@ -110,6 +115,7 @@ class AuthService extends BaseService implements AuthInterface {
 	
 	public function loginRequired() {
 		try {
+
 			Yii::$app->user->loginRequired();
 		} catch(InvalidConfigException $e) {
 			return;
@@ -117,7 +123,7 @@ class AuthService extends BaseService implements AuthInterface {
 	}
 	
 	public function breakSession() {
-		if(APP != CONSOLE) {
+		if(APP == CONSOLE) {
 			return;
 		}
 		if(APP == API) {
