@@ -57,7 +57,7 @@ class AuthHelper {
 	}
 	
 	public static function getTokenFromQuery() {
-		if(API == CONSOLE) {
+		if(APP == CONSOLE) {
 			return null;
 		}
 		$token = Yii::$app->request->headers->get(HttpHeaderEnum::AUTHORIZATION);

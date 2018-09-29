@@ -3,9 +3,9 @@
 namespace yii2module\account\domain\v2\entities;
 
 use yii\helpers\ArrayHelper;
+use yii\web\IdentityInterface;
 use yii2lab\app\domain\helpers\EnvService;
 use yii2lab\domain\BaseEntity;
-use yii\web\IdentityInterface;
 use yii2lab\domain\values\TimeValue;
 use yii2lab\rbac\domain\entities\AssignmentEntity;
 use yii2module\account\domain\v2\helpers\LoginHelper;
@@ -15,20 +15,23 @@ use yii2module\account\domain\v2\helpers\LoginHelper;
  *
  * @package yii2module\account\domain\v2\entities
  *
- * @property integer $id
- * @property string $login
- * @property integer $status
- * @property string $token
- * @property array $roles
- * @property string $username
- * @property string $created_at
- * @property SecurityEntity $security
+ * @property integer          $id
+ * @property string           $login
+ * @property integer          $status
+ * @property string           $token
+ * @property array            $roles
+ * @property string           $username
+ * @property string           $created_at
+ * @property SecurityEntity   $security
  * @property AssignmentEntity $assignments
- * @property-read string $email
- * @property string $password
+ * @property-read string      $email
+ * @property string           $password
+ * @property string           $parent_login
+ * @property string           $subject_type
  */
-class LoginEntity extends BaseEntity implements IdentityInterface {
-
+class LoginEntity extends BaseEntity implements IdentityInterface
+{
+	
 	protected $id;
 	protected $login;
 	protected $status;
@@ -40,13 +43,15 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 	protected $created_at;
 	protected $password;
 	
-	public function init() {
+	public function init()
+	{
 		parent::init();
 		$this->created_at = new TimeValue;
 		$this->created_at->setNow();
 	}
 	
-	public function fieldType() {
+	public function fieldType()
+	{
 		$fieldTypeConfig = [
 			'id' => 'integer',
 			'parent_id' => 'integer',
@@ -56,7 +61,8 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 		return $fieldTypeConfig;
 	}
 	
-	public function rules() {
+	public function rules()
+	{
 		return [
 			[['login', 'status'], 'trim'],
 			[['login', 'status'], 'required'],
@@ -64,59 +70,72 @@ class LoginEntity extends BaseEntity implements IdentityInterface {
 		];
 	}
 	
-	public function getAvatar() {
+	public function getAvatar()
+	{
 		$avatar = EnvService::getUrl('frontend', 'images/avatars/_default.jpg');
 		return $avatar;
 	}
 	
-	public function getUsername() {
+	public function getUsername()
+	{
 		return LoginHelper::format($this->login);
 	}
-
-	public function getIinFixed() {
+	
+	public function getIinFixed()
+	{
 		if(empty($this->iin_fixed)) {
-			return  false;
+			return false;
 		}
 		return $this->iin_fixed;
 	}
 	
-	public function setRoles($value) {
+	public function setRoles($value)
+	{
 		if(!empty($value)) {
 			$this->roles = ArrayHelper::toArray($value);
 		}
 	}
 	
-	public static function findIdentity($id) {}
-
-	public static function findIdentityByAccessToken($token, $type = null) {}
-
-	public function getId() {
+	public static function findIdentity($id)
+	{
+	}
+	
+	public static function findIdentityByAccessToken($token, $type = null)
+	{
+	}
+	
+	public function getId()
+	{
 		return intval($this->id);
 	}
 	
-	public function getToken() {
+	public function getToken()
+	{
 		return $this->getAuthKey();
 	}
 	
 	// todo: после перехода на security выпилить
-	public function getEmail() {
+	public function getEmail()
+	{
 		if(!$this->security instanceof SecurityEntity) {
 			return $this->email;
 		}
 		return $this->security->email;
 	}
 	
-	public function getAuthKey() {
+	public function getAuthKey()
+	{
 		if(!$this->security instanceof SecurityEntity) {
 			return $this->token;
 		}
 		return $this->security->token;
 	}
-
-	public function validateAuthKey($authKey) {
+	
+	public function validateAuthKey($authKey)
+	{
 		return $this->getAuthKey() === $authKey;
 	}
-
+	
 	public function fields()
 	{
 		$fields = parent::fields();

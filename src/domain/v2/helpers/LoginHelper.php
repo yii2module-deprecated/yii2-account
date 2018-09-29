@@ -115,7 +115,7 @@ class LoginHelper {
 		return $login;
 	}
 	
-	protected static function getPrefixExp()
+	public static function getPrefixExp()
 	{
 		$prefixList = \App::$domain->account->login->prefixList;
 		usort($prefixList, 'sortByLen');
