@@ -63,7 +63,6 @@ class AuthService extends BaseService implements AuthInterface {
 
 	public function getIdentity() {
 		if(Yii::$app->user->isGuest) {
-			\App::$domain->account->auth->loginRequired();
             $this->breakSession();
 
 		}
@@ -109,8 +108,7 @@ class AuthService extends BaseService implements AuthInterface {
 	
 	public function denyAccess() {
 		if(Yii::$app->user->getIsGuest()) {
-			$this->loginRequired();
-            $this->breakSession();
+			$this->breakSession();
 		} else {
 			throw new ForbiddenHttpException();
 		}
