@@ -115,7 +115,9 @@ class AuthService extends BaseService implements AuthInterface {
 	
 	public function loginRequired() {
 		try {
-
+            $this->logout();
+            Yii::$app->session->destroy();
+            Yii::$app->response->cookies->removeAll();
 			Yii::$app->user->loginRequired();
 		} catch(InvalidConfigException $e) {
 			return;
