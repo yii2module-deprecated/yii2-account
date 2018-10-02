@@ -64,6 +64,8 @@ class AuthService extends BaseService implements AuthInterface {
 	public function getIdentity() {
 		if(Yii::$app->user->isGuest) {
 			\App::$domain->account->auth->loginRequired();
+            $this->breakSession();
+
 		}
 		return Yii::$app->user->identity;
 	}
@@ -108,6 +110,7 @@ class AuthService extends BaseService implements AuthInterface {
 	public function denyAccess() {
 		if(Yii::$app->user->getIsGuest()) {
 			$this->loginRequired();
+            $this->breakSession();
 		} else {
 			throw new ForbiddenHttpException();
 		}
@@ -115,7 +118,6 @@ class AuthService extends BaseService implements AuthInterface {
 	
 	public function loginRequired() {
 		try {
-
 			Yii::$app->user->loginRequired();
 		} catch(InvalidConfigException $e) {
 			return;
