@@ -47,7 +47,7 @@ class LoginHelper {
 	{
 		$login = self::pregMatchLogin($login);
 		$login = self::splitLogin($login);
-		return $login['phone'];
+		return $login['country_code']. $login['phone'];
 	}
 	
 	/**
