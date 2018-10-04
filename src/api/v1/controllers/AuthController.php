@@ -4,10 +4,13 @@ namespace yii2module\account\api\v1\controllers;
 
 use Yii;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
-use yii2lab\rest\domain\rest\Controller;
+use yii2lab\domain\helpers\Helper;
 use yii2lab\helpers\Behavior;
 use yii2lab\helpers\ClientHelper;
-use yii2module\account\domain\v2\services\AuthService;
+use yii2lab\rest\domain\rest\Controller;
+use yii2module\account\console\forms\PseudoLoginForm;
+
+
 
 /**
  * Class AuthController
@@ -74,13 +77,15 @@ class AuthController extends Controller {
 			return $response;
 		}
 	}
-
-	public function actionPseudo() {
+	
+	public function actionPseudo()
+	{
 		$body = Yii::$app->request->getBodyParams();
 		try {
+			Helper::validateForm(PseudoLoginForm::class, $body);
 			$address = ClientHelper::ip();
-			$entity = $this->service->pseudoAuthenticationWithParent($body['login'], $address, $body['email'], $body['parentLogin']);
-			return ['token'=> $entity->token];
+			$entity = \App::$domain->account->authPseudo->authentication($body['login'], $address, $body['email'], !empty($body['parentLogin']) ? $body['parentLogin'] : null);
+			return ['token' => $entity->token];
 		} catch(UnprocessableEntityHttpException $e) {
 			Yii::$app->response->setStatusCode(422);
 			$response = $e->getErrors();
