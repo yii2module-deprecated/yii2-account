@@ -22,7 +22,7 @@ class AssignmentTest extends Unit
 				'user_id' => LoginEnum::ID_ADMIN,
 				'item_name' => 'rAdministrator',
 			],
-		], $collection);
+		], $collection, true);
 		$this->tester->assertCount(1, $collection);
 	}
 	
@@ -41,7 +41,7 @@ class AssignmentTest extends Unit
 				'user_id' => LoginEnum::ID_USER_2,
 				'item_name' => 'rResmiUnknownUser',
 			],
-		], $collection);
+		], $collection, true);
 		$this->tester->assertCount(2, $collection);
 	}
 	

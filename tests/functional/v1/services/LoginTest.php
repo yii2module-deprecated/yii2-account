@@ -2,6 +2,7 @@
 
 namespace tests\functional\v1\services;
 
+use yii2lab\test\helpers\DataHelper;
 use yii2lab\test\Test\Unit;
 use Yii;
 use yii\web\NotFoundHttpException;
@@ -12,6 +13,7 @@ use tests\functional\v1\enums\LoginEnum;
 
 class LoginTest extends Unit
 {
+	const PACKAGE = 'yii2module/yii2-account';
 	
 	public function testOneByLogin()
 	{
@@ -78,10 +80,9 @@ class LoginTest extends Unit
 		/** @var BaseEntity[] $collection */
 		$query = Query::forge();
 		$collection = \App::$domain->account->login->all($query);
-		$this->tester->assertCollection([
-			0 => LoginEnum::getUser(LoginEnum::ID_ADMIN),
-			2 => LoginEnum::getUser(LoginEnum::ID_USER),
-		], $collection);
+		
+		$expect = DataHelper::loadForTest(self::PACKAGE, __METHOD__, $collection);
+		$this->tester->assertCollection($expect, $collection, true);
 	}
 	
 }
