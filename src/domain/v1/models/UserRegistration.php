@@ -4,7 +4,7 @@ namespace yii2module\account\domain\v1\models;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;
-use yii2lab\helpers\Helper;
+use yii2lab\extension\common\helpers\Helper;
 
 /**
  * User model
