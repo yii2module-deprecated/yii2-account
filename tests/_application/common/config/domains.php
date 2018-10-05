@@ -27,7 +27,7 @@ $config = [
 		'services' => [
 			'auth',
 			'login' => [
-				'prefixList' => ['B', 'BS', 'R', 'QRS'],
+				'prefixList' => \yii2woop\common\domain\account\v2\enums\PrefixListEnum::values(),
 				'defaultRole' => null,
 				'defaultStatus' => 1,
 				'forbiddenStatusList' => [0],
@@ -43,6 +43,10 @@ $config = [
 			'assignment',
 			'token',
 		],
+	],
+	'container' => [
+		'yii2module\account\domain\v2\repositories\core\AuthPseudoRepository' => 'yii2woop\common\domain\account\v2\repositories\core\AuthPseudoRepository',
+		'yii2module\account\domain\v2\services\AuthPseudoService' => 'yii2woop\common\domain\account\v2\services\AuthPseudoService',
 	],
 ];
 
