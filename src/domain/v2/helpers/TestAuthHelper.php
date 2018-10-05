@@ -24,7 +24,9 @@ class TestAuthHelper {
 		$userEntity = \App::$domain->account->login->oneById($id);
 		Yii::$app->user->setIdentity($userEntity);
 	}
-	
-	
+
+    public static function defineAccountDomain() {
+        DomainHelper::defineDomain('account', self::DOMAIN_CLASS);
+    }
 	
 }
