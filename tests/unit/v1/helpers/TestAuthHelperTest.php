@@ -11,27 +11,20 @@ use yii2module\account\domain\v2\helpers\TestAuthHelper;
 class TestAuthHelperTest extends Unit
 {
 	
-//	public function testAuthById()
-//	{
-//		TestAuthHelper::authById(LoginEnum::ID_ADMIN);
-//		/** @var LoginEntity $loginEntity */
-//		$loginEntity = Yii::$app->user->identity;
-//		$this->tester->assertEntity(LoginEnum::getUser(LoginEnum::ID_ADMIN), $loginEntity);
-//	}
-//
-//	public function testAuthByLogin()
-//	{
-//		TestAuthHelper::authByLogin(LoginEnum::LOGIN_ADMIN);
-//		/** @var LoginEntity $loginEntity */
-//		$loginEntity = Yii::$app->user->identity;
-//		$this->tester->assertEntity(LoginEnum::getUser(LoginEnum::ID_ADMIN), $loginEntity);
-//	}
-
-	public function testPseudoLogin()
+	public function testAuthById()
 	{
-		TestAuthHelper::authPseudo(LoginEnum::LOGIN_ADMIN);
+		TestAuthHelper::authById(LoginEnum::ID_ADMIN);
 		/** @var LoginEntity $loginEntity */
 		$loginEntity = Yii::$app->user->identity;
 		$this->tester->assertEntity(LoginEnum::getUser(LoginEnum::ID_ADMIN), $loginEntity);
 	}
+
+	public function testAuthByLogin()
+	{
+		TestAuthHelper::authByLogin(LoginEnum::LOGIN_ADMIN);
+		/** @var LoginEntity $loginEntity */
+		$loginEntity = Yii::$app->user->identity;
+		$this->tester->assertEntity(LoginEnum::getUser(LoginEnum::ID_ADMIN), $loginEntity);
+	}
+
 }
