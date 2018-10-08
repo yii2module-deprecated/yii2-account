@@ -1,7 +1,7 @@
 <?php
 namespace yii2module\account\module\controllers;
 
-use yii2lab\helpers\Behavior;
+use yii2lab\extension\web\helpers\Behavior;
 use yii2module\account\module\forms\RestorePasswordForm;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use Yii;
