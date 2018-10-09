@@ -5,7 +5,7 @@ use Yii;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii2lab\applicationTemplate\common\enums\ApplicationPermissionEnum;
-use yii2lab\helpers\Behavior;
+use yii2lab\extension\web\helpers\Behavior;
 use yii2module\account\domain\v2\forms\LoginForm;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2lab\navigation\domain\widgets\Alert;

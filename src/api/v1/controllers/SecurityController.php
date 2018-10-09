@@ -4,7 +4,7 @@ namespace yii2module\account\api\v1\controllers;
 
 use yii2lab\rest\domain\rest\Controller;
 use yii\filters\VerbFilter;
-use yii2lab\helpers\Behavior;
+use yii2lab\extension\web\helpers\Behavior;
 
 class SecurityController extends Controller
 {
@@ -17,7 +17,7 @@ class SecurityController extends Controller
 	public function behaviors()
 	{
 		return [
-			'authenticator' => Behavior::apiAuth(),
+			'authenticator' => Behavior::auth(),
 			'verb' => Behavior::verb([
 				'email' => ['PUT'],
 				'password' => ['PUT'],

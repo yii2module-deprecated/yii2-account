@@ -3,7 +3,7 @@ namespace yii2module\account\module\controllers;
 
 use yii2lab\domain\base\Model;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
-use yii2lab\helpers\Behavior;
+use yii2lab\extension\web\helpers\Behavior;
 use yii2module\account\domain\v2\forms\RegistrationForm;
 use yii2module\account\domain\v2\services\RegistrationService;
 use yii2module\account\module\forms\SetSecurityForm;

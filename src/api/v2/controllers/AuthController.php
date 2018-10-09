@@ -5,7 +5,7 @@ namespace yii2module\account\api\v2\controllers;
 use Yii;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2lab\domain\helpers\Helper;
-use yii2lab\helpers\Behavior;
+use yii2lab\extension\web\helpers\Behavior;
 use yii2lab\helpers\ClientHelper;
 use yii2lab\rest\domain\rest\Controller;
 use yii2module\account\console\forms\PseudoLoginForm;
@@ -29,7 +29,7 @@ class AuthController extends Controller
 	{
 		return [
 			'cors' => Behavior::cors(),
-			'authenticator' => Behavior::apiAuth(['info']),
+			'authenticator' => Behavior::auth(['info']),
 		];
 	}
 	

@@ -3,7 +3,7 @@
 namespace yii2module\account\api\v1\controllers;
 
 use yii2lab\rest\domain\rest\Controller;
-use yii2lab\helpers\Behavior;
+use yii2lab\extension\web\helpers\Behavior;
 
 class BalanceController extends Controller
 {
@@ -16,7 +16,7 @@ class BalanceController extends Controller
 	public function behaviors()
 	{
 		return [
-			'authenticator' => Behavior::apiAuth(),
+			'authenticator' => Behavior::auth(),
 		];
 	}
 
