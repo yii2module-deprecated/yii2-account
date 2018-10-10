@@ -13,8 +13,11 @@ use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2lab\domain\helpers\ErrorCollection;
 use yii2lab\domain\helpers\Helper;
 use yii2lab\domain\services\BaseService;
+use yii2lab\domain\traits\MethodEventTrait;
+use yii2lab\extension\common\helpers\StringHelper;
 use yii2lab\helpers\ClientHelper;
 use yii2lab\extension\enum\enums\TimeEnum;
+use yii2module\account\domain\v2\behaviors\UserActivityFilter;
 use yii2module\account\domain\v2\forms\LoginForm;
 use yii2module\account\domain\v2\helpers\AuthHelper;
 use yii2module\account\domain\v2\helpers\TokenHelper;
@@ -31,8 +34,19 @@ use yii2module\account\domain\v2\entities\LoginEntity;
  */
 class AuthService extends BaseService implements AuthInterface {
 
+	use MethodEventTrait;
+	
     public $rememberExpire = TimeEnum::SECOND_PER_DAY * 30;
 	
+	public function behaviors() {
+		return [
+			[
+				'class' => UserActivityFilter::class,
+				'methods' => ['authentication'],
+			],
+		];
+	}
+ 
 	public function authentication($login, $password, $ip = null) {
 		if(empty($ip)) {
 			$ip = ClientHelper::ip();
@@ -51,6 +65,14 @@ class AuthService extends BaseService implements AuthInterface {
 		}
 		$this->checkStatus($loginEntity);
 		AuthHelper::setToken($loginEntity->token);
+		
+		$loginArray = $loginEntity->toArray();
+		$loginArray['token'] = StringHelper::mask($loginArray['token']);
+		$this->afterMethodTrigger(__METHOD__, [
+			'login' => $login,
+			'password' => StringHelper::mask($password, 0),
+		], $loginArray);
+		
 		return $loginEntity;
 	}
 	

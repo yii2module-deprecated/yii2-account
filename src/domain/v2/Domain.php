@@ -25,6 +25,7 @@ use yii2woop\common\domain\account\v2\enums\PrefixListEnum;
  * @property-read \yii2module\account\domain\v2\interfaces\repositories\RepositoriesInterface $repositories
  * @property-read \yii2module\account\domain\v2\interfaces\services\TokenInterface $token
  * @property-read \yii2module\account\domain\v2\interfaces\services\JwtInterface $jwt
+ * @property-read \yii2module\account\domain\v2\interfaces\services\ActivityInterface $activity
  */
 class Domain extends \yii2lab\domain\Domain {
 	
@@ -44,6 +45,7 @@ class Domain extends \yii2lab\domain\Domain {
 				//'assignment' => $this->primaryDriver,
 				'token' => Driver::ACTIVE_RECORD,
                 'jwt' => 'jwt',
+				'activity' => Driver::ACTIVE_RECORD,
 			],
 			'services' => [
 				'auth' => [
@@ -65,6 +67,7 @@ class Domain extends \yii2lab\domain\Domain {
 				//'assignment',
 				'token',
                 'jwt',
+				'activity',
 			],
 		];
 	}

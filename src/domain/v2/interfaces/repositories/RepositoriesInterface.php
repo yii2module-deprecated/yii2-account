@@ -7,6 +7,7 @@ namespace yii2module\account\domain\v2\interfaces\repositories;
  * 
  * @package yii2module\account\domain\v2\interfaces\repositories
  * 
+ * @property-read \yii2module\account\domain\v2\interfaces\repositories\ActivityInterface $activity
  * @property-read \yii2module\account\domain\v2\interfaces\repositories\AuthInterface $auth
  * @property-read \yii2module\account\domain\v2\interfaces\repositories\ConfirmInterface $confirm
  * @property-read \yii2module\account\domain\v2\interfaces\repositories\JwtInterface $jwt
