@@ -18,7 +18,7 @@ use yii2lab\domain\services\base\BaseActiveService;
  */
 class ActivityService extends BaseActiveService implements ActivityInterface {
 
-	public $onlyMethods;
+	public $sources;
 	
 	public function create($data) {
 		if(!self::isEnabled($data)) {
@@ -32,8 +32,8 @@ class ActivityService extends BaseActiveService implements ActivityInterface {
 	}
 	
 	private function isEnabled($data) {
-		if(empty($this->onlyMethods)) {
-			return true;
+		if(empty($this->sources)) {
+			return false;
 		}
 		$map = [
 			$data['domain'],
@@ -41,7 +41,7 @@ class ActivityService extends BaseActiveService implements ActivityInterface {
 			$data['domain'] . DOT . $data['service'] . DOT . $data['method'],
 		];
 		foreach($map as $name) {
-			if(in_array($name, $this->onlyMethods)) {
+			if(in_array($name, $this->sources)) {
 				return true;
 			}
 		}

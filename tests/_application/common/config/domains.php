@@ -23,6 +23,7 @@ $config = [
 			'confirm' => Driver::ACTIVE_RECORD,
 			'assignment' => Driver::FILEDB,
 			'token' => Driver::ACTIVE_RECORD,
+			'activity' => Driver::ACTIVE_RECORD,
 		],
 		'services' => [
 			'auth',
@@ -42,6 +43,7 @@ $config = [
 			'confirm',
 			'assignment',
 			'token',
+			'activity',
 		],
 	],
 ];
