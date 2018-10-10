@@ -114,7 +114,10 @@ class LoginEntity extends BaseEntity implements IdentityInterface
 		return $this->getAuthKey();
 	}
 	
-	// todo: после перехода на security выпилить
+	/**
+	 * @return string
+	 * @deprecated после перехода на security выпилить
+	 */
 	public function getEmail()
 	{
 		if(!$this->security instanceof SecurityEntity) {
