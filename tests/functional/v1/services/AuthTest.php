@@ -28,7 +28,7 @@ class AuthTest extends Unit
 	{
 		try {
 			\App::$domain->account->auth->authentication(LoginEnum::LOGIN_ADMIN, LoginEnum::PASSWORD_INCORRECT);
-			$this->tester->assertTrue(false);
+			$this->tester->assertBad();
 		} catch(UnprocessableEntityHttpException $e) {
 			$this->tester->assertUnprocessableEntityHttpException(['password' => 'Incorrect login or password'], $e);
 		}
@@ -38,7 +38,7 @@ class AuthTest extends Unit
 	{
 		try {
 			\App::$domain->account->auth->authentication(LoginEnum::LOGIN_NOT_EXISTS, LoginEnum::PASSWORD);
-			$this->tester->assertTrue(false);
+			$this->tester->assertBad();
 		} catch(UnprocessableEntityHttpException $e) {
 			$this->tester->assertUnprocessableEntityHttpException(['password' => 'Incorrect login or password'], $e);
 		}
@@ -61,7 +61,7 @@ class AuthTest extends Unit
 		try {
 			/** @var LoginEntity $entity */
 			\App::$domain->account->auth->authenticationByToken(LoginEnum::TOKEN_NOT_INCORRECT);
-			$this->tester->assertTrue(false);
+			$this->tester->assertBad();
 		} catch(UnauthorizedHttpException $e) {
 			$this->tester->assertTrue(true);
 		}
@@ -72,7 +72,7 @@ class AuthTest extends Unit
 		TestAuthHelper::authById(LoginEnum::ID_USER);
 		try {
 			\App::$domain->account->auth->denyAccess();
-			$this->tester->assertTrue(false);
+			$this->tester->assertBad();
 		} catch(ForbiddenHttpException $e) {
 			$this->tester->assertTrue(true);
 		}

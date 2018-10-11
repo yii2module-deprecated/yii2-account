@@ -4,7 +4,6 @@ namespace tests\functional\v1\services;
 
 use yii2lab\test\helpers\DataHelper;
 use yii2lab\test\Test\Unit;
-use Yii;
 use yii\web\NotFoundHttpException;
 use yii2lab\domain\BaseEntity;
 use yii2lab\domain\data\Query;
@@ -59,7 +58,7 @@ class LoginTest extends Unit
 	{
 		try {
 			\App::$domain->account->login->oneByLogin(LoginEnum::LOGIN_NOT_EXISTS);
-			$this->tester->assertTrue(false);
+			$this->tester->assertBad();
 		} catch(NotFoundHttpException $e) {
 			$this->tester->assertTrue(true);
 		}
@@ -69,7 +68,7 @@ class LoginTest extends Unit
 	{
 		try {
 			\App::$domain->account->login->oneById(LoginEnum::ID_NOT_EXISTS);
-			$this->tester->assertTrue(false);
+			$this->tester->assertBad();
 		} catch(NotFoundHttpException $e) {
 			$this->tester->assertTrue(true);
 		}

@@ -25,7 +25,7 @@ class TokenTest extends Unit
 	public function testForgeNotFoundLogin() {
 		try {
 			\App::$domain->account->token->forge(999999, self::IP);
-			$this->tester->assertTrue(false);
+			$this->tester->assertBad();
 		} catch(NotFoundLoginException $e) {
 			$this->tester->assertTrue(true);
 		}
@@ -59,14 +59,14 @@ class TokenTest extends Unit
 		
 		try {
 			\App::$domain->account->token->validate($token, self::INVALID_IP);
-			$this->tester->assertTrue(false);
+			$this->tester->assertBad();
 		} catch(InvalidIpAddressException $e) {
 			$this->tester->assertTrue(true);
 		}
 		
 		try {
 			\App::$domain->account->token->validate(self::INVALID_TOKEN, self::IP);
-			$this->tester->assertTrue(false);
+			$this->tester->assertBad();
 		} catch(NotFoundHttpException $e) {
 			$this->tester->assertTrue(true);
 		}
