@@ -88,7 +88,7 @@ class AuthService extends BaseService implements AuthInterface {
 		
 		$loginArray = $loginEntity->toArray();
 		$loginArray['token'] = StringHelper::mask($loginArray['token']);
-		$this->afterMethodTrigger(__METHOD__, [
+		$this->afterMethodTrigger('authentication', [
 			'login' => $body['login'],
 			'password' => StringHelper::mask($body['password'], 0),
 		], $loginArray);
