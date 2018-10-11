@@ -5,7 +5,6 @@ namespace yii2module\account\domain\v2\forms;
 use Yii;
 use yii2lab\domain\base\Model;
 use yii2module\account\domain\v2\helpers\LoginHelper;
-use yii2module\account\domain\v2\validators\LoginValidator;
 
 class LoginForm extends Model
 {
@@ -17,6 +16,7 @@ class LoginForm extends Model
 	public $email;
 	public $role;
 	public $status;
+	public $tokenType;
 	public $rememberMe = true;
 
 	/**
@@ -25,7 +25,7 @@ class LoginForm extends Model
 	public function rules()
 	{
 		return [
-			[['login', 'password'], 'trim'],
+			[['login', 'password', 'tokenType'], 'trim'],
 			[['login', 'password'], 'required'],
 			['email', 'email'],
 			//['login', 'match', 'pattern' => '/^[0-9_]{11,13}$/i', 'message' => Yii::t('account/registration', 'login_not_valid')],
@@ -46,10 +46,12 @@ class LoginForm extends Model
 				'role',
 				'status',
 				'rememberMe',
+				'tokenType',
 			],
 			self::SCENARIO_SIMPLE => [
 				'login',
 				'password',
+				'tokenType',
 			],
 		];
 	}

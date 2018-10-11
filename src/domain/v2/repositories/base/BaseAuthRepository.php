@@ -4,7 +4,6 @@ namespace yii2module\account\domain\v2\repositories\base;
 
 use yii\web\NotFoundHttpException;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
-use yii2lab\helpers\ClientHelper;
 use yii2module\account\domain\v2\entities\LoginEntity;
 use yii2module\account\domain\v2\entities\SecurityEntity;
 use yii2module\account\domain\v2\interfaces\repositories\AuthInterface;

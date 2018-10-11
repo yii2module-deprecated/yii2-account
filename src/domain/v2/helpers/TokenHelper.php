@@ -3,60 +3,34 @@
 namespace yii2module\account\domain\v2\helpers;
 
 use Yii;
-use yii\web\NotFoundHttpException;
-use yii\web\UnauthorizedHttpException;
-use yii2lab\extension\registry\helpers\Registry;
-use yii2lab\extension\scenario\base\BaseScenario;
-use yii2lab\extension\web\enums\HttpHeaderEnum;
-use yii2module\account\domain\v2\entities\LoginEntity;
+use yii\base\InvalidArgumentException;
+use yii2lab\extension\yii\helpers\ArrayHelper;
+use yii2module\account\domain\v2\filters\token\BaseTokenFilter;
 
 class TokenHelper {
 
 	const KEY = 'authToken';
     const DEFAULT_TOKEN_TYPE = 'default';
-
-	public static $types = [
-        self::DEFAULT_TOKEN_TYPE => 'yii2module\account\domain\v2\filters\token\DefaultFilter',
-        'tps' => 'yii2module\account\domain\v2\filters\token\DefaultFilter',
-        'jwt' => 'yii2module\account\domain\v2\filters\token\JwtFilter',
-    ];
-
-	private static function runAuthFilter($className, $token) {
-        /** @var BaseScenario $filter */
-	    $filter = new $className;
+	
+	private static function runAuthFilter($definition, $token) {
+        /** @var BaseTokenFilter $filter */
+	    $filter = Yii::createObject($definition);
         $filter->token = $token;
         $filter->run();
         $loginEntity = $filter->getData();
         return $loginEntity;
     }
 
-    private static function runAuthFilterForce($token) {
-        foreach (self::$types as $itemType => $className) {
-            $data = self::runAuthFilter($className, $token);
-            if($data) {
-                return $data;
-            }
+    public static function authByToken($token, $type = null, $types = []) {
+	    $type = !empty($types[$type]) ? $type : ArrayHelper::firstKey($types);
+		if(!$type) {
+	        $tokenArray = self::splitToken($token);
+	        $token = $tokenArray['token'];
+	        $type = $tokenArray['type'];
         }
-    }
-
-    public static function authByToken($token, $type = null) {
-        if(!$type) {
-            $tokenArray = self::splitToken($token);
-            $token = $tokenArray['token'];
-            $type = $tokenArray['type'];
-        }
-        $className = self::$types[$type];
+        $className = $types[$type];
         $loginEntity = self::runAuthFilter($className, $token);
-        /*$loginEntity = null;
-        try {
-            $loginEntity = self::runAuthFilter($className, $token);
-        } catch (NotFoundHttpException $e) {
-            $loginEntity = self::runAuthFilterForce($token);
-        }*/
         return $loginEntity;
-
-
-        return null;
     }
 
     public static function splitToken($token) {
@@ -70,6 +44,7 @@ class TokenHelper {
         if(!$isValid) {
             throw new InvalidArgumentException('Invalid token format');
         }
+	    $result = [];
         if(count($tokenSegments) == 1) {
             $result['type'] = self::DEFAULT_TOKEN_TYPE;
             $result['token'] = $tokenSegments[0];

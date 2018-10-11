@@ -2,17 +2,17 @@
 
 namespace yii2module\account\domain\v2\filters\token;
 
-use yii\helpers\ArrayHelper;
-use yii\web\UnauthorizedHttpException;
-use yii2lab\extension\scenario\base\BaseScenario;
-
-class DefaultFilter extends BaseScenario {
-
-    public $token;
+class DefaultFilter extends BaseTokenFilter {
 
 	public function run() {
 	    $loginEntity = \App::$domain->account->repositories->login->oneByToken($this->token);
 	    $this->setData($loginEntity);
 	}
-
+	
+	public function auth($body, $ip) {
+		$loginEntity = \App::$domain->account->repositories->auth->authentication($body['login'], $body['password'], $ip);
+		$loginEntity->token = $this->forgeToken($loginEntity->token);
+		return $loginEntity;
+	}
+	
 }

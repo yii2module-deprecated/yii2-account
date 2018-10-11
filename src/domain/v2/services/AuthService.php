@@ -16,8 +16,12 @@ use yii2lab\domain\services\base\BaseService;
 use yii2lab\domain\traits\MethodEventTrait;
 use yii2lab\extension\common\helpers\StringHelper;
 use yii2lab\extension\enum\enums\TimeEnum;
+use yii2lab\extension\jwt\filters\token\JwtFilter;
 use yii2lab\extension\web\helpers\ClientHelper;
+use yii2lab\extension\yii\helpers\ArrayHelper;
 use yii2module\account\domain\v2\behaviors\UserActivityFilter;
+use yii2module\account\domain\v2\filters\token\BaseTokenFilter;
+use yii2module\account\domain\v2\filters\token\DefaultFilter;
 use yii2module\account\domain\v2\forms\LoginForm;
 use yii2module\account\domain\v2\helpers\AuthHelper;
 use yii2module\account\domain\v2\helpers\TokenHelper;
@@ -37,6 +41,11 @@ class AuthService extends BaseService implements AuthInterface {
 	use MethodEventTrait;
 	
     public $rememberExpire = TimeEnum::SECOND_PER_DAY * 30;
+    public $tokenAuthMethods = [
+	    'default' => DefaultFilter::class,
+	    'tps' => DefaultFilter::class,
+	    'jwt' => JwtFilter::class,
+    ];
 	
 	public function behaviors() {
 		return [
@@ -46,7 +55,47 @@ class AuthService extends BaseService implements AuthInterface {
 			],
 		];
 	}
- 
+	
+	public function authentication2($body, $ip = null) {
+		if(empty($ip)) {
+			$ip = ClientHelper::ip();
+		}
+		$body = Helper::validateForm(LoginForm::class, $body);
+		try {
+			$type = ArrayHelper::getValue($body, 'tokenType');
+			$type = !empty($type) ? $type : ArrayHelper::firstKey($this->tokenAuthMethods);
+			//prr($type,1,1);
+			$definitionFilter = ArrayHelper::getValue($this->tokenAuthMethods, $type);
+			if(!$definitionFilter) {
+				$error = new ErrorCollection();
+				$error->add('tokenType', 'account/auth', 'token_type_not_found');
+				throw new UnprocessableEntityHttpException($error);
+			}
+			/** @var BaseTokenFilter $filterInstance */
+			$filterInstance = Yii::createObject($definitionFilter);
+			$filterInstance->type = $type;
+			$loginEntity = $filterInstance->auth($body, $ip);
+		} catch(NotFoundHttpException $e) {
+			$loginEntity = false;
+		}
+		if(!$loginEntity instanceof LoginEntity || empty($loginEntity->id)) {
+			$error = new ErrorCollection();
+			$error->add('password', 'account/auth', 'incorrect_login_or_password');
+			throw new UnprocessableEntityHttpException($error);
+		}
+		$this->checkStatus($loginEntity);
+		AuthHelper::setToken($loginEntity->token);
+		
+		$loginArray = $loginEntity->toArray();
+		$loginArray['token'] = StringHelper::mask($loginArray['token']);
+		$this->afterMethodTrigger(__METHOD__, [
+			'login' => $body['login'],
+			'password' => StringHelper::mask($body['password'], 0),
+		], $loginArray);
+		
+		return $loginEntity;
+	}
+	
 	public function authentication($login, $password, $ip = null) {
 		if(empty($ip)) {
 			$ip = ClientHelper::ip();
@@ -112,7 +161,7 @@ class AuthService extends BaseService implements AuthInterface {
         $tokenArray = TokenHelper::splitToken($token);
 		AuthHelper::setToken($tokenArray['token']);
 		try {
-            $loginEntity = TokenHelper::authByToken($tokenArray['token'], $tokenArray['type']);
+            $loginEntity = TokenHelper::authByToken($tokenArray['token'], $tokenArray['type'], $this->tokenAuthMethods);
 		} catch(NotFoundHttpException $e) {
 			throw new UnauthorizedHttpException();
 		}
