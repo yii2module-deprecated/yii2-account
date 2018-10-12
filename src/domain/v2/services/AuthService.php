@@ -16,7 +16,6 @@ use yii2lab\domain\services\base\BaseService;
 use yii2lab\domain\traits\MethodEventTrait;
 use yii2lab\extension\common\helpers\StringHelper;
 use yii2lab\extension\enum\enums\TimeEnum;
-use yii2lab\extension\jwt\filters\token\JwtFilter;
 use yii2lab\extension\web\helpers\ClientHelper;
 use yii2lab\extension\yii\helpers\ArrayHelper;
 use yii2module\account\domain\v2\behaviors\UserActivityFilter;
@@ -42,9 +41,7 @@ class AuthService extends BaseService implements AuthInterface {
 	
     public $rememberExpire = TimeEnum::SECOND_PER_DAY * 30;
     public $tokenAuthMethods = [
-	    'default' => DefaultFilter::class,
-	    'tps' => DefaultFilter::class,
-	    'jwt' => JwtFilter::class,
+	    'bearer' => DefaultFilter::class,
     ];
 	
 	public function behaviors() {
@@ -64,7 +61,6 @@ class AuthService extends BaseService implements AuthInterface {
 		try {
 			$type = ArrayHelper::getValue($body, 'tokenType');
 			$type = !empty($type) ? $type : ArrayHelper::firstKey($this->tokenAuthMethods);
-			//prr($type,1,1);
 			$definitionFilter = ArrayHelper::getValue($this->tokenAuthMethods, $type);
 			if(!$definitionFilter) {
 				$error = new ErrorCollection();
@@ -74,7 +70,7 @@ class AuthService extends BaseService implements AuthInterface {
 			/** @var BaseTokenFilter $filterInstance */
 			$filterInstance = Yii::createObject($definitionFilter);
 			$filterInstance->type = $type;
-			$loginEntity = $filterInstance->auth($body, $ip);
+			$loginEntity = $filterInstance->login($body, $ip);
 		} catch(NotFoundHttpException $e) {
 			$loginEntity = false;
 		}
@@ -158,10 +154,9 @@ class AuthService extends BaseService implements AuthInterface {
 		if(empty($token)) {
 			throw new InvalidArgumentException('Empty token');
 		}
-        $tokenArray = TokenHelper::splitToken($token);
-		AuthHelper::setToken($tokenArray['token']);
 		try {
-            $loginEntity = TokenHelper::authByToken($tokenArray['token'], $tokenArray['type'], $this->tokenAuthMethods);
+            $loginEntity = TokenHelper::authByToken($token, $this->tokenAuthMethods);
+			AuthHelper::setToken($loginEntity->token);
 		} catch(NotFoundHttpException $e) {
 			throw new UnauthorizedHttpException();
 		}

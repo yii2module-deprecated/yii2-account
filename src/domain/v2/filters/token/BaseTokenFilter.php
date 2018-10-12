@@ -2,15 +2,28 @@
 
 namespace yii2module\account\domain\v2\filters\token;
 
+use yii\base\BaseObject;
 use yii\base\InvalidArgumentException;
-use yii2lab\extension\scenario\base\BaseScenario;
+use yii2module\account\domain\v2\entities\LoginEntity;
 
-abstract class BaseTokenFilter extends BaseScenario {
+abstract class BaseTokenFilter extends BaseObject {
 
-    public $token;
 	public $type;
 	
-	abstract public function auth($body, $ip);
+	/**
+	 * @param $token
+	 *
+	 * @return LoginEntity
+	 */
+	abstract public function auth($token);
+	
+	/**
+	 * @param $body
+	 * @param $ip
+	 *
+	 * @return LoginEntity
+	 */
+	abstract public function login($body, $ip);
 
 	protected function forgeToken($token) {
 		if(empty($this->type)) {
