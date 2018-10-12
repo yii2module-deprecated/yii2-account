@@ -5,7 +5,6 @@ namespace yii2module\account\domain\v2;
 use yii2module\account\domain\v2\enums\AccountRoleEnum;
 use yii2lab\domain\enums\Driver;
 use yii2lab\extension\enum\enums\TimeEnum;
-use yii2woop\common\domain\account\v2\enums\PrefixListEnum;
 
 // todo: описание докблоков в руководство
 
@@ -52,7 +51,6 @@ class Domain extends \yii2lab\domain\Domain {
 					'rememberExpire' => TimeEnum::SECOND_PER_YEAR,
 				],
 				'login' => [
-					'prefixList' => PrefixListEnum::values(),
 					'defaultRole' => AccountRoleEnum::UNKNOWN_USER,
 					'defaultStatus' => 1,
 					'forbiddenStatusList' => [0],
