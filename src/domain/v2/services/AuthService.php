@@ -59,18 +59,21 @@ class AuthService extends BaseService implements AuthInterface {
 		}
 		$body = Helper::validateForm(LoginForm::class, $body);
 		try {
-			$type = ArrayHelper::getValue($body, 'tokenType');
-			$type = !empty($type) ? $type : ArrayHelper::firstKey($this->tokenAuthMethods);
+			
+			$loginEntity = TokenHelper::login($body, $ip, $this->tokenAuthMethods);
+			
+			/*$type = !empty($type) ? $type : ArrayHelper::firstKey($this->tokenAuthMethods);
 			$definitionFilter = ArrayHelper::getValue($this->tokenAuthMethods, $type);
 			if(!$definitionFilter) {
 				$error = new ErrorCollection();
 				$error->add('tokenType', 'account/auth', 'token_type_not_found');
 				throw new UnprocessableEntityHttpException($error);
 			}
-			/** @var BaseTokenFilter $filterInstance */
+			// @var BaseTokenFilter $filterInstance
 			$filterInstance = Yii::createObject($definitionFilter);
 			$filterInstance->type = $type;
-			$loginEntity = $filterInstance->login($body, $ip);
+			$loginEntity = $filterInstance->login($body, $ip);*/
+			
 		} catch(NotFoundHttpException $e) {
 			$loginEntity = false;
 		}
@@ -156,7 +159,7 @@ class AuthService extends BaseService implements AuthInterface {
 		}
 		try {
             $loginEntity = TokenHelper::authByToken($token, $this->tokenAuthMethods);
-			AuthHelper::setToken($loginEntity->token);
+			//AuthHelper::setToken($loginEntity->token);
 		} catch(NotFoundHttpException $e) {
 			throw new UnauthorizedHttpException();
 		}
