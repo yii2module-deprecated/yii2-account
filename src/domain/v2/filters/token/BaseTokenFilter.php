@@ -5,6 +5,7 @@ namespace yii2module\account\domain\v2\filters\token;
 use yii\base\BaseObject;
 use yii\base\InvalidArgumentException;
 use yii2module\account\domain\v2\entities\LoginEntity;
+use yii2module\account\domain\v2\helpers\TokenHelper;
 
 abstract class BaseTokenFilter extends BaseObject {
 
@@ -29,6 +30,7 @@ abstract class BaseTokenFilter extends BaseObject {
 		if(empty($this->type)) {
 			throw new InvalidArgumentException('Attribute "type" not defined in filter "' . static::class . '"!');
 		}
-		return $token = $this->type . SPC . $token;
+		$tokenArray = TokenHelper::splitToken($token);
+		return $this->type . SPC . $tokenArray['token'];
 	}
 }

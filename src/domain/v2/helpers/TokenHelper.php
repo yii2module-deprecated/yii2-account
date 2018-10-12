@@ -58,7 +58,7 @@ class TokenHelper {
 		return $loginEntity;
 	}
 
-    private static function splitToken($token) {
+    public static function splitToken($token) {
         $token = trim($token);
         if(empty($token)) {
             throw new InvalidArgumentException('Empty token');
