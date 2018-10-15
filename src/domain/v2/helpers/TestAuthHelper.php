@@ -4,13 +4,20 @@ namespace yii2module\account\domain\v2\helpers;
 
 use Yii;
 use yii2lab\domain\helpers\DomainHelper;
-use yii2lab\helpers\ClientHelper;
+use yii2lab\extension\web\helpers\ClientHelper;
 use yii2module\account\domain\v2\entities\LoginEntity;
 
 class TestAuthHelper {
 	
 	const ADMIN_PASSWORD = 'Wwwqqq111';
 	const DOMAIN_CLASS = \yii2module\account\domain\v2\Domain::class;
+	
+	public static function authPseudo($login, $email = null, $parentLogin = null) {
+		self::defineAccountDomain();
+		$email = $email ? $email : $login . '@mail.ru';
+		$userEntity = \App::$domain->account->authPseudo->authentication($login, ClientHelper::ip(), $email, $parentLogin);
+		Yii::$app->user->setIdentity($userEntity);
+	}
 	
 	public static function authByLogin($login, $password = self::ADMIN_PASSWORD) {
 		self::defineAccountDomain();
