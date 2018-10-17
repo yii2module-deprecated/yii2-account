@@ -63,7 +63,7 @@ class AuthTest extends Unit
 			\App::$domain->account->auth->authenticationByToken(LoginEnum::TOKEN_NOT_INCORRECT);
 			$this->tester->assertBad();
 		} catch(UnauthorizedHttpException $e) {
-			$this->tester->assertTrue(true);
+			$this->tester->assertNice();
 		}
 	}
 	
@@ -74,7 +74,7 @@ class AuthTest extends Unit
 			\App::$domain->account->auth->denyAccess();
 			$this->tester->assertBad();
 		} catch(ForbiddenHttpException $e) {
-			$this->tester->assertTrue(true);
+			$this->tester->assertNice();
 		}
 	}
 	

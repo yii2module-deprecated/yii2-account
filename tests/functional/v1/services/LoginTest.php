@@ -60,7 +60,7 @@ class LoginTest extends Unit
 			\App::$domain->account->login->oneByLogin(LoginEnum::LOGIN_NOT_EXISTS);
 			$this->tester->assertBad();
 		} catch(NotFoundHttpException $e) {
-			$this->tester->assertTrue(true);
+			$this->tester->assertNice();
 		}
 	}
 	
@@ -70,7 +70,7 @@ class LoginTest extends Unit
 			\App::$domain->account->login->oneById(LoginEnum::ID_NOT_EXISTS);
 			$this->tester->assertBad();
 		} catch(NotFoundHttpException $e) {
-			$this->tester->assertTrue(true);
+			$this->tester->assertNice();
 		}
 	}
 	
