@@ -2,9 +2,11 @@
 
 namespace yii2module\account\domain\v2;
 
+use yii2lab\extension\jwt\filters\token\JwtFilter;
 use yii2module\account\domain\v2\enums\AccountRoleEnum;
 use yii2lab\domain\enums\Driver;
 use yii2lab\extension\enum\enums\TimeEnum;
+use yii2module\account\domain\v2\filters\token\DefaultFilter;
 
 // todo: описание докблоков в руководство
 
@@ -49,6 +51,13 @@ class Domain extends \yii2lab\domain\Domain {
 			'services' => [
 				'auth' => [
 					'rememberExpire' => TimeEnum::SECOND_PER_YEAR,
+					'tokenAuthMethods' => [
+						'bearer' => DefaultFilter::class,
+						'jwt' => [
+							'class' => JwtFilter::class,
+							'profile' => 'auth',
+						],
+					],
 				],
 				'login' => [
 					'defaultRole' => AccountRoleEnum::UNKNOWN_USER,
