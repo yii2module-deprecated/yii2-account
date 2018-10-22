@@ -97,9 +97,4 @@ class LoginService extends ActiveBaseService implements LoginInterface {
 		return in_array($status, $this->forbiddenStatusList);
 	}
 	
-	// todo: перенести в домен услуг
-	/*public function getAvailableServices() {
-		return $this->repository->getAvailableServices();
-	}*/
-	
 }
