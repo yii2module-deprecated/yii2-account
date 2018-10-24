@@ -4,7 +4,7 @@ namespace yii2module\account\domain\v2\filters\token;
 
 class DefaultFilter extends BaseTokenFilter {
 	
-	public function auth($token) {
+	public function authByToken($token) {
 		$loginEntity = \App::$domain->account->repositories->login->oneByToken($token);
 		return $loginEntity;
 	}

@@ -54,7 +54,7 @@ class TokenHelper {
 	private static function runAuthFilter($definition, $token) {
 		/** @var BaseTokenFilter $filter */
 		$filter = Yii::createObject($definition);
-		$loginEntity = $filter->auth($token);
+		$loginEntity = $filter->authByToken($token);
 		return $loginEntity;
 	}
 

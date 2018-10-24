@@ -16,7 +16,7 @@ abstract class BaseTokenFilter extends BaseObject {
 	 *
 	 * @return LoginEntity
 	 */
-	abstract public function auth($token);
+	abstract public function authByToken($token);
 	
 	/**
 	 * @param $body
