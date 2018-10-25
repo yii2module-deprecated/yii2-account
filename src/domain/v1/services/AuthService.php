@@ -175,13 +175,17 @@ class AuthService extends BaseService implements AuthInterface {
 		if($token) {
 			return $token;
 		}
-		$token = AuthHelper::getToken();
+		$token = AuthHelper::getTokenDto()->getTokenString();
 		if($token) {
 			return $token;
 		}
 		return null;
 	}
 	
+	/**
+	 * @return array
+	 * @deprecated
+	 */
 	public function getBalance() {
 		if(empty(Yii::$app->user->identity->login)) {
 			return [];

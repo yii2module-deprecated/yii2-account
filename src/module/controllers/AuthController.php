@@ -91,7 +91,7 @@ class AuthController extends Controller
     public function actionGetToken()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-        return AuthHelper::getToken();
+        return AuthHelper::getTokenDto()->getTokenString();
     }
 
 	private function isBackendAccessAllowed()

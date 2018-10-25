@@ -30,7 +30,7 @@ abstract class BaseTokenFilter extends BaseObject {
 		if(empty($this->type)) {
 			throw new InvalidArgumentException('Attribute "type" not defined in filter "' . static::class . '"!');
 		}
-		$tokenArray = TokenHelper::splitToken($token);
-		return $this->type . SPC . $tokenArray['token'];
+		$tokenDto = TokenHelper::forgeDtoFromToken($token);
+		return $this->type . SPC . $tokenDto->token;
 	}
 }

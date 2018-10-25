@@ -11,6 +11,7 @@ use yii2lab\domain\BaseEntity;
  * 
  * @property $user_id
  * @property $token
+ * @property $type
  * @property $ip
  * @property $platform
  * @property $browser
@@ -23,6 +24,7 @@ class TokenEntity extends BaseEntity {
 
 	protected $user_id;
 	protected $token;
+	protected $type;
 	protected $ip;
 	protected $platform;
 	protected $browser;

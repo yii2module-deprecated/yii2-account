@@ -3,8 +3,10 @@
 namespace yii2module\account\domain\v2\helpers;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii2lab\extension\registry\helpers\Registry;
 use yii2lab\extension\web\enums\HttpHeaderEnum;
+use yii2module\account\domain\v2\dto\TokenDto;
 use yii2module\account\domain\v2\entities\LoginEntity;
 
 class AuthHelper {
@@ -12,48 +14,40 @@ class AuthHelper {
 	const KEY = 'authToken';
 	
 	public static function setToken($token) {
-		Registry::set(self::KEY, $token);
-		self::setTokenToSession($token);
+		$tokenDto = self::forgeDto($token);
+		Registry::set(self::KEY, $tokenDto);
+		self::setTokenToSession($tokenDto);
 	}
 	
-	public static function getToken() {
-		$token = Registry::get(self::KEY);
-		if($token) {
-			return $token;
+	/**
+	 * @return TokenDto|null
+	 */
+	public static function getTokenDto() {
+		$tokenDto = Registry::get(self::KEY);
+		if($tokenDto) {
+			return $tokenDto;
 		}
-		$token = self::getTokenFromSession();
-		if($token) {
-			return $token;
+		$tokenDto = self::getTokenFromSession();
+		if($tokenDto) {
+			return $tokenDto;
 		}
 		$token = self::getTokenFromQuery();
 		if($token) {
-			return $token;
+			$tokenDto = self::forgeDto($token);
+			return $tokenDto;
 		}
 		return null;
-		//return self::getTokenFromIdentity();
 	}
 	
+	/**
+	 * @return TokenDto
+	 */
 	public static function updateTokenViaSession() {
 		if(Yii::$app->user->enableSession) {
-			AuthHelper::setToken(AuthHelper::getTokenFromSession());
+			$tokenDto = AuthHelper::getTokenFromSession();
+			AuthHelper::setToken($tokenDto);
 		}
 		return null;
-	}
-	
-	public static function getTokenFromSession() {
-		if(Yii::$app->user->enableSession) {
-			return Yii::$app->session->get(self::KEY);
-		}
-		return null;
-	}
-	
-	public static function setTokenToSession($token) {
-		if(Yii::$app->user->enableSession) {
-			$tokenFromSession = self::getTokenFromSession();
-			if ($tokenFromSession !== $token) {
-				Yii::$app->session->set(self::KEY, $token);
-			}
-		}
 	}
 	
 	public static function getTokenFromQuery() {
@@ -87,6 +81,41 @@ class AuthHelper {
 			return $token;
 		}
 		return null;
+	}
+	
+	private static function forgeDto($token) {
+		if($token instanceof TokenDto) {
+			return $token;
+		}
+		$tokenDto = null;
+		if(is_string($token)) {
+			$tokenDto = TokenHelper::forgeDtoFromToken($token);
+		}
+		if(is_array($token)) {
+			$tokenDto = new TokenDto;
+			$tokenDto->token = ArrayHelper::getValue($token, 'token');
+			$tokenDto->type = ArrayHelper::getValue($token, 'type');
+		}
+		return $tokenDto;
+	}
+	
+	/**
+	 * @return TokenDto|null
+	 */
+	private static function getTokenFromSession() {
+		if(Yii::$app->user->enableSession) {
+			return Yii::$app->session->get(self::KEY);
+		}
+		return null;
+	}
+	
+	private static function setTokenToSession(TokenDto $tokenDto = null) {
+		if(Yii::$app->user->enableSession) {
+			$tokenFromSession = self::getTokenFromSession();
+			if ($tokenFromSession !== $tokenDto) {
+				Yii::$app->session->set(self::KEY, $tokenDto);
+			}
+		}
 	}
 	
 }

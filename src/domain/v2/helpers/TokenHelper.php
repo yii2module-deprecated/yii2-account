@@ -6,6 +6,7 @@ use Yii;
 use yii\base\InvalidArgumentException;
 use yii2lab\extension\common\helpers\StringHelper;
 use yii2lab\extension\yii\helpers\ArrayHelper;
+use yii2module\account\domain\v2\dto\TokenDto;
 use yii2module\account\domain\v2\entities\LoginEntity;
 use yii2module\account\domain\v2\filters\token\BaseTokenFilter;
 
@@ -29,9 +30,9 @@ class TokenHelper {
 	}
 	
     public static function authByToken($SourceToken, $types = []) {
-	    $tokenArray = self::splitToken($SourceToken);
-	    $type = $tokenArray['type'];
-	    $token = $tokenArray['token'];
+	    $tokenDto = self::forgeDtoFromToken($SourceToken);
+	    $type = $tokenDto->type;
+	    $token = $tokenDto->token;
 	    $type = self::prepareType($type, $types);
 	    $definition = $types[$type];
         $loginEntity = self::runAuthFilter($definition, $token);
@@ -57,11 +58,16 @@ class TokenHelper {
 		$loginEntity = $filter->authByToken($token);
 		return $loginEntity;
 	}
-
-    public static function splitToken($token) {
+	
+	/**
+	 * @param $token
+	 *
+	 * @return TokenDto|null
+	 */
+	public static function forgeDtoFromToken($token) {
         $token = trim($token);
         if(empty($token)) {
-            throw new InvalidArgumentException('Empty token');
+            return null;
         }
 	    $token = trim($token);
 	    $token = StringHelper::removeDoubleSpace($token);
@@ -72,15 +78,15 @@ class TokenHelper {
         if(!$isValid) {
             throw new InvalidArgumentException('Invalid token format');
         }
-	    $result = [];
+		$tokenDto = new TokenDto();
         if(count($tokenSegments) == 1) {
-            $result['type'] = null;
-            $result['token'] = $tokenSegments[0];
+	        $tokenDto->type = null;
+	        $tokenDto->token = $tokenSegments[0];
         } elseif(count($tokenSegments) == 2) {
-            $result['type'] = strtolower($tokenSegments[0]);
-            $result['token'] = $tokenSegments[1];
+	        $tokenDto->type = strtolower($tokenSegments[0]);
+	        $tokenDto->token = $tokenSegments[1];
         }
-        return $result;
+        return $tokenDto;
     }
 
 }
