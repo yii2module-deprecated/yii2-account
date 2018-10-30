@@ -38,7 +38,15 @@ class AuthHelper {
 		}
 		return null;
 	}
-	
+	/**
+	 * @return String|null
+	 */
+	public static function getTokenString() {
+		if(!empty(self::getTokenDto())){
+			return self::getTokenDto()->getTokenString();
+		}
+		return null;
+	}
 	/**
 	 * @return TokenDto
 	 */
