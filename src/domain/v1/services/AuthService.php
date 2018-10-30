@@ -175,7 +175,7 @@ class AuthService extends BaseService implements AuthInterface {
 		if($token) {
 			return $token;
 		}
-		$token = AuthHelper::getTokenDto()->getTokenString();
+		$token = AuthHelper::getTokenString();
 		if($token) {
 			return $token;
 		}
