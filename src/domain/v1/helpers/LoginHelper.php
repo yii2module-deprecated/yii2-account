@@ -2,8 +2,6 @@
 
 namespace yii2module\account\domain\v1\helpers;
 
-use Yii;
-
 class LoginHelper {
 
     const DEFAULT_MASK = '+9 (999) 999-99-99';
