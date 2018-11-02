@@ -3,19 +3,21 @@
 namespace yii2module\account\domain\v2\services;
 
 use Yii;
-use yii\helpers\ArrayHelper;
-use yii\web\ForbiddenHttpException;
-use yii\web\UnauthorizedHttpException;
+use yii\data\DataProviderInterface;
+use yii\validators\Validator;
+use yii2lab\domain\BaseEntity;
 use yii2lab\domain\data\Query;
 use yii2lab\domain\helpers\Helper;
+use yii2lab\domain\services\base\BaseActiveService;
+use yii2lab\extension\common\helpers\ClassHelper;
 use yii2module\account\domain\v2\entities\LoginEntity;
+use yii2module\account\domain\v2\filters\login\LoginValidator;
+use yii2module\account\domain\v2\interfaces\LoginValidatorInterface;
 use yii2module\account\domain\v2\interfaces\services\LoginInterface;
 use yii2module\account\domain\v2\forms\LoginForm;
 use yii2lab\domain\helpers\ErrorCollection;
-use yii2lab\domain\services\ActiveBaseService;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii\web\NotFoundHttpException;
-use yii2woop\common\domain\account\v2\helpers\UserHelper;
 
 /**
  * Class LoginService
@@ -25,13 +27,14 @@ use yii2woop\common\domain\account\v2\helpers\UserHelper;
  * @property \yii2module\account\domain\v2\interfaces\repositories\LoginInterface $repository
  * @property \yii2module\account\domain\v2\Domain $domain
  */
-class LoginService extends ActiveBaseService implements LoginInterface {
+class LoginService extends BaseActiveService implements LoginInterface {
 
 	public $relations = [];
 	public $prefixList = [];
 	public $defaultRole;
 	public $defaultStatus;
 	public $forbiddenStatusList;
+	public $loginValidator = LoginValidator::class;
 	
 	public function isExistsByLogin($login) {
 		return $this->repository->isExistsByLogin($login);
@@ -46,6 +49,18 @@ class LoginService extends ActiveBaseService implements LoginInterface {
 	 */
 	public function oneByLogin($login) {
 		return $this->repository->oneByLogin($login);
+	}
+	
+	public function isValidLogin($login) {
+		/** @var LoginValidatorInterface $validator */
+		$validator = ClassHelper::createInstance($this->loginValidator, [], LoginValidatorInterface::class);
+		return $validator->isValid($login);
+	}
+	
+	public function normalizeLogin($login) {
+		/** @var LoginValidatorInterface $validator */
+		$validator = ClassHelper::createInstance($this->loginValidator, [], LoginValidatorInterface::class);
+		return $validator->normalize($login);
 	}
 	
 	public function create($data) {

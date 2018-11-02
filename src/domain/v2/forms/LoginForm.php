@@ -4,7 +4,7 @@ namespace yii2module\account\domain\v2\forms;
 
 use Yii;
 use yii2lab\domain\base\Model;
-use yii2module\account\domain\v2\helpers\LoginHelper;
+use yii2module\lang\domain\helpers\LangHelper;
 
 class LoginForm extends Model
 {
@@ -70,7 +70,13 @@ class LoginForm extends Model
 
 	public function normalizeLogin($attribute)
 	{
-		$this->$attribute = LoginHelper::pregMatchLogin($this->$attribute);
+		//$this->$attribute = LoginHelper::pregMatchLogin($this->$attribute);
+		$isValid = \App::$domain->account->login->isValidLogin($this->$attribute);
+		if($isValid) {
+			$this->$attribute = \App::$domain->account->login->normalizeLogin($this->$attribute);
+		} else {
+			$this->addError($attribute, LangHelper::extract(['account/login', 'not_valid']));
+		}
 	}
 	
 }

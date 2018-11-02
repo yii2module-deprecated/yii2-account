@@ -17,6 +17,8 @@ use yii2lab\domain\interfaces\services\CrudInterface;
 interface LoginInterface extends CrudInterface {
 	
 	public function oneByLogin($login);
+	public function isValidLogin($login);
+	public function normalizeLogin($login);
 	public function isExistsByLogin($login);
 	public function isForbiddenByStatus($status);
 
