@@ -2,14 +2,9 @@
 
 namespace yii2module\account\domain\v2\services;
 
-use Yii;
-use yii\data\DataProviderInterface;
-use yii\validators\Validator;
-use yii2lab\domain\BaseEntity;
-use yii2lab\domain\data\Query;
 use yii2lab\domain\helpers\Helper;
 use yii2lab\domain\services\base\BaseActiveService;
-use yii2lab\extension\common\helpers\ClassHelper;
+use yii2lab\extension\common\helpers\InstanceHelper;
 use yii2module\account\domain\v2\entities\LoginEntity;
 use yii2module\account\domain\v2\filters\login\LoginValidator;
 use yii2module\account\domain\v2\interfaces\LoginValidatorInterface;
@@ -34,7 +29,13 @@ class LoginService extends BaseActiveService implements LoginInterface {
 	public $defaultRole;
 	public $defaultStatus;
 	public $forbiddenStatusList;
-	public $loginValidator = LoginValidator::class;
+	
+	/** @var LoginValidatorInterface|array|string $validator */
+	private $loginValidator;
+	
+	public function setLoginValidator($definition) {
+		$this->loginValidator = InstanceHelper::create($definition, [], LoginValidatorInterface::class);
+	}
 	
 	public function isExistsByLogin($login) {
 		return $this->repository->isExistsByLogin($login);
@@ -52,15 +53,11 @@ class LoginService extends BaseActiveService implements LoginInterface {
 	}
 	
 	public function isValidLogin($login) {
-		/** @var LoginValidatorInterface $validator */
-		$validator = ClassHelper::createInstance($this->loginValidator, [], LoginValidatorInterface::class);
-		return $validator->isValid($login);
+		return $this->loginValidator->isValid($login);
 	}
 	
 	public function normalizeLogin($login) {
-		/** @var LoginValidatorInterface $validator */
-		$validator = ClassHelper::createInstance($this->loginValidator, [], LoginValidatorInterface::class);
-		return $validator->normalize($login);
+		return $this->loginValidator->normalize($login);
 	}
 	
 	public function create($data) {
@@ -69,7 +66,7 @@ class LoginService extends BaseActiveService implements LoginInterface {
         Helper::validateForm(LoginForm::class, $data);
 		
 		try {
-			$user = $this->repository->oneByLogin($data['login']);
+			$this->repository->oneByLogin($data['login']);
 			$error = new ErrorCollection();
 			$error->add('login', 'account/registration', 'user_already_exists_and_activated');
 			throw new UnprocessableEntityHttpException($error);

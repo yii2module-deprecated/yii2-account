@@ -2,30 +2,16 @@
 
 namespace yii2module\account\domain\v2\validators;
 
-use Yii;
+use yii2lab\extension\validator\BaseValidator;
 use yii2module\account\domain\v2\helpers\LoginHelper;
-use yii\validators\Validator;
 
-class LoginValidator extends Validator
-{
-    /**
-     * @inheritdoc
-     */
-    public function init()
-    {
-        parent::init();
-        if ($this->message === null) {
-            $this->message = Yii::t('account/registration', 'login_not_valid');
-        }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function validateValue($value)
-    {
-	    $valid = LoginHelper::validate($value);
-        return $valid ? null : [$this->message, []];
-    }
+class LoginValidator extends BaseValidator {
+	
+	protected $messageLang = ['account/login', 'not_valid'];
+	
+	protected function validateValue($value) {
+		$isValid = LoginHelper::validate($value);
+		return $this->prepareMessage($isValid);
+	}
 	
 }
