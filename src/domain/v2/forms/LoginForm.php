@@ -16,7 +16,7 @@ class LoginForm extends Model
 	public $email;
 	public $role;
 	public $status;
-	public $tokenType;
+	public $token_type;
 	public $rememberMe = true;
 
 	/**
@@ -25,7 +25,7 @@ class LoginForm extends Model
 	public function rules()
 	{
 		return [
-			[['login', 'password', 'tokenType'], 'trim'],
+			[['login', 'password', 'token_type'], 'trim'],
 			[['login', 'password'], 'required'],
 			['email', 'email'],
 			//['login', 'match', 'pattern' => '/^[0-9_]{11,13}$/i', 'message' => Yii::t('account/registration', 'login_not_valid')],
@@ -46,12 +46,12 @@ class LoginForm extends Model
 				'role',
 				'status',
 				'rememberMe',
-				'tokenType',
+				'token_type',
 			],
 			self::SCENARIO_SIMPLE => [
 				'login',
 				'password',
-				'tokenType',
+				'token_type',
 			],
 		];
 	}
