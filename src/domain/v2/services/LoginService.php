@@ -31,10 +31,14 @@ class LoginService extends BaseActiveService implements LoginInterface {
 	public $forbiddenStatusList;
 	
 	/** @var LoginValidatorInterface|array|string $validator */
-	private $loginValidator;
+	public $loginValidator = LoginValidator::class;
 	
-	public function setLoginValidator($definition) {
-		$this->loginValidator = InstanceHelper::create($definition, [], LoginValidatorInterface::class);
+	/**
+	 * @return LoginValidatorInterface
+	 */
+	public function getLoginValidator() {
+		$this->loginValidator = InstanceHelper::ensure($this->loginValidator, [], LoginValidatorInterface::class);
+		return $this->loginValidator;
 	}
 	
 	public function isExistsByLogin($login) {
@@ -53,11 +57,11 @@ class LoginService extends BaseActiveService implements LoginInterface {
 	}
 	
 	public function isValidLogin($login) {
-		return $this->loginValidator->isValid($login);
+		return $this->getLoginValidator()->isValid($login);
 	}
 	
 	public function normalizeLogin($login) {
-		return $this->loginValidator->normalize($login);
+		return $this->getLoginValidator()->normalize($login);
 	}
 	
 	public function create($data) {
