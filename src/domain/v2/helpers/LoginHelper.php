@@ -16,6 +16,13 @@ class LoginHelper {
 		return \App::$domain->account->login->one($query2);
 	}
 	
+	/**
+	 * @param $id
+	 *
+	 * @return \yii2lab\domain\BaseEntity
+	 *
+	 * @deprecated
+	 */
 	public static function getLogin($id) {
 		try {
 			return \App::$domain->account->login->oneById($id);
