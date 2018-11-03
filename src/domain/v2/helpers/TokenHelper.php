@@ -13,7 +13,7 @@ use yii2module\account\domain\v2\filters\token\BaseTokenFilter;
 class TokenHelper {
 	
 	public static function login($body, $ip, $types = []) {
-		$type = ArrayHelper::getValue($body, 'tokenType');
+		$type = ArrayHelper::getValue($body, 'token_type');
 		$type = self::prepareType($type, $types);
 		//$type = !empty($type) ? $type : ArrayHelper::firstKey($this->tokenAuthMethods);
 		$definitionFilter = ArrayHelper::getValue($types, $type);
