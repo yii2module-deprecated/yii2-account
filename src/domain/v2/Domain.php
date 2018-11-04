@@ -28,6 +28,7 @@ use yii2module\account\domain\v2\filters\token\DefaultFilter;
  * @property-read \yii2module\account\domain\v2\interfaces\services\TokenInterface $token
  * @property-read \yii2module\account\domain\v2\interfaces\services\JwtInterface $jwt
  * @property-read \yii2module\account\domain\v2\interfaces\services\ActivityInterface $activity
+ * @property-read \yii2module\account\domain\v2\interfaces\services\OauthInterface $oauth
  */
 class Domain extends \yii2lab\domain\Domain {
 	
@@ -77,6 +78,7 @@ class Domain extends \yii2lab\domain\Domain {
 				'token',
                 'jwt',
 				'activity',
+				'oauth',
 			],
 		];
 	}

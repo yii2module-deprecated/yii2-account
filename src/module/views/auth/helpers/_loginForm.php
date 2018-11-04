@@ -9,6 +9,8 @@ use yii\bootstrap\ActiveForm;
 
 ?>
 
+<br/>
+
 <p class="login-box-msg"><?= Yii::t('account/auth', 'login_text') ?></p>
 
 <?php $form = ActiveForm::begin(); ?>
@@ -26,3 +28,7 @@ use yii\bootstrap\ActiveForm;
 	</div>
 	
 <?php ActiveForm::end(); ?>
+
+<?= Html::a(Yii::t('account/auth', 'register_new_user'), ['/user/registration']) ?>
+    <br/>
+<?= Html::a(Yii::t('account/auth', 'i_forgot_my_password'), ['/user/restore-password']) ?>
