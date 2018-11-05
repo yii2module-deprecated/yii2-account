@@ -21,6 +21,11 @@ use yii2lab\domain\services\base\BaseService;
  */
 class OauthService extends BaseService implements OauthInterface {
 	
+	public $defaultRoles = [
+		'rOauth',
+		'rUser',
+	];
+	
 	/** @var \yii2module\account\domain\v2\interfaces\repositories\LoginInterface */
 	private $_arLoginRepository;
 	
@@ -44,14 +49,16 @@ class OauthService extends BaseService implements OauthInterface {
 	public function oneById($id): LoginEntity {
 		/** @var LoginEntity $loginEntity */
 		$loginEntity = $this->_arLoginRepository->oneById($id);
-		$loginEntity->roles = [
-			'rOauth',
-			'rUser',
-		];
+		$loginEntity->roles = $this->defaultRoles;
 		return $loginEntity;
 	}
 	
-	public function forgeAccount(BaseOAuth $client) : LoginEntity {
+	public function authByClient(BaseOAuth $client) {
+		$loginEntity = $this->forgeAccount($client);
+		\App::$domain->account->auth->login($loginEntity, true);
+	}
+	
+	private function forgeAccount(BaseOAuth $client) : LoginEntity {
 		try {
 			$loginEntity = $this->oneByClient($client);
 		} catch(NotFoundHttpException $e) {
