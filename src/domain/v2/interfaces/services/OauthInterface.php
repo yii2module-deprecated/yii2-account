@@ -17,7 +17,5 @@ interface OauthInterface {
 	public function isEnabled() : bool;
 	public function oneById($id) : LoginEntity;
 	public function forgeAccount(BaseOAuth $client) : LoginEntity;
-	public function storeToken(BaseOAuth $client);
-	public function getToken($serviceId);
 	
 }

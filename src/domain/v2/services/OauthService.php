@@ -4,13 +4,11 @@ namespace yii2module\account\domain\v2\services;
 
 use Yii;
 use yii\authclient\BaseOAuth;
-use yii\di\Instance;
 use yii\web\NotFoundHttpException;
 use yii2lab\app\domain\helpers\EnvService;
 use yii2lab\domain\enums\Driver;
 use yii2lab\domain\helpers\factory\RepositoryFactoryHelper;
 use yii2module\account\domain\v2\entities\LoginEntity;
-use yii2module\account\domain\v2\helpers\UserCacheHelper;
 use yii2module\account\domain\v2\interfaces\services\OauthInterface;
 use yii2lab\domain\services\base\BaseService;
 
@@ -60,22 +58,6 @@ class OauthService extends BaseService implements OauthInterface {
 			$loginEntity = $this->insert($client);
 		}
 		return $loginEntity;
-	}
-	
-	public function storeToken(BaseOAuth $client) {
-		$token = $client->getAccessToken()->getToken();
-		$serviceId = $client->getId();
-		$key = $this->getKeyForCache($serviceId);
-		UserCacheHelper::set($key, $token);
-	}
-	
-	public function getToken($serviceId) {
-		$key = $this->getKeyForCache($serviceId);
-		return UserCacheHelper::get($key);
-	}
-	
-	private function getKeyForCache($serviceId) {
-		return 'oauth' . DOT . $serviceId . DOT . DOT . 'token';
 	}
 	
 	private function oneByClient(BaseOAuth $client): LoginEntity {

@@ -19,11 +19,6 @@ class OauthController extends Controller {
 						'allow' => true,
 						'roles' => ['?'],
 					],
-					[
-						'actions' => ['get-token'],
-						'allow' => true,
-						'roles' => ['@'],
-					],
 				],
 			],
 		];
@@ -34,10 +29,6 @@ class OauthController extends Controller {
 			'login' => [
 				'class' => 'yii\authclient\AuthAction',
 				'successCallback' => [$this, 'onLoginSuccess'],
-			],
-			'get-token' => [
-				'class' => 'yii\authclient\AuthAction',
-				'successCallback' => [$this, 'onGetTokenSuccess'],
 			],
 		];
 	}
@@ -52,11 +43,6 @@ class OauthController extends Controller {
 	public function onLoginSuccess(BaseOAuth $client) {
 		$loginEntity = \App::$domain->account->oauth->forgeAccount($client);
 		\App::$domain->account->auth->login($loginEntity, true);
-		\App::$domain->account->oauth->storeToken($client);
-	}
-	
-	public function onGetTokenSuccess(BaseOAuth $client) {
-		\App::$domain->account->oauth->storeToken($client);
 	}
 	
 }
