@@ -12,5 +12,5 @@ use yii\authclient\widgets\AuthChoice;
 <p class="login-box-msg"><?= Yii::t('account/oauth', 'login_text') ?></p>
 
 <?= AuthChoice::widget([
-	'baseAuthUrl' => ['/user/oauth/auth'],
+	'baseAuthUrl' => ['/user/oauth/login'],
 ]) ?>

@@ -20,7 +20,7 @@ $items[] = [
 	'content' => $loginForm,
 ];
 
-if(Yii::$app->has('authClientCollection')) {
+if(\App::$domain->account->oauth->isEnabled()) {
 	$items[] = [
 		'label' => Yii::t('account/oauth', 'title'),
 		'content' => $this->render('helpers/_loginOauth.php'),

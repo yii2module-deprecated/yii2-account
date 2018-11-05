@@ -2,7 +2,6 @@
 
 namespace yii2module\account\domain\v2\services;
 
-use Yii;
 use yii2lab\domain\data\Query;
 use yii2lab\domain\helpers\Helper;
 use yii2lab\domain\services\base\BaseActiveService;
@@ -39,21 +38,13 @@ class LoginService extends BaseActiveService implements LoginInterface {
 		try {
 			$loginEntity = parent::oneById($id, $query);
 		} catch(NotFoundHttpException $e) {
-			if(Yii::$app->has('authClientCollection')) {
+			if($this->domain->oauth->isEnabled()) {
 				$loginEntity = \App::$domain->account->oauth->oneById($id);
 			} else {
 				throw $e;
 			}
 		}
 		return $loginEntity;
-	}
-	
-	/**
-	 * @return LoginValidatorInterface
-	 */
-	public function getLoginValidator() {
-		$this->loginValidator = InstanceHelper::ensure($this->loginValidator, [], LoginValidatorInterface::class);
-		return $this->loginValidator;
 	}
 	
 	public function isExistsByLogin($login) {
@@ -126,6 +117,14 @@ class LoginService extends BaseActiveService implements LoginInterface {
 			return false;
 		}
 		return in_array($status, $this->forbiddenStatusList);
+	}
+	
+	/**
+	 * @return LoginValidatorInterface
+	 */
+	private function getLoginValidator() {
+		$this->loginValidator = InstanceHelper::ensure($this->loginValidator, [], LoginValidatorInterface::class);
+		return $this->loginValidator;
 	}
 	
 }
