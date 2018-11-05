@@ -26,6 +26,7 @@ $config = [
 			'activity' => Driver::ACTIVE_RECORD,
 		],
 		'services' => [
+			'oauth',
 			'auth',
 			'login' => [
 				'prefixList' => ['B', 'BS', 'R', 'QRS'],
