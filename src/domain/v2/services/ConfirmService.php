@@ -5,6 +5,7 @@ namespace yii2module\account\domain\v2\services;
 use Yii;
 use yii\web\NotFoundHttpException;
 use yii2lab\domain\services\base\BaseActiveService;
+use yii2lab\notify\domain\exceptions\SmsTimeLimitException;
 use yii2module\account\domain\v2\entities\ConfirmEntity;
 use yii2module\account\domain\v2\exceptions\ConfirmAlreadyExistsException;
 use yii2module\account\domain\v2\exceptions\ConfirmIncorrectCodeException;
@@ -122,6 +123,10 @@ class ConfirmService extends BaseActiveService implements ConfirmInterface
 		$login = LoginHelper::pregMatchLogin($login);
 		$loginParts = LoginHelper::splitLogin($login);
 		$message = Yii::t('account/confirm', 'confirmation_code {code}', ['code' => $activation_code]);
-		\App::$domain->notify->sms->send($loginParts['country_code'] . $loginParts['phone'], $message);
+		try {
+			\App::$domain->notify->sms->send($loginParts['country_code'] . $loginParts['phone'], $message);
+		} catch(SmsTimeLimitException $e) {
+			throw new ConfirmAlreadyExistsException;
+		}
 	}
 }
