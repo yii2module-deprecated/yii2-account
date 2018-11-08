@@ -39,7 +39,7 @@ class Menu implements MenuInterface {
 		if(Yii::$app->user->isGuest) {
 			return Html::fa('user') . NBSP . Yii::t('account/auth', 'title');
 		} else {
-			return Avatar::widget() . NBSP . self::getUseName();
+			return !class_exists(Avatar::class) ? self::getUseName() : Avatar::widget() . NBSP . self::getUseName();
 		}
 	}
 	
