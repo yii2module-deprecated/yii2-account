@@ -62,7 +62,7 @@ class ConfirmEntity extends BaseEntity {
 			[['login', 'action', 'code'], 'trim'],
 			[['login', 'action', 'code', 'expire'], 'required'],
 			[['expire'], 'integer'],
-			['login', LoginValidator::class],
+			//['login', LoginValidator::class],
 			//'normalizeLogin' => ['login', 'normalizeLogin'],
 			[['code'], 'string', 'length' => 6],
 			[['data'], JsonValidator::class],

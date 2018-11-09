@@ -24,9 +24,19 @@ class RegistrationService extends BaseService implements RegistrationInterface {
 	public $expire = TimeEnum::SECOND_PER_MINUTE * 1;
 	public $requiredEmail = false;
 	
+	private function validateLogin($login) {
+		if(!\App::$domain->account->login->isValidLogin($login)) {
+			$error = new ErrorCollection();
+			$error->add('login', 'account/login', 'not_valid');
+			throw new UnprocessableEntityHttpException($error);
+		}
+		$login = \App::$domain->account->login->normalizeLogin($login);
+		return $login;
+	}
+	
 	//todo: изменить путь чтения временного аккаунта для ригистрации. Инкапсулировать все в ядро. Сейчас запрос идет на прямую.
 	public function createTempAccount($login, $email = null) {
-		$login = LoginHelper::pregMatchLogin($login);
+		$login = $this->validateLogin($login);
 		$body = compact(['login', 'email']);
 		$scenario = RegistrationForm::SCENARIO_REQUEST;
 		if($this->requiredEmail) {
@@ -45,20 +55,20 @@ class RegistrationService extends BaseService implements RegistrationInterface {
 	}
 	
 	public function checkActivationCode($login, $activation_code) {
-		$login = LoginHelper::pregMatchLogin($login);
+		$login = $this->validateLogin($login);
 		$body = compact(['login', 'activation_code']);
         Helper::validateForm(RegistrationForm::class, $body, RegistrationForm::SCENARIO_CHECK);
 		$this->verifyActivationCode($login, $activation_code);
 	}
 	
 	public function activateAccount($login, $activation_code) {
-		$login = LoginHelper::pregMatchLogin($login);
+		$login = $this->validateLogin($login);
 		$this->checkActivationCode($login, $activation_code);
 		\App::$domain->account->confirm->activate($login, self::CONFIRM_ACTION, $activation_code);
 	}
 	
 	public function createTpsAccount($login, $activation_code, $password, $email = null) {
-		$login = LoginHelper::pregMatchLogin($login);
+		$login = $this->validateLogin($login);
 		$body = compact(['login', 'activation_code', 'password']);
         Helper::validateForm(RegistrationForm::class, $body, RegistrationForm::SCENARIO_CONFIRM);
 		//$this->activateAccount($login, $activation_code);
