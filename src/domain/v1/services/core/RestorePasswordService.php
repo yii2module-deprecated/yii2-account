@@ -5,7 +5,6 @@ namespace yii2module\account\domain\v1\services\core;
 use yii2lab\domain\helpers\Helper;
 use yii2module\account\domain\v1\forms\RestorePasswordForm;
 use yii2lab\domain\services\CoreBaseService;
-use common\enums\app\ApiVersionEnum;
 
 class RestorePasswordService extends CoreBaseService {
 	

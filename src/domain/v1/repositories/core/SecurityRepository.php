@@ -3,7 +3,6 @@
 namespace yii2module\account\domain\v1\repositories\core;
 
 use yii2lab\domain\repositories\CoreRepository;
-use common\enums\app\ApiVersionEnum;
 
 class SecurityRepository extends CoreRepository {
 	

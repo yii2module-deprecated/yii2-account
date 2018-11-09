@@ -2,7 +2,6 @@
 
 namespace yii2module\account\domain\v1\repositories\core;
 
-use common\enums\app\ApiVersionEnum;
 use yii\helpers\ArrayHelper;
 use yii\rbac\Assignment;
 use yii\web\NotFoundHttpException;
