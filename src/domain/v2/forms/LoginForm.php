@@ -75,7 +75,7 @@ class LoginForm extends Model
 		if($isValid) {
 			$this->$attribute = \App::$domain->account->login->normalizeLogin($this->$attribute);
 		} else {
-			$this->addError($attribute, LangHelper::extract(['account/login', 'not_valid']));
+			return;
 		}
 	}
 	
