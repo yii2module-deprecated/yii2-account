@@ -10,7 +10,7 @@ use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
 use yii2lab\domain\Alias;
 use yii2lab\domain\BaseEntity;
-use yii2lab\helpers\ClientHelper;
+use yii2lab\extension\web\helpers\ClientHelper;
 use yii2module\account\domain\v2\entities\LoginEntity;
 use yii2module\account\domain\v2\entities\SecurityEntity;
 use yii2module\account\domain\v2\entities\TokenEntity;
