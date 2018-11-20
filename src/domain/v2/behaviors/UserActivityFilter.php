@@ -28,8 +28,8 @@ class UserActivityFilter extends Behavior {
 			'domain' => $sender->domain->id,
 			'service' => $sender->id,
 			'method' => $event->activeMethod,
-			//'request' => $event->query,
-			//'response' => $event->content,
+			'request' => $event->query,
+			'response' => $event->content,
 		]);
 	}
 	
