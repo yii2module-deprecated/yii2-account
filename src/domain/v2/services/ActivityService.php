@@ -2,7 +2,6 @@
 
 namespace yii2module\account\domain\v2\services;
 
-use yii2lab\extension\common\helpers\Helper;
 use yii2lab\extension\web\helpers\ClientHelper;
 use yii2lab\extension\yii\helpers\ArrayHelper;
 use yii2module\account\domain\v2\interfaces\services\ActivityInterface;
