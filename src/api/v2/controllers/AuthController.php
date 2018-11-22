@@ -8,7 +8,7 @@ use yii2lab\domain\helpers\Helper;
 use yii2lab\extension\web\helpers\Behavior;
 use yii2lab\extension\web\helpers\ClientHelper;
 use yii2lab\rest\domain\rest\Controller;
-use yii2module\account\console\forms\PseudoLoginForm;
+use yii2woop\common\domain\account\v2\forms\AuthPseudoForm;
 use yii2module\account\domain\v2\interfaces\services\AuthInterface;
 
 /**
@@ -82,7 +82,8 @@ class AuthController extends Controller
 	{
 		$body = Yii::$app->request->getBodyParams();
 		try {
-			Helper::validateForm(PseudoLoginForm::class, $body);
+		
+			Helper::validateForm(AuthPseudoForm::class, $body);
 			$address = ClientHelper::ip();
 			$entity = \App::$domain->account->authPseudo->authentication($body['login'], $address, $body['email'], !empty($body['parentLogin']) ? $body['parentLogin'] : null);
 			return $entity;
