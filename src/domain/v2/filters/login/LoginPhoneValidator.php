@@ -2,7 +2,11 @@
 
 namespace yii2module\account\domain\v2\filters\login;
 
+use Yii;
 use yii\web\NotFoundHttpException;
+
+use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
+use yii2lab\domain\helpers\ErrorCollection;
 use yii2module\account\domain\v2\interfaces\LoginValidatorInterface;
 
 class LoginPhoneValidator implements LoginValidatorInterface {
@@ -14,7 +18,9 @@ class LoginPhoneValidator implements LoginValidatorInterface {
 			$phoneInfoEntity = \App::$domain->geo->phone->parse($value);
 			return $phoneInfoEntity->id;
 		} catch(NotFoundHttpException $e) {
-			return null;
+			$error = new ErrorCollection;
+			$error->add('login', Yii::t('account/login', 'not_valid'));
+			throw new UnprocessableEntityHttpException($error);
 		}
 	}
 	

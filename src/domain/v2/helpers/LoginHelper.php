@@ -90,6 +90,7 @@ class LoginHelper {
 	
 	protected static function cleanLoginOfChar($login)
 	{
+		$login = preg_replace('/[a-z A-Zа-Я А-Я]/','',$login);
 		$login = str_replace(['+', ' ', '-', '(', ')'], '', $login);
 		return $login;
 	}
