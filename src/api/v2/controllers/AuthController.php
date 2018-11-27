@@ -66,7 +66,7 @@ class AuthController extends Controller
 	{
 		$body = Yii::$app->request->getBodyParams();
 		try {
-			//Helper::validateForm(LoginForm::class,$body);
+			 Helper::validateForm(LoginForm::class,$body);
 			$ip = ClientHelper::ip();
 			$entity = $this->service->authentication2($body, $ip);
 			Yii::$app->response->headers->set('Authorization', $entity->token);
@@ -82,8 +82,8 @@ class AuthController extends Controller
 	{
 		$body = Yii::$app->request->getBodyParams();
 		try {
-		
-			Helper::validateForm(AuthPseudoForm::class, $body);
+			
+			$body = Helper::validateForm(AuthPseudoForm::class, $body);
 			$address = ClientHelper::ip();
 			$entity = \App::$domain->account->authPseudo->authentication($body['login'], $address, $body['email'], !empty($body['parentLogin']) ? $body['parentLogin'] : null);
 			return $entity;
