@@ -66,7 +66,7 @@ class AuthController extends Controller
 	{
 		$body = Yii::$app->request->getBodyParams();
 		try {
-			 Helper::validateForm(LoginForm::class,$body);
+			//Helper::validateForm(LoginForm::class,$body);
 			$ip = ClientHelper::ip();
 			$entity = $this->service->authentication2($body, $ip);
 			Yii::$app->response->headers->set('Authorization', $entity->token);
