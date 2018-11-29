@@ -129,5 +129,8 @@ class LoginHelper {
 		usort($prefixList, 'sortByLen');
 		return implode('|', $prefixList);
 	}
-	
+	public static function formatPhoneNumber($number) {
+		$cleanNumber = preg_replace('/[^\d]/', '', $number);
+		return (strlen($cleanNumber) == 10) ? '7'.$cleanNumber : $cleanNumber;
+	}
 }
