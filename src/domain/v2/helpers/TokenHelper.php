@@ -44,6 +44,9 @@ class TokenHelper {
     }
 	
     private static function prepareType($type, $types) {
+		if(empty($types)) {
+			throw new InvalidArgumentException(Yii::t('account/auth', 'empty_token_type_list'));
+		}
 	    if(empty($type)) {
 		    $type = ArrayHelper::firstKey($types);
 	    } elseif(empty($types[$type])) {

@@ -37,4 +37,5 @@ return [
 	'invalid_login_or_password' => 'Неверный пользователь или пароль',
 	
 	'token_type_not_found' => 'Неверный тип токена',
+	'empty_token_type_list' => 'Пустой список возможных типов токена',
 ];
