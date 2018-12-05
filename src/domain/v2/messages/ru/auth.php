@@ -36,6 +36,6 @@ return [
 	//'not_found_account' => 'Не найден пользователь. Пройдите первый шаг аутентификации',
 	'invalid_login_or_password' => 'Неверный пользователь или пароль',
 	
-	'token_type_not_found' => 'Неверный тип токена',
+	'token_type_not_found {actual_types}' => 'Неверный тип токена. Актуальные типы: {actual_types}',
 	'empty_token_type_list' => 'Пустой список возможных типов токена',
 ];

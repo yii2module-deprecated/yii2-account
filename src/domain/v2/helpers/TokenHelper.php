@@ -50,7 +50,8 @@ class TokenHelper {
 	    if(empty($type)) {
 		    $type = ArrayHelper::firstKey($types);
 	    } elseif(empty($types[$type])) {
-	    	throw new InvalidArgumentException(Yii::t('account/auth', 'token_type_not_found'));
+			$message = Yii::t('account/auth', 'token_type_not_found {actual_types}', ['actual_types' => implode(', ', array_keys($types))]);
+	    	throw new InvalidArgumentException($message);
 	    }
 	    return $type;
     }
