@@ -90,7 +90,7 @@ class LoginHelper {
 	
 	protected static function cleanLoginOfChar($login)
 	{
-		$login = preg_replace('/[a-z A-Zа-Я А-Я]/','',$login);
+		$login = preg_replace('/[a-zа-ЯА-Я]/','',$login);
 		$login = str_replace(['+', ' ', '-', '(', ')'], '', $login);
 		return $login;
 	}
@@ -125,9 +125,10 @@ class LoginHelper {
 	
 	public static function getPrefixExp()
 	{
-		$prefixList = \App::$domain->account->login->prefixList;
+		return '[A-Z]{1,3}';
+		/*$prefixList = \App::$domain->account->login->prefixList;
 		usort($prefixList, 'sortByLen');
-		return implode('|', $prefixList);
+		return implode('|', $prefixList);*/
 	}
 	public static function formatPhoneNumber($number) {
 		$cleanNumber = preg_replace('/[^\d]/', '', $number);
