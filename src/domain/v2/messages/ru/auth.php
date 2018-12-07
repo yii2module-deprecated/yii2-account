@@ -13,7 +13,8 @@ return [
 	'signup_text' 		=> 'Заполните следующие поля, чтобы зарегистрироваться:',
 
 	'if_forgot_password' 		=> 'Если вы забыли свой пароль, Вы можете ',
-
+	'login_is_blocked' 		=> 'Пользователь заблокирован',
+	
 	'forgot_title' => 'сбросить пароль',
 	'login_action' => 'Войти',
 	'logout_action' => 'Выйти',
@@ -36,5 +37,6 @@ return [
 	//'not_found_account' => 'Не найден пользователь. Пройдите первый шаг аутентификации',
 	'invalid_login_or_password' => 'Неверный пользователь или пароль',
 	
-	'token_type_not_found' => 'Неверный тип токена',
+	'token_type_not_found {actual_types}' => 'Неверный тип токена. Актуальные типы: {actual_types}',
+	'empty_token_type_list' => 'Пустой список возможных типов токена',
 ];

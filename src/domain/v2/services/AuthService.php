@@ -78,7 +78,7 @@ class AuthService extends BaseService implements AuthInterface {
 			$loginEntity = false;
 		} catch(InvalidArgumentException $e) {
 			$error = new ErrorCollection();
-			$error->add('password', 'account/auth', 'token_type_not_found');
+			$error->add('password', $e->getMessage());
 			throw new UnprocessableEntityHttpException($error);
 		}
 		if(!$loginEntity instanceof LoginEntity || empty($loginEntity->id)) {
