@@ -4,8 +4,6 @@ namespace tests\functional\v1\services;
 
 use yii2lab\test\Test\Unit;
 use tests\functional\v1\enums\LoginEnum;
-use UnitTester;
-use Yii;
 use yii\web\ForbiddenHttpException;
 use yii\web\UnauthorizedHttpException;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
