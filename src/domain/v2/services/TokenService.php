@@ -6,6 +6,7 @@ use Yii;
 use yii\web\NotFoundHttpException;
 use yii2lab\extension\web\helpers\ClientHelper;
 use yii2lab\extension\enum\enums\TimeEnum;
+use yii2lab\extension\yii\helpers\FileHelper;
 use yii2module\account\domain\v2\entities\TokenEntity;
 use yii2module\account\domain\v2\exceptions\InvalidIpAddressException;
 use yii2module\account\domain\v2\exceptions\NotFoundLoginException;
@@ -115,6 +116,9 @@ class TokenService extends BaseActiveService implements TokenInterface {
 		$agentInfo['ip'] = $ip;
 		$agentInfo['token'] = $token;
 		$agentInfo['expire_at'] = TIMESTAMP + $expire;
+        while(mb_strlen($agentInfo['version']) > 10) {
+            $agentInfo['version'] = FileHelper::fileRemoveExt($agentInfo['version']);
+        }
 		$tokenEntity = new TokenEntity();
 		$tokenEntity->load($agentInfo);
 		$this->repository->insert($tokenEntity);
