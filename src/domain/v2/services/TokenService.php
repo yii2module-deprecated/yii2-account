@@ -116,15 +116,22 @@ class TokenService extends BaseActiveService implements TokenInterface {
 		$agentInfo['ip'] = $ip;
 		$agentInfo['token'] = $token;
 		$agentInfo['expire_at'] = TIMESTAMP + $expire;
-        while(mb_strlen($agentInfo['version']) > 10) {
-            $agentInfo['version'] = FileHelper::fileRemoveExt($agentInfo['version']);
+		if(!empty($agentInfo['version'])) {
+            $agentInfo['version'] = $this->trimVersion($agentInfo['version']);
         }
 		$tokenEntity = new TokenEntity();
 		$tokenEntity->load($agentInfo);
 		$this->repository->insert($tokenEntity);
 		return $token;
 	}
-	
+
+	private function trimVersion($version) {
+        while(mb_strlen($version) > 10) {
+            $version = FileHelper::fileRemoveExt($version);
+        }
+        return $version;
+    }
+
 	private function oneByIp($ip) {
 		$collection = $this->allByIp($ip);
 		if(empty($collection)) {
