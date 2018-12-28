@@ -14,4 +14,6 @@ return [
 	"{$version}/security/<action:(password|email)>" => "account/security/<action>",
 
 	["class" => "yii\\rest\UrlRule", "controller" => ["{$version}/user" => "account/user"]],
+	
+	"{$version}/firebase/register-user" => "account/fire/register-user",
 ];
