@@ -18,7 +18,7 @@ class ChangePasswordForm  extends ApiChangePasswordForm {
 		return ArrayHelper::merge(parent::rules(), [
 			[['new_password_repeat'], 'trim'],
 			[['new_password_repeat'], 'required'],
-			[['new_password_repeat'], 'string', 'min' => 8],
+			[['new_password_repeat'], 'string', 'min' => 4],
 			['new_password_repeat', 'compare', 'compareAttribute' => 'new_password',],
 		]);
 	}

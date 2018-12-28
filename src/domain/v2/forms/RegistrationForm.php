@@ -24,7 +24,7 @@ class RegistrationForm extends RestorePasswordForm {
 			['email', 'email'],
 			[['activation_code'], 'integer'],
 			[['activation_code'], 'string', 'length' => 6],
-			[['password'], 'string', 'min' => 8],
+			[['password'], 'string', 'min' => 4],
 		];
 	}
 	

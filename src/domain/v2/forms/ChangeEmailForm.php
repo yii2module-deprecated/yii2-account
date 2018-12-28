@@ -18,7 +18,7 @@ class ChangeEmailForm extends Model
 		return [
 			[['password', 'email'], 'trim'],
 			[['password', 'email'], 'required'],
-			[['password'], 'string', 'min' => 8],
+			[['password'], 'string', 'min' => 4],
 			['email', 'email'],
 		];
 	}

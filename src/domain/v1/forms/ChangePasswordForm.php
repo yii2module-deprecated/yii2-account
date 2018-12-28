@@ -18,7 +18,7 @@ class ChangePasswordForm extends Model
 		return [
 			[['password', 'new_password'], 'trim'],
 			[['password', 'new_password'], 'required'],
-			[['password', 'new_password'], 'string', 'min' => 8],
+			[['password', 'new_password'], 'string', 'min' => 4],
 			['new_password', 'compare', 'compareAttribute' => 'password', 'operator' => '!='],
 		];
 	}
