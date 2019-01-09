@@ -7,6 +7,7 @@ use yii\base\InvalidArgumentException;
 use yii\base\InvalidConfigException;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
+use yii\web\ServerErrorHttpException;
 use yii\web\UnauthorizedHttpException;
 use yii2lab\domain\BaseEntity;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
@@ -17,16 +18,14 @@ use yii2lab\domain\traits\MethodEventTrait;
 use yii2lab\extension\common\helpers\StringHelper;
 use yii2lab\extension\enum\enums\TimeEnum;
 use yii2lab\extension\web\helpers\ClientHelper;
-use yii2lab\extension\yii\helpers\ArrayHelper;
 use yii2module\account\domain\v2\behaviors\UserActivityFilter;
-use yii2module\account\domain\v2\filters\token\BaseTokenFilter;
+use yii2module\account\domain\v2\entities\LoginEntity;
+use yii2module\account\domain\v2\filters\auth\ConsoleAuth;
 use yii2module\account\domain\v2\filters\token\DefaultFilter;
 use yii2module\account\domain\v2\forms\LoginForm;
 use yii2module\account\domain\v2\helpers\AuthHelper;
 use yii2module\account\domain\v2\helpers\TokenHelper;
 use yii2module\account\domain\v2\interfaces\services\AuthInterface;
-use yii\web\ServerErrorHttpException;
-use yii2module\account\domain\v2\entities\LoginEntity;
 
 /**
  * Class AuthService
@@ -197,6 +196,8 @@ class AuthService extends BaseService implements AuthInterface {
 	
 	public function breakSession() {
 		if(APP == CONSOLE) {
+			AuthHelper::setToken('');
+			Yii::$app->cache->set(ConsoleAuth::IDENTITY_CACHE_KEY, '');
 			return;
 		}
 		if(APP == API) {
