@@ -2,6 +2,7 @@
 
 namespace yii2module\account\api\v2\controllers;
 
+use Yii;
 use yii2lab\extension\web\helpers\Behavior;
 use yii2lab\rest\domain\rest\Controller;
 use yii2woop\common\domain\account\v2\interfaces\services\FireUserInterface;
@@ -39,6 +40,7 @@ class FireController extends Controller {
 	
 	public function actionRegisterUser() {
 		$body = \Yii::$app->request->getBodyParams();
+		Yii::$app->response->setStatusCode(201);
 		return $this->service->register($body);
 	}
 }
