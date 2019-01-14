@@ -15,5 +15,5 @@ return [
 
 	["class" => "yii\\rest\UrlRule", "controller" => ["{$version}/user" => "account/user"]],
 	
-	"{$version}/firebase/register-user" => "account/fire/register-user",
+
 ];
