@@ -57,7 +57,6 @@ class RegistrationService extends BaseService implements RegistrationInterface {
 	public function checkActivationCode($login, $activation_code) {
 		$login = $this->validateLogin($login);
 		$body = compact(['login', 'activation_code']);
-		prr($body,1,1);
         Helper::validateForm(RegistrationForm::class, $body, RegistrationForm::SCENARIO_CHECK);
 		$this->verifyActivationCode($login, $activation_code);
 	}
