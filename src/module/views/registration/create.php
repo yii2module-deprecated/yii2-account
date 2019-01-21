@@ -70,7 +70,8 @@ $this->title = Yii::t('account/registration', 'create_title');
                         {hint}
                      </div>",
 			]) ?>
-			
+	
+			<?= $form->field($model, 'email')?>
 			<?= $form->field($model, 'activation_code') ?>
 
             <div class="form-group">
