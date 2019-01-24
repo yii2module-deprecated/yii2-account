@@ -93,7 +93,7 @@ class RegistrationService extends BaseService implements RegistrationInterface {
 		/** @var LoginInterface $loginRepository */
 		$loginRepository = $this->domain->repositories->login;
 		$isExists = $loginRepository->isExistsByLogin($login);
-		if($isExists) {
+		if($isExists == false) {
 			$error = new ErrorCollection();
 			$error->add('login', 'account/registration', 'user_already_exists_and_activated');
 			throw new UnprocessableEntityHttpException($error);
