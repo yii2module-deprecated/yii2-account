@@ -64,6 +64,7 @@ class AuthController extends Controller
 	
 	public function actionLogin()
 	{
+		Yii::$app->log->targets = [];
 		$body = Yii::$app->request->getBodyParams();
 		try {
 			//Helper::validateForm(LoginForm::class,$body);
