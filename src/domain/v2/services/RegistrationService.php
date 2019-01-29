@@ -93,7 +93,7 @@ class RegistrationService extends BaseService implements RegistrationInterface {
 		/** @var LoginInterface $loginRepository */
 		$loginRepository = $this->domain->repositories->login;
 		$isExists = $loginRepository->isExistsByLogin($login);
-		if($isExists == false) {
+		if($isExists) {
 			$error = new ErrorCollection();
 			$error->add('login', 'account/registration', 'user_already_exists_and_activated');
 			throw new UnprocessableEntityHttpException($error);
@@ -114,5 +114,9 @@ class RegistrationService extends BaseService implements RegistrationInterface {
 			throw new UnprocessableEntityHttpException($error);
 		}
 	}
-	
+	private function isHasPossibility() {
+		if(Yii::$app->user->can(RBACOperations::CREATE_UNKNOWN_USER) == false) {
+			throw new ForbiddenHttpException();
+		}
+	}
 }
