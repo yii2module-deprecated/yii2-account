@@ -16,6 +16,8 @@ use yii2lab\domain\helpers\ErrorCollection;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2module\account\domain\v2\interfaces\repositories\LoginInterface;
 use yii2module\account\domain\v2\interfaces\services\RegistrationInterface;
+use yii2woop\common\components\RBACOperations;
+use yii\web\ForbiddenHttpException;
 
 class RegistrationService extends BaseService implements RegistrationInterface {
 	
@@ -36,6 +38,7 @@ class RegistrationService extends BaseService implements RegistrationInterface {
 	
 	//todo: изменить путь чтения временного аккаунта для ригистрации. Инкапсулировать все в ядро. Сейчас запрос идет на прямую.
 	public function createTempAccount($login, $email = null) {
+		$this->isHasPossibility();
 		$login = $this->validateLogin($login);
 		$body = compact(['login', 'email']);
 		$scenario = RegistrationForm::SCENARIO_REQUEST;
@@ -114,6 +117,7 @@ class RegistrationService extends BaseService implements RegistrationInterface {
 			throw new UnprocessableEntityHttpException($error);
 		}
 	}
+
 	private function isHasPossibility() {
 		if(Yii::$app->user->can(RBACOperations::CREATE_UNKNOWN_USER) == false) {
 			throw new ForbiddenHttpException();
