@@ -119,7 +119,7 @@ class RegistrationService extends BaseService implements RegistrationInterface {
 	}
 
 	private function isHasPossibility() {
-		if(Yii::$app->user->can(RBACOperations::CREATE_UNKNOWN_USER) == false) {
+		if(Yii::$app->user->can(RBACOperations::CREATE_UNKNOWN_USER)) {
 			throw new ForbiddenHttpException();
 		}
 	}
