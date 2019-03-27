@@ -69,6 +69,7 @@ class AuthController extends Controller
 				$form->addErrorsFromException($e);
 			} catch(SubjectOtpRequiredException $e) {
 				$form->setScenario(LoginForm::SCENARIO_OTP);
+			}
 		}
 		
 		return $this->render('login', [
