@@ -11,6 +11,7 @@ use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2lab\navigation\domain\widgets\Alert;
 use yii2module\account\domain\v2\helpers\AuthHelper;
 use yii\web\Response;
+use yii2woop\generated\exception\tps\SubjectOtpRequiredException;
 
 /**
  * AuthController controller
@@ -56,7 +57,7 @@ class AuthController extends Controller
 		$isValid = $form->load($body) && $form->validate();
 		if ($isValid) {
 			try {
-				\App::$domain->account->auth->authenticationFromWeb($form->login, $form->password, $form->rememberMe);
+				$form = \App::$domain->account->auth->authenticationFromWeb($form->login, $form->password, $form->rememberMe);
 				if(!$this->isBackendAccessAllowed()) {
 					\App::$domain->account->auth->logout();
 					\App::$domain->navigation->alert->create(['account/auth', 'login_access_error'], Alert::TYPE_DANGER);
@@ -66,6 +67,8 @@ class AuthController extends Controller
 				return $this->goBack();
 			} catch(UnprocessableEntityHttpException $e) {
 				$form->addErrorsFromException($e);
+			} catch(SubjectOtpRequiredException $e) {
+				$form->setScenario(LoginForm::SCENARIO_OTP);
 			}
 		}
 		
