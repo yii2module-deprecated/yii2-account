@@ -6,7 +6,6 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use yii2module\account\domain\v2\forms\LoginForm;
 
 ?>
 
@@ -19,11 +18,7 @@ use yii2module\account\domain\v2\forms\LoginForm;
 	<?= $form->field($model, 'login') ?>
 
 	<?= $form->field($model, 'password')->passwordInput() ?>
-
-    <?php if($model->scenario == LoginForm::SCENARIO_OTP) {
-        echo $form->field($model, 'otp');
-    } ?>
-
+	
 	<?=$form->field($model, 'rememberMe', [
 		'checkboxTemplate'=>'<div class="checkbox">{beginLabel}{input}{labelTitle}{endLabel}{error}{hint}</div>',
 	])->checkbox();?>
