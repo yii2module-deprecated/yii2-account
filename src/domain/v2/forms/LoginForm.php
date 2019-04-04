@@ -50,6 +50,7 @@ class LoginForm extends Model
 				'status',
 				'rememberMe',
 				'token_type',
+				'otp',
 			],
 			self::SCENARIO_SIMPLE => [
 				'login',

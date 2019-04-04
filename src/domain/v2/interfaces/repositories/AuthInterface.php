@@ -13,6 +13,6 @@ interface AuthInterface {
 	 *
 	 * @return LoginEntity
 	 */
-	public function authentication($login, $password, $ip = null);
+	public function authentication($login, $password, $otp = null, $ip = null);
 	
 }
