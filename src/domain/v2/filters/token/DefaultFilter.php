@@ -12,7 +12,7 @@ class DefaultFilter extends BaseTokenFilter {
 	}
 	
 	public function login($body, $ip) {
-		$loginEntity = \App::$domain->account->repositories->auth->authentication($body['login'], $body['password'], $ip);
+		$loginEntity = \App::$domain->account->repositories->auth->authentication($body['login'], $body['password'], $body['otp'], $ip);
 		if($loginEntity instanceof LoginEntity) {
             $loginEntity->token = $this->forgeToken($loginEntity->token);
             return $loginEntity;

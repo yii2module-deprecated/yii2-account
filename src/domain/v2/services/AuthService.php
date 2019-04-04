@@ -98,14 +98,14 @@ class AuthService extends BaseService implements AuthInterface {
 		return $loginEntity;
 	}
 	
-	public function authentication($login, $password, $ip = null) {
+	public function authentication($login, $password, $otp = null, $ip = null) {
 		if(empty($ip)) {
 			$ip = ClientHelper::ip();
 		}
 		$body = compact(['login', 'password']);
 		$body = Helper::validateForm(LoginForm::class, $body);
 		try {
-			$loginEntity = $this->repository->authentication($body['login'], $body['password'], $ip);
+			$loginEntity = $this->repository->authentication($body['login'], $body['password'], $otp, $ip);
 		} catch(NotFoundHttpException $e) {
 			$loginEntity = false;
 		}
@@ -142,8 +142,8 @@ class AuthService extends BaseService implements AuthInterface {
 		return Yii::$app->user->identity;
 	}
 
-	public function authenticationFromWeb($login, $password, $rememberMe = false) {
-		$loginEntity = $this->authentication($login, $password);
+	public function authenticationFromWeb($login, $password, $otp = null, $rememberMe = false) {
+		$loginEntity = $this->authentication($login, $password, $otp);
 		$this->login($loginEntity, $rememberMe);
 	}
 

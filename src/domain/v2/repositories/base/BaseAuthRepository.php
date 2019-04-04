@@ -17,7 +17,7 @@ use yii2lab\domain\repositories\BaseRepository;
  */
 class BaseAuthRepository extends BaseRepository implements AuthInterface {
 	
-	public function authentication($login, $password, $ip = null) {
+	public function authentication($login, $password, $otp = null, $ip = null) {
 		try {
 			/** @var LoginEntity $loginEntity */
 			$loginEntity = $this->domain->repositories->login->oneByLogin($login);
