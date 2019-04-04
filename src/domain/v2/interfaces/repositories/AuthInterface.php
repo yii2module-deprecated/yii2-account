@@ -9,6 +9,7 @@ interface AuthInterface {
 	/**
 	 * @param string $login
 	 * @param string $password
+	 * @param null   $otp
 	 * @param null   $ip
 	 *
 	 * @return LoginEntity
