@@ -11,8 +11,8 @@ use yii2module\account\domain\v2\interfaces\repositories\AuthInterface;
 class AuthRepository extends BaseCoreRepository implements AuthInterface {
 	
 	public $point = 'auth';
-	
-	public function authentication($login, $password, $ip = null) {
+
+	public function authentication($login, $password, $otp = null, $ip = null) {
 		$response = $this->post(null, compact('login', 'password'), [ClientHelper::IP_HEADER_KEY => $ip]);
 		$entity = $this->forgeEntity($response, LoginEntity::class);
 		return $entity;

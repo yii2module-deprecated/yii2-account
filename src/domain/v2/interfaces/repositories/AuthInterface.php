@@ -9,10 +9,11 @@ interface AuthInterface {
 	/**
 	 * @param string $login
 	 * @param string $password
+	 * @param null   $otp
 	 * @param null   $ip
 	 *
 	 * @return LoginEntity
 	 */
-	public function authentication($login, $password, $ip = null);
+	public function authentication($login, $password, $otp = null, $ip = null);
 	
 }
