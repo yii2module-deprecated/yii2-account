@@ -11,7 +11,7 @@ return [
 	'password_repeat' => 'Повтор пароля',
 	'role' => 'Роль',
 	'otp' => 'ОТП',
-	'error.otp' => 'Введен не верный ОТП',
+	'error.otp' => 'Введен неверный ОТП',
 	'activation_code' => 'Код активации',
 	
 	'login_not_found' => 'Пользователь не найден',

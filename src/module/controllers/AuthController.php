@@ -72,7 +72,8 @@ class AuthController extends Controller
 				$form->setScenario(LoginForm::SCENARIO_OTP);
 			} catch (SubjectWrongOtpException $e) {
 				$form->setScenario(LoginForm::SCENARIO_OTP);
-				$form->addError('otp',Yii::t('account/main','error.otp'));
+				$form->addError('otp', Yii::t('account/main', 'error.otp'));
+			}
 		}
 		
 		return $this->render('login', [
