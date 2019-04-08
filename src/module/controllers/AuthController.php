@@ -7,6 +7,7 @@ use yii\filters\AccessControl;
 use yii2lab\applicationTemplate\common\enums\ApplicationPermissionEnum;
 use yii2lab\extension\web\helpers\Behavior;
 use yii2module\account\domain\v2\forms\LoginForm;
+use yii2woop\generated\exception\tps\SubjectWrongOtpException;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2lab\navigation\domain\widgets\Alert;
 use yii2module\account\domain\v2\helpers\AuthHelper;
@@ -69,7 +70,9 @@ class AuthController extends Controller
 				$form->addErrorsFromException($e);
 			} catch(SubjectOtpRequiredException $e) {
 				$form->setScenario(LoginForm::SCENARIO_OTP);
-			}
+			} catch (SubjectWrongOtpException $e) {
+				$form->setScenario(LoginForm::SCENARIO_OTP);
+				$form->addError('otp',Yii::t('account/main','error.otp'));
 		}
 		
 		return $this->render('login', [
