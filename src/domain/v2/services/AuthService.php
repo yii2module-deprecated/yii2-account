@@ -108,6 +108,10 @@ class AuthService extends BaseService implements AuthInterface {
 			$loginEntity = $this->repository->authentication($body['login'], $body['password'], $otp, $ip);
 		} catch(NotFoundHttpException $e) {
 			$loginEntity = false;
+		}  catch (ServerErrorHttpException $e ){
+			if ($e->getPrevious() instanceof \Exception){
+				throw $e->getPrevious();
+			}
 		}
 		if(!$loginEntity instanceof LoginEntity || empty($loginEntity->id)) {
 			$error = new ErrorCollection();
