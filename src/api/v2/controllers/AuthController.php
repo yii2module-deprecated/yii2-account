@@ -66,6 +66,8 @@ class AuthController extends Controller
 	{
 		Yii::$app->log->targets = [];
 		$body = Yii::$app->request->getBodyParams();
+		Yii::warning('asd',__METHOD__);
+		Yii::error('asd',__METHOD__);
 		try {
 			//Helper::validateForm(LoginForm::class,$body);
 			$ip = ClientHelper::ip();
