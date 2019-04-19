@@ -53,9 +53,12 @@ class AuthService extends BaseService implements AuthInterface {
 	}
 	
 	public function authentication2($body, $ip = null) {
+		Yii::warning($ip.'begin',__METHOD__);
 		if(empty($ip)) {
+			Yii::warning($ip.'bad',__METHOD__);
 			$ip = ClientHelper::ip();
 		}
+		Yii::warning($ip.'begin',__METHOD__);
 		$body = Helper::validateForm(LoginForm::class, $body);
 		try {
 			
