@@ -53,12 +53,15 @@ class AuthService extends BaseService implements AuthInterface {
 	}
 	
 	public function authentication2($body, $ip = null) {
+		Yii::warning('authentication21' . $ip, __METHOD__);
 		if(empty($ip)) {
+			Yii::warning('authentication22' . $ip, __METHOD__);
 			$ip = ClientHelper::ip();
 		}
 		
 		$body = Helper::validateForm(LoginForm::class, $body);
 		try {
+			Yii::warning('authentication23' . $ip, __METHOD__);
 			$loginEntity = TokenHelper::login($body, $ip, $this->tokenAuthMethods);
 			
 			/*$type = !empty($type) ? $type : ArrayHelper::firstKey($this->tokenAuthMethods);
