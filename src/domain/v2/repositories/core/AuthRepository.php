@@ -14,7 +14,6 @@ class AuthRepository extends BaseCoreRepository implements AuthInterface {
 
 	public function authentication($login, $password, $otp = null, $ip = null) {
 		$response = $this->post(null, compact('login', 'password', 'otp'), [ClientHelper::IP_HEADER_KEY => $ip]);
-		Yii::warning('response answer '. $response->content,__METHOD__);
 		$entity = $this->forgeEntity($response, LoginEntity::class);
 		return $entity;
 	}
