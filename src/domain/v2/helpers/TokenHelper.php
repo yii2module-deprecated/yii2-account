@@ -25,7 +25,6 @@ class TokenHelper {
 		/** @var BaseTokenFilter $filterInstance */
 		$filterInstance = Yii::createObject($definitionFilter);
 		$filterInstance->type = $type;
-		Yii::warning('TokenHelper-login ' . $ip, __METHOD__);
 		$loginEntity = $filterInstance->login($body, $ip);
 		return $loginEntity;
 	}
