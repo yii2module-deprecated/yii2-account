@@ -10,11 +10,20 @@ class RestorePasswordRepository extends CoreRepository implements RestorePasswor
 	
 	public $version = 'v4';
 	public $baseUri = 'auth/restore-password';
-	
+
+	/**
+	 * @param $login
+	 * @param null $mail
+	 */
 	public function requestNewPassword($login, $mail = null) {
 		$this->post('request', compact('login'));
 	}
-	
+
+	/**
+	 * @param $login
+	 * @param $activation_code
+	 * @return bool
+	 */
 	public function checkActivationCode($login, $activation_code) {
 		try {
 			$this->post('check-code', compact('login', 'activation_code'));
@@ -23,7 +32,12 @@ class RestorePasswordRepository extends CoreRepository implements RestorePasswor
 			return false;
 		}
 	}
-	
+
+	/**
+	 * @param $login
+	 * @param $activation_code
+	 * @param $password
+	 */
 	public function setNewPassword($login, $activation_code, $password) {
 		$this->post('confirm', compact('login', 'activation_code', 'password'));
 	}
