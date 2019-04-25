@@ -23,20 +23,33 @@ class RestorePasswordService extends BaseService implements RestorePasswordInter
 
     public $tokenExpire = TimeEnum::SECOND_PER_MINUTE * 1;
 
+	/**
+	 * @param $login
+	 * @param null $mail
+	 */
 	public function request($login, $mail = null) {
 		$body = compact(['login']);
 		Helper::validateForm(RestorePasswordForm::class, $body, RestorePasswordForm::SCENARIO_REQUEST);
 		$this->validateLogin($login);
 		$this->repository->requestNewPassword($login, $mail);
 	}
-	
+
+	/**
+	 * @param $login
+	 * @param $activation_code
+	 */
 	public function checkActivationCode($login, $activation_code) {
 		$body = compact(['login', 'activation_code']);
 		Helper::validateForm(RestorePasswordForm::class, $body, RestorePasswordForm::SCENARIO_CHECK);
 		$this->validateLogin($login);
 		$this->verifyActivationCode($login, $activation_code);
 	}
-	
+
+	/**
+	 * @param $login
+	 * @param $activation_code
+	 * @param $password
+	 */
 	public function confirm($login, $activation_code, $password) {
 		$body = compact(['login', 'activation_code', 'password']);
 		Helper::validateForm(RestorePasswordForm::class, $body, RestorePasswordForm::SCENARIO_CONFIRM);
