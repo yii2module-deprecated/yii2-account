@@ -1,0 +1,26 @@
+description: "Восстановление пароля"
+/request:
+    post:
+        description: "Восстановление пароля по логину"
+        is: !include /../../../vendor/yii2lab/yii2-rest/src/domain/docs/is/create.raml
+        body:
+            application/json:
+                example: !include example/restore.json
+        responses:
+            202:
+                description: |
+                    СМС-код был отправлен ранее.
+/check-code:
+    post:
+        description: "Проверка кода активации"
+        is: !include /../../../vendor/yii2lab/yii2-rest/src/domain/docs/is/create.raml
+        body:
+            application/json:
+                example: !include example/restore-with-code.json
+/confirm:
+    post:
+        description: "Назначение нового пароля"
+        is: !include /../../../vendor/yii2lab/yii2-rest/src/domain/docs/is/create.raml
+        body:
+            application/json:
+                example: !include example/confirm.json
