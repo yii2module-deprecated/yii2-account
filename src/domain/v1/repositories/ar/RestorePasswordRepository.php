@@ -11,18 +11,32 @@ use yii2lab\domain\repositories\TpsRepository;
 class RestorePasswordRepository extends TpsRepository implements RestorePasswordInterface {
 
 	public $smsCodeExpire = TimeEnum::SECOND_PER_HOUR;
-	
+
+	/**
+	 * @param $login
+	 * @param null $mail
+	 */
 	public function requestNewPassword($login, $mail = null) {
 		$login = LoginHelper::getPhone($login);
 		$entity = $this->domain->confirm->createNew($login, 'restore-password', $this->smsCodeExpire);
 		$message = Yii::t('account/registration', 'activate_account_sms {activation_code}', ['activation_code' => $entity->activation_code]);
 		\App::$domain->notify->sms->send($login, $message);
 	}
-	
+
+	/**
+	 * @param $login
+	 * @param $code
+	 * @return mixed
+	 */
 	public function checkActivationCode($login, $code) {
 		return $this->domain->confirm->isVerifyCode($login, 'restore-password', $code);
 	}
-	
+
+	/**
+	 * @param $login
+	 * @param $code
+	 * @param $password
+	 */
 	public function setNewPassword($login, $code, $password) {
 		$model = $this->domain->repositories->login->getModel();
 		$query = $model->find();
