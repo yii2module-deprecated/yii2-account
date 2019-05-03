@@ -1,0 +1,15 @@
+{
+	"parent_login": null,
+	"subject_type": 5018,
+	"country": 1,
+	"id": 380989,
+	"login": "A77781004290",
+	"status": 1,
+	"roles": [
+		"rPseudoUser"
+	],
+	"assignments": null,
+	"token": null,
+	"email": "hddanvar@gmail.com",
+	"created_at": "2019-05-03T10:53:47+0000"
+}
