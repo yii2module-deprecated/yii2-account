@@ -1,13 +1,13 @@
 {
-	"id": 361008,
-	"login": "77778891622",
-	"status": 1,
+	"id": "{{integer}}",
+	"login": "{{string}}",
+	"status": "{{integer}}",
 	"roles": [
-		"rUnknownUser",
-		"rWPFinanceSpecialist"
+		"{{string}}",
+		"{{string}}"
 	],
 	"assignments": null,
-	"token": "d0d7e16b11e526b1369a82d087cbafa7",
-	"email": "szhanabay@wooppay.com",
-	"created_at": "2018-07-06T06:55:12Z"
+	"token": "{{string}}",
+	"email": "{{string}}",
+	"created_at": "{{datetime: yyyy-MM-dd HH:mm:ss}}"
 }

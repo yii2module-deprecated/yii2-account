@@ -1,13 +1,15 @@
 {
+	"parent_login": "{{string}}",
+	"subject_type": "{{integer}}",
+	"country": "{{integer}}",
 	"id": "{{integer}}",
 	"login": "{{string}}",
-	"status": "{{integer}}",,
+	"status": "{{integer}}",
 	"roles": [
-		"{{string}}",
 		"{{string}}"
 	],
 	"assignments": null,
-	"token": null,
+	"token": "{{string}}",
 	"email": "{{string}}",
 	"created_at": "{{datetime: yyyy-MM-dd HH:mm:ss}}"
 }

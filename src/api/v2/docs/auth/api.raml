@@ -26,3 +26,35 @@ get:
             body:
                 application/json:
                     example: !include example/one-reponse-body.json
+
+/pseudo:
+    post:
+        description: "Получение токена"
+        is: !include /../../../vendor/yii2lab/yii2-rest/src/domain/docs/is/post200.raml
+        body:
+           application/json:
+               example: !include example/pseudo-request-body.json
+        responses:
+            200:
+                description: "Аутентификация прошла успешно"
+                body:
+                    application/json:
+                        example: !include example/pseudo-response-body.json
+                headers:
+                    Authorization:
+                        description: Токен авторизации
+                        type: string
+                        example: "a032b6770685e8e52f75df0921d51052"
+        queryParameters:
+            login:
+                type: string
+                description: "Обычно, номер телефона пользователя"
+                required: true
+            email:
+                type: string
+                description: "Почта пользователя на которую обычно приходит чек по операции"
+                required: true
+            parentLogin:
+                type: string
+                description: "Логин родительского субъекта "
+                required: false
