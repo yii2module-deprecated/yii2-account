@@ -1,5 +1,5 @@
 {
-	"login": 77778891622,
-	"email": "hddanvar@gmail.com",
-	"parentLogin": "subagent_activ"
+	"login": "{{string}}",
+	"email": "{{string}}",
+	"parentLogin": "{{string}}"
 }

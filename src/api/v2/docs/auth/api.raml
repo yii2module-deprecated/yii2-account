@@ -58,14 +58,3 @@ get:
                 type: string
                 description: "Логин родительского субъекта "
                 required: false
-
-    get:
-        securedBy: [Auth]
-        description: Получение информации текущего пользователя
-        is: !include /../../../vendor/yii2lab/yii2-rest/src/domain/docs/is/simple/one.raml
-        responses:
-            200:
-                body:
-                    application/json:
-                        example: !include example/pseudo-one-reponse-body.json
-
