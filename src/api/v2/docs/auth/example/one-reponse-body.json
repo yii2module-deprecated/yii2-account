@@ -9,5 +9,5 @@
 	"assignments": null,
 	"token": null,
 	"email": "{{string}}",
-	"created_at": "{{datetime: yyyy-MM-dd HH:mm:ss}}"
+	"created_at": "{{datetime: YYYY-MM-DDThh:mm:ss±hhmm}}"
 }
