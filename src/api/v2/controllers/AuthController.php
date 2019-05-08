@@ -83,7 +83,6 @@ class AuthController extends Controller
 	{
 		$body = Yii::$app->request->getBodyParams();
 		try {
-			
 			$body = Helper::validateForm(AuthPseudoForm::class, $body);
 			$address = ClientHelper::ip();
 			$parentLogin = null;
