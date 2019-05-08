@@ -64,8 +64,9 @@ class AuthController extends Controller
 	
 	public function actionLogin()
 	{
-		Yii::$app->log->targets = [];
+//		Yii::$app->log->targets = [];
 		$body = Yii::$app->request->getBodyParams();
+		prr(Yii::$app->request->headers,1,1);
 		try {
 			$ip = ClientHelper::ip();
 			$entity = $this->service->authentication2($body, $ip);
@@ -85,7 +86,13 @@ class AuthController extends Controller
 			
 			$body = Helper::validateForm(AuthPseudoForm::class, $body);
 			$address = ClientHelper::ip();
-			$entity = \App::$domain->account->authPseudo->authentication($body['login'], $address, $body['email'], !empty($body['parentLogin']) ? $body['parentLogin'] : null);
+			$parentLogin = null;
+			if(!empty($body['parentLogin'])){
+				$parentLogin = $body['parentLogin'];
+			} elseif (!empty($body['parent_login'])){
+				$parentLogin = $body['parent_login'];
+			}
+			$entity = \App::$domain->account->authPseudo->authentication($body['login'], $address, $body['email'], $parentLogin);
 			return $entity;
 		} catch(UnprocessableEntityHttpException $e) {
 			Yii::$app->response->setStatusCode(422);
