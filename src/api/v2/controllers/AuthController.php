@@ -64,9 +64,8 @@ class AuthController extends Controller
 	
 	public function actionLogin()
 	{
-//		Yii::$app->log->targets = [];
+		Yii::$app->log->targets = [];
 		$body = Yii::$app->request->getBodyParams();
-		prr(Yii::$app->request->headers,1,1);
 		try {
 			$ip = ClientHelper::ip();
 			$entity = $this->service->authentication2($body, $ip);
