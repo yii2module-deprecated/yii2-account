@@ -32,7 +32,7 @@ class RestorePasswordService extends CoreBaseService implements RestorePasswordI
 		$this->repository->post('check-code', $body);
 	}
 	
-	public function confirm($login, $activation_code, $password) {
+	public function confirm($login, $activation_code) {
 		$body = compact(['login', 'activation_code', 'password']);
 		Helper::validateForm(RestorePasswordForm::class, $body, RestorePasswordForm::SCENARIO_CONFIRM);
 		$this->repository->post('confirm', $body);

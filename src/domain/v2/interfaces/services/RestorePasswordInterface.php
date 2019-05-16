@@ -6,6 +6,6 @@ interface RestorePasswordInterface {
 	
 	public function request($login, $mail = null);
 	public function checkActivationCode($login, $activation_code);
-	public function confirm($login, $activation_code, $password);
+	public function confirm($login, $activation_code);
 
 }

@@ -10,6 +10,9 @@ use yii2lab\domain\helpers\ErrorCollection;
 use yii2lab\domain\services\BaseService;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2module\account\domain\v2\interfaces\services\RestorePasswordInterface;
+use yii2woop\generated\exception\tps\PasswordResetHashExpiredException;
+use yii2woop\generated\exception\tps\WrongConfirmationCodeException;
+use yii2woop\generated\transport\TpsCommands;
 
 /**
  * Class RestorePasswordService
@@ -48,14 +51,16 @@ class RestorePasswordService extends BaseService implements RestorePasswordInter
 	/**
 	 * @param $login
 	 * @param $activation_code
-	 * @param $password
 	 */
-	public function confirm($login, $activation_code, $password) {
-		$body = compact(['login', 'activation_code', 'password']);
-		Helper::validateForm(RestorePasswordForm::class, $body, RestorePasswordForm::SCENARIO_CONFIRM);
-		$this->validateLogin($login);
-		$this->verifyActivationCode($login, $activation_code);
-		$this->repository->setNewPassword($login, $activation_code, $password);
+	public function confirm($login, $activation_code) {
+		try {
+			$request = TpsCommands::sendConfirmationCodeByEmail($activation_code, $login);
+			return $request->send();
+		} catch(PasswordResetHashExpiredException $e) {
+			$error = new ErrorCollection();
+			$error->add('activation_code', 'resetHash', 'activation_code');
+			throw new UnprocessableEntityHttpException($error);
+		}
 	}
 	
 	protected function validateLogin($login) {
