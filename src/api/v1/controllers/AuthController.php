@@ -65,6 +65,7 @@ class AuthController extends Controller {
 	}
 	
 	public function actionLogin() {
+		Yii::$app->log->targets = [];
 		$body = Yii::$app->request->getBodyParams();
 		try {
 			$ip = ClientHelper::ip();
@@ -80,6 +81,7 @@ class AuthController extends Controller {
 	
 	public function actionPseudo()
 	{
+		Yii::$app->log->targets = [];
 		$body = Yii::$app->request->getBodyParams();
 		try {
 			Helper::validateForm(PseudoLoginForm::class, $body);
