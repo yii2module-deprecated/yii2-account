@@ -24,9 +24,9 @@ class RestorePasswordRepository extends BaseRepository implements RestorePasswor
 	public function checkActivationCode($login, $code) {
 		// TODO: Implement checkActivationCode() method.
 	}
-	
+
 	public function setNewPassword($login, $code, $password) {
 		// TODO: Implement setNewPassword() method.
 	}
-	
+
 }

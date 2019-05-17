@@ -25,17 +25,17 @@ class RestorePasswordService extends CoreBaseService implements RestorePasswordI
 		Helper::validateForm(RestorePasswordForm::class, $body, RestorePasswordForm::SCENARIO_REQUEST);
 		$this->repository->post('request', $body);
 	}
-	
-	public function checkActivationCode($login, $activation_code) {
-		$body = compact(['login', 'activation_code']);
-		Helper::validateForm(RestorePasswordForm::class, $body, RestorePasswordForm::SCENARIO_CHECK);
-		$this->repository->post('check-code', $body);
-	}
-	
-	public function confirm($login, $activation_code) {
+
+	public function checkActivationCode($login, $activation_code, $password) {
 		$body = compact(['login', 'activation_code', 'password']);
 		Helper::validateForm(RestorePasswordForm::class, $body, RestorePasswordForm::SCENARIO_CONFIRM);
+		$this->repository->post('check-code', $body);
+	}
+
+	public function confirm($login, $activation_code) {
+		$body = compact(['login', 'activation_code']);
+		Helper::validateForm(RestorePasswordForm::class, $body, RestorePasswordForm::SCENARIO_CHECK);
 		$this->repository->post('confirm', $body);
 	}
-	
+
 }
