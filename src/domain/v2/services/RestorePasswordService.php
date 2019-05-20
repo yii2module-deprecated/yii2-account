@@ -10,9 +10,9 @@ use yii2lab\domain\helpers\ErrorCollection;
 use yii2lab\domain\services\BaseService;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2module\account\domain\v2\interfaces\services\RestorePasswordInterface;
+use yii2woop\generated\exception\tps\WrongConfirmationCodeException;
 use yii2woop\generated\exception\tps\CallCounterExceededException;
 use yii2woop\generated\exception\tps\PasswordResetHashExpiredException;
-use yii2woop\generated\exception\tps\WrongConfirmationCodeException;
 use yii2woop\generated\transport\TpsCommands;
 
 /**

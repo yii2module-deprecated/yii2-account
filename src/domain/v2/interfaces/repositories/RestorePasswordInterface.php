@@ -21,10 +21,18 @@ interface RestorePasswordInterface {
 	 *
 	 * @return bool
 	 *
-	 * @throws NotFoundHttpException
+	 * @deprecated  use passwordChangeByAuthKey()
 	 */
-	
-	public function checkActivationCode($login, $code);
+	public function checkActivationCode($login, $code, $password);
+	/**
+	 * @param $login
+	 * @param $code
+	 *
+	 * @return bool
+	 *
+	 * @deprecated use passwordChangeByAuthKey()
+	 */
 	public function setNewPassword($login, $code, $password);
 
+	public function passwordChangeByAuthKey($login, $code, $password);
 }
