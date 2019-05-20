@@ -5,8 +5,6 @@ namespace yii2module\account\domain\v2\repositories\ar;
 use Yii;
 use yii2lab\domain\repositories\BaseRepository;
 use yii2lab\extension\enum\enums\TimeEnum;
-use yii2module\account\domain\v2\entities\LoginEntity;
-use yii2module\account\domain\v2\entities\SecurityEntity;
 use yii2module\account\domain\v2\helpers\LoginHelper;
 use yii2module\account\domain\v2\interfaces\repositories\RestorePasswordInterface;
 
@@ -24,18 +22,11 @@ class RestorePasswordRepository extends BaseRepository implements RestorePasswor
 	}
 	
 	public function checkActivationCode($login, $code) {
-		return $this->domain->confirm->isVerifyCode($login, self::CONFIRM_ACTION, $code);
+		// TODO: Implement checkActivationCode() method.
 	}
-	
+
 	public function setNewPassword($login, $code, $password) {
-		$login = LoginHelper::getPhone($login);
-		/** @var LoginEntity $loginEntity */
-		$loginEntity = $this->domain->login->oneByLogin($login);
-		/** @var SecurityEntity $securityEntity */
-		$securityEntity = $this->domain->security->oneById($loginEntity->id);
-		$securityEntity->password_hash = Yii::$app->security->generatePasswordHash($password);
-		$this->domain->security->updateById($securityEntity->id, $securityEntity);
-		return $this->domain->confirm->delete($login, self::CONFIRM_ACTION);
+		// TODO: Implement setNewPassword() method.
 	}
-	
+
 }

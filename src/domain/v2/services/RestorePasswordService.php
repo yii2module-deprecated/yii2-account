@@ -10,6 +10,10 @@ use yii2lab\domain\helpers\ErrorCollection;
 use yii2lab\domain\services\BaseService;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2module\account\domain\v2\interfaces\services\RestorePasswordInterface;
+use yii2woop\generated\exception\tps\CallCounterExceededException;
+use yii2woop\generated\exception\tps\PasswordResetHashExpiredException;
+use yii2woop\generated\exception\tps\WrongConfirmationCodeException;
+use yii2woop\generated\transport\TpsCommands;
 
 /**
  * Class RestorePasswordService
@@ -21,7 +25,7 @@ use yii2module\account\domain\v2\interfaces\services\RestorePasswordInterface;
  */
 class RestorePasswordService extends BaseService implements RestorePasswordInterface {
 
-    public $tokenExpire = TimeEnum::SECOND_PER_MINUTE * 1;
+	public $tokenExpire = TimeEnum::SECOND_PER_MINUTE * 1;
 
 	/**
 	 * @param $login
@@ -37,25 +41,39 @@ class RestorePasswordService extends BaseService implements RestorePasswordInter
 	/**
 	 * @param $login
 	 * @param $activation_code
+	 * @param $password
+	 *
+	 * @return mixed
 	 */
-	public function checkActivationCode($login, $activation_code) {
-		$body = compact(['login', 'activation_code']);
-		Helper::validateForm(RestorePasswordForm::class, $body, RestorePasswordForm::SCENARIO_CHECK);
+	public function checkActivationCode($login, $activation_code, $password) {
 		$this->validateLogin($login);
-		$this->verifyActivationCode($login, $activation_code);
+		try {
+			$request = TpsCommands::passwordChangeByAuthKey($login, $password, $activation_code);
+			return $request->send();
+		} catch (WrongConfirmationCodeException $e) {
+			$error = new ErrorCollection();
+			$error->add('smsCode', 'resetHash', 'Неверный СМС-код');
+			throw new UnprocessableEntityHttpException($error);
+		} catch (CallCounterExceededException $e) {
+			$error = new ErrorCollection();
+			$error->add('smsCode', 'resetHash', 'Слишком много попыток');
+			throw new UnprocessableEntityHttpException($error);
+		}
 	}
 
 	/**
 	 * @param $login
 	 * @param $activation_code
-	 * @param $password
 	 */
-	public function confirm($login, $activation_code, $password) {
-		$body = compact(['login', 'activation_code', 'password']);
-		Helper::validateForm(RestorePasswordForm::class, $body, RestorePasswordForm::SCENARIO_CONFIRM);
-		$this->validateLogin($login);
-		$this->verifyActivationCode($login, $activation_code);
-		$this->repository->setNewPassword($login, $activation_code, $password);
+	public function confirm($login, $activation_code) {
+		try {
+			$request = TpsCommands::sendConfirmationCodeByEmail($activation_code, $login);
+			return $request->send();
+		} catch(PasswordResetHashExpiredException $e) {
+			$error = new ErrorCollection();
+			$error->add('activation_code', 'resetHash', 'activation_code');
+			throw new UnprocessableEntityHttpException($error);
+		}
 	}
 	
 	protected function validateLogin($login) {
@@ -67,17 +85,12 @@ class RestorePasswordService extends BaseService implements RestorePasswordInter
 		}
 	}
 	
-	protected function verifyActivationCode($login, $activation_code) {
+	protected function verifyActivationCode($login, $activation_code, $password) {
 		try {
-			$isChecked = $this->repository->checkActivationCode($login, $activation_code);
+			$this->repository->checkActivationCode($login, $activation_code, $password);
 		} catch(NotFoundHttpException $e) {
 			$error = new ErrorCollection();
 			$error->add('login', 'account/restore-password', 'not_found_request');
-			throw new UnprocessableEntityHttpException($error);
-		}
-		if(!$isChecked) {
-			$error = new ErrorCollection();
-			$error->add('activation_code', 'account/restore-password', 'invalid_activation_code');
 			throw new UnprocessableEntityHttpException($error);
 		}
 	}

@@ -55,8 +55,7 @@ class RestorePasswordController extends Controller
 			$body = Yii::$app->request->post('RestorePasswordForm');
 			$model->setAttributes($body, false);
 			try {
-				
-				\App::$domain->account->restorePassword->checkActivationCode($model->login, $model->activation_code);
+				\App::$domain->account->restorePassword->checkActivationCode($model->login, $model->activation_code, $model->password);
 				$session['activation_code'] = $model->activation_code;
 				Yii::$app->session->set(self::SESSION_KEY, $session);
 				return $this->redirect(['/user/restore-password/confirm']);

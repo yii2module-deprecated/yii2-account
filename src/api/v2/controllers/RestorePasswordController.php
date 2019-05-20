@@ -35,7 +35,7 @@ class RestorePasswordController extends Controller
 				'class' => 'yii2lab\domain\rest\UniAction',
 				'successStatusCode' => 204,
 				'serviceMethod' => 'checkActivationCode',
-				'serviceMethodParams' => ['login', 'activation_code'],
+				'serviceMethodParams' => ['login', 'activation_code', 'password'],
 			],
 			'confirm' => [
 				'class' => 'yii2lab\domain\rest\UniAction',
