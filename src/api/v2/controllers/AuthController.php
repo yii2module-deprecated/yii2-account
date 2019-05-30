@@ -28,7 +28,6 @@ class AuthController extends Controller
 	public function behaviors()
 	{
 		return [
-			'cors' => Behavior::cors(),
 			'authenticator' => Behavior::auth(['info']),
 		];
 	}
@@ -74,6 +73,7 @@ class AuthController extends Controller
 		} catch(UnprocessableEntityHttpException $e) {
 			Yii::$app->response->setStatusCode(422);
 			$response = $e->getErrors();
+			return parent::afterAction($action, $result);
 			return $response;
 		}
 	}
