@@ -1,5 +1,4 @@
 {
-	"login": "77778891622",
-	"password": "Wwwqqq111",
-	"activation_code": "111111"
+	"login": "{{string}}",
+	"activation_code": "{{string}}"
 }
