@@ -1,4 +1,5 @@
 {
-	"login": "77778891622",
-	"activation_code": "%reset_hash%"
+	"login": "{{string}}",
+	"password": "{{string}}",
+	"activation_code": "{{string}}"
 }
