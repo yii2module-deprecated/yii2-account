@@ -13,6 +13,7 @@ use yii2module\account\domain\v2\interfaces\services\RestorePasswordInterface;
 use yii2woop\generated\exception\tps\CallCounterExceededException;
 use yii2woop\generated\exception\tps\InvalidPackageStructureException;
 use yii2woop\generated\exception\tps\PasswordResetHashExpiredException;
+use yii2woop\generated\exception\tps\WrongConfirmationCodeException;
 use yii2woop\generated\transport\TpsCommands;
 
 /**
@@ -52,11 +53,15 @@ class RestorePasswordService extends BaseService implements RestorePasswordInter
 			return $request->send();
 		} catch (WrongConfirmationCodeException $e) {
 			$error = new ErrorCollection();
-			$error->add('smsCode', 'resetHash', 'Неверный СМС-код');
+			$error->add('smsCode', 'account/restore-password', 'invalid_sms');
 			throw new UnprocessableEntityHttpException($error);
 		} catch (CallCounterExceededException $e) {
 			$error = new ErrorCollection();
-			$error->add('smsCode', 'resetHash', 'Слишком много попыток');
+			$error->add('smsCode', 'account/restore-password', 'too_many_attempts');
+			throw new UnprocessableEntityHttpException($error);
+		} catch(InvalidPackageStructureException $e) {
+			$error = new ErrorCollection();
+			$error->add('password', 'account/restore-password', 'enter_new_password');
 			throw new UnprocessableEntityHttpException($error);
 		}
 	}
@@ -71,11 +76,11 @@ class RestorePasswordService extends BaseService implements RestorePasswordInter
 			return $request->send();
 		} catch(PasswordResetHashExpiredException $e) {
 			$error = new ErrorCollection();
-			$error->add('activation_code', 'resetHash', 'activation_code');
+			$error->add('activation_code', 'account/restore-password', 'invalid_code');
 			throw new UnprocessableEntityHttpException($error);
 		} catch(InvalidPackageStructureException $e) {
 			$error = new ErrorCollection();
-			$error->add('activation_code', 'resetHash', 'InvalidPackageStructureException');
+			$error->add('activation_code', 'account/restore-password', 'must_fill_field');
 			throw new UnprocessableEntityHttpException($error);
 		}
 	}
@@ -98,5 +103,4 @@ class RestorePasswordService extends BaseService implements RestorePasswordInter
 			throw new UnprocessableEntityHttpException($error);
 		}
 	}
-	
 }
