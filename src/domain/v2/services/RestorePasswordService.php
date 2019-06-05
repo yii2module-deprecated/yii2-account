@@ -10,8 +10,8 @@ use yii2lab\domain\helpers\ErrorCollection;
 use yii2lab\domain\services\BaseService;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2module\account\domain\v2\interfaces\services\RestorePasswordInterface;
-use yii2woop\generated\exception\tps\WrongConfirmationCodeException;
 use yii2woop\generated\exception\tps\CallCounterExceededException;
+use yii2woop\generated\exception\tps\InvalidPackageStructureException;
 use yii2woop\generated\exception\tps\PasswordResetHashExpiredException;
 use yii2woop\generated\transport\TpsCommands;
 
@@ -72,6 +72,10 @@ class RestorePasswordService extends BaseService implements RestorePasswordInter
 		} catch(PasswordResetHashExpiredException $e) {
 			$error = new ErrorCollection();
 			$error->add('activation_code', 'resetHash', 'activation_code');
+			throw new UnprocessableEntityHttpException($error);
+		} catch(InvalidPackageStructureException $e) {
+			$error = new ErrorCollection();
+			$error->add('activation_code', 'resetHash', 'InvalidPackageStructureException');
 			throw new UnprocessableEntityHttpException($error);
 		}
 	}
