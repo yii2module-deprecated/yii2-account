@@ -21,12 +21,15 @@ class RestorePasswordRepository extends BaseRepository implements RestorePasswor
 		\App::$domain->notify->sms->send($login, $message);
 	}
 	
-	public function checkActivationCode($login, $code) {
+	public function checkActivationCode($login, $code, $password) {
 		// TODO: Implement checkActivationCode() method.
 	}
 
 	public function setNewPassword($login, $code, $password) {
 		// TODO: Implement setNewPassword() method.
 	}
-
+	
+	public function passwordChangeByAuthKey($login, $code, $password) {
+		// TODO: Implement passwordChangeByAuthKey() method.
+	}
 }

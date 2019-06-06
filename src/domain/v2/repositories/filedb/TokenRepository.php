@@ -50,4 +50,59 @@ class TokenRepository extends BaseRepository implements TokenInterface {
 	public function deleteAllExpired() {
 		// TODO: Implement deleteAllExpired() method.
 	}
+	
+	/**
+	 * @param BaseEntity $entity
+	 *
+	 * @throws \yii2lab\domain\exceptions\UnprocessableEntityHttpException
+	 */
+	public function insert(BaseEntity $entity) {
+		// TODO: Implement insert() method.
+	}
+	
+	/**
+	 * @param BaseEntity $entity
+	 *
+	 * @throws \yii2lab\domain\exceptions\UnprocessableEntityHttpException
+	 */
+	public function update(BaseEntity $entity) {
+		// TODO: Implement update() method.
+	}
+	
+	/**
+	 * @param BaseEntity $entity
+	 *
+	 */
+	public function delete(BaseEntity $entity) {
+		// TODO: Implement delete() method.
+	}
+	
+	/**
+	 * @param Query|null $query
+	 *
+	 * @return BaseEntity[]|null
+	 */
+	public function all(Query $query = null) {
+		// TODO: Implement all() method.
+	}
+	
+	/**
+	 * @param Query|null $query
+	 *
+	 * @return integer
+	 */
+	public function count(Query $query = null) {
+		// TODO: Implement count() method.
+	}
+	
+	/**
+	 * @param            $id
+	 * @param Query|null $query
+	 *
+	 * @return \yii2lab\domain\BaseEntity
+	 * @throws \yii\web\NotFoundHttpException
+	 */
+	public function oneById($id, Query $query = null) {
+		// TODO: Implement oneById() method.
+	}
 }
