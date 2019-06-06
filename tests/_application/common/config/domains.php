@@ -1,52 +1,24 @@
 <?php
 
 use yii\helpers\ArrayHelper;
-use yii2lab\domain\Domain;
-use yii2lab\domain\enums\Driver;
+use yii2lab\extension\enum\enums\TimeEnum;
 use yii2lab\test\helpers\TestHelper;
+use yii2module\account\domain\v2\filters\login\LoginPhoneValidator;
 
 $config = [
 	'lang' => 'yii2module\lang\domain\Domain',
 	'rbac' => 'yii2lab\rbac\domain\Domain',
-	'account' => [
-		'class' => Domain::class,
-		'path' => 'yii2module\account\domain\v2',
-		'repositories' => [
-			'auth' => Driver::FILEDB,
-			'login' => Driver::FILEDB,
-			'registration' => Driver::FILEDB,
-			'temp' => Driver::ACTIVE_RECORD,
-			'restorePassword' => Driver::FILEDB,
-			'security' => Driver::FILEDB,
-			'test' => Driver::DISC,
-			'rbac' => Driver::MEMORY,
-			'confirm' => Driver::ACTIVE_RECORD,
-			'assignment' => Driver::FILEDB,
-			'token' => Driver::ACTIVE_RECORD,
-			'activity' => Driver::ACTIVE_RECORD,
-		],
+	'geo' => \yii2woop\common\domain\geo\helpers\DomainHelper::config(),
+	'account' => \yii2woop\common\domain\account\v2\helpers\DomainHelper::config([
 		'services' => [
-			'oauth',
-			'auth',
 			'login' => [
-				'prefixList' => ['B', 'BS', 'R', 'QRS'],
-				'defaultRole' => null,
-				'defaultStatus' => 1,
-				'forbiddenStatusList' => [0],
+				'loginValidator' => LoginPhoneValidator::class,
 			],
-			'registration',
-			'temp',
-			'restorePassword',
-			'security',
-			'test',
-			'balance',
-			'rbac',
-			'confirm',
-			'assignment',
-			'token',
-			'activity',
+			'registration' => [
+				'expire' => TimeEnum::SECOND_PER_MINUTE * 3,
+			],
 		],
-	],
+	]),
 ];
 
 $baseConfig = TestHelper::loadConfig('common/config/domains.php');

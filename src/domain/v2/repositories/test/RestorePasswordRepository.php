@@ -18,8 +18,8 @@ class RestorePasswordRepository extends BaseRepository implements RestorePasswor
 	
 	}
 	
-	public function checkActivationCode($login, $code) {
-		if($code == 123456) {
+	public function checkActivationCode($login, $code, $password) {
+		if($code == 111111) {
 			return true;
 		}
 		return false;
@@ -29,4 +29,7 @@ class RestorePasswordRepository extends BaseRepository implements RestorePasswor
 	
 	}
 	
+	public function passwordChangeByAuthKey($login, $code, $password) {
+		// TODO: Implement passwordChangeByAuthKey() method.
+	}
 }
