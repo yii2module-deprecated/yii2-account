@@ -2,6 +2,7 @@
 
 namespace yii2module\account\domain\v2\services;
 
+use App;
 use yii\web\NotFoundHttpException;
 use yii2lab\domain\helpers\Helper;
 use yii2lab\extension\enum\enums\TimeEnum;
@@ -15,6 +16,7 @@ use yii2woop\generated\exception\tps\InvalidPackageStructureException;
 use yii2woop\generated\exception\tps\PasswordResetHashExpiredException;
 use yii2woop\generated\exception\tps\WrongConfirmationCodeException;
 use yii2woop\generated\transport\TpsCommands;
+use yii2woop\partner\domain\entities\InfoEntity;
 
 /**
  * Class RestorePasswordService
@@ -72,7 +74,9 @@ class RestorePasswordService extends BaseService implements RestorePasswordInter
 	 */
 	public function confirm($login, $activation_code) {
 		try {
-			$request = TpsCommands::sendConfirmationCodeByEmail($activation_code, $login);
+			/** @var InfoEntity $partnerInfo */
+			$partnerInfo = App::$domain->partner->info->oneFromHeader();
+			$request = TpsCommands::sendConfirmationCodeByEmail($activation_code, $login, $partnerInfo->contacts->smsSenderName, $partnerInfo->contacts->smsProtocolType);
 			return $request->send();
 		} catch(PasswordResetHashExpiredException $e) {
 			$error = new ErrorCollection();
