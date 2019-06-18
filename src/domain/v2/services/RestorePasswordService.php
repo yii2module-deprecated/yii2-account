@@ -50,6 +50,7 @@ class RestorePasswordService extends BaseService implements RestorePasswordInter
 	 */
 	public function checkActivationCode($login, $activation_code, $password) {
 		$this->validateLogin($login);
+		$this->validateData($activation_code, $password);
 		try {
 			$request = TpsCommands::passwordChangeByAuthKey($login, $password, $activation_code);
 			return $request->send();
@@ -73,6 +74,7 @@ class RestorePasswordService extends BaseService implements RestorePasswordInter
 	 * @param $activation_code
 	 */
 	public function confirm($login, $activation_code) {
+		$this->validateLogin($login);
 		try {
 			/** @var InfoEntity $partnerInfo */
 			$partnerInfo = App::$domain->partner->info->oneFromHeader();
@@ -94,6 +96,19 @@ class RestorePasswordService extends BaseService implements RestorePasswordInter
 		if(empty($user)) {
 			$error = new ErrorCollection();
 			$error->add('login', 'account/main', 'login_not_found');
+			throw new UnprocessableEntityHttpException($error);
+		}
+	}
+
+	protected function validateData($activation_code, $password)	{
+		if (empty($password)) {
+			$error = new ErrorCollection();
+			$error->add('password', 'account/restore-password', 'enter_new_password');
+			throw new UnprocessableEntityHttpException($error);}
+
+		if (empty($activation_code)) {
+			$error = new ErrorCollection();
+			$error->add('activation_code', 'account/restore-password', 'must_fill_field');
 			throw new UnprocessableEntityHttpException($error);
 		}
 	}
