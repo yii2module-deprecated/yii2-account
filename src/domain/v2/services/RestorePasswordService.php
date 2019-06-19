@@ -38,7 +38,8 @@ class RestorePasswordService extends BaseService implements RestorePasswordInter
 		$body = compact(['login']);
 		Helper::validateForm(RestorePasswordForm::class, $body, RestorePasswordForm::SCENARIO_REQUEST);
 		$this->validateLogin($login);
-		$this->repository->requestNewPassword($login, $mail);
+		$restore = $this->repository->requestNewPassword($login, $mail);
+		return $restore;
 	}
 
 	/**
