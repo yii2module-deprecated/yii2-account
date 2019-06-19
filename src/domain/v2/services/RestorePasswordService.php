@@ -100,7 +100,7 @@ class RestorePasswordService extends BaseService implements RestorePasswordInter
 		}
 	}
 
-	protected function validateData($activation_code, $password)	{
+	private function validateData($activation_code, $password)	{
 		if (empty($password)) {
 			$error = new ErrorCollection();
 			$error->add('password', 'account/restore-password', 'enter_new_password');
