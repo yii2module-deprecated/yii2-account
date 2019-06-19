@@ -2,6 +2,7 @@
 
 namespace yii2module\account\api\v2\controllers;
 
+use Yii;
 use yii2lab\rest\domain\rest\Controller;
 
 class RestorePasswordController extends Controller
@@ -25,12 +26,6 @@ class RestorePasswordController extends Controller
 	 */
 	public function actions() {
 		return [
-			'request' => [
-				'class' => 'yii2lab\domain\rest\UniAction',
-				'successStatusCode' => 201,
-				'serviceMethod' => 'request',
-				'serviceMethodParams' => ['login'],
-			],
 			'check-code' => [
 				'class' => 'yii2lab\domain\rest\UniAction',
 				'successStatusCode' => 204,
@@ -44,6 +39,12 @@ class RestorePasswordController extends Controller
 				'serviceMethodParams' => ['login', 'activation_code', 'password'],
 			],
 		];
+	}
+
+	public function actionRequest() {
+		$body = Yii::$app->request->getBodyParams();
+		$entity = \App::$domain->account->restorePassword->request($body);
+		return $entity;
 	}
 
 }
