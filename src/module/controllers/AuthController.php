@@ -67,6 +67,7 @@ class AuthController extends Controller
 				\App::$domain->navigation->alert->create(['account/auth', 'login_success'], Alert::TYPE_SUCCESS);
 				return $this->goBack();
 			} catch(UnprocessableEntityHttpException $e) {
+				$form->setScenario(LoginForm::SCENARIO_OTP);
 				$form->addErrorsFromException($e);
 			} catch(SubjectOtpRequiredException $e) {
 				$form->setScenario(LoginForm::SCENARIO_OTP);
