@@ -3,13 +3,20 @@
 namespace yii2module\account\domain\v2\helpers;
 
 use Yii;
+use yii\base\InvalidConfigException;
+use yii\db\Exception;
 use yii\web\NotFoundHttpException;
 use yii2lab\domain\data\Query;
+use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
+use yii2lab\domain\helpers\ErrorCollection;
+use yii2lab\extension\console\helpers\Error;
 
 class LoginHelper {
 
     const DEFAULT_MASK = '+9 (999) 999-99-99';
-	
+
+    public static $regexPrefix = '[A-Z]{1,4}';
+
 	public static function getLoginByQuery(Query $query = null) {
 		$query2 = Query::forge();
 		$query2->where($query->getParam('where'));
@@ -85,7 +92,8 @@ class LoginHelper {
 	{
 		$login = self::cleanLoginOfChar($login);
 		$login = self::replaceCountryCode($login);
-		return (boolean) preg_match('/^(' . self::getPrefixExp() . ')?([+]?[\d]{1}){1}([\d]{10})$/', $login);
+		$result = (boolean) preg_match('/^(' . self::getPrefixExp() . ')?([+]?'.self::getCountryCode($login).'){1}([\d]{10})$/', $login);
+		return $result;
 	}
 	
 	protected static function cleanLoginOfChar($login)
@@ -125,13 +133,25 @@ class LoginHelper {
 	
 	public static function getPrefixExp()
 	{
-		return '[A-Z]{1,3}';
-		/*$prefixList = \App::$domain->account->login->prefixList;
+		$prefixList = \App::$domain->partner->info->getPrefixes();
 		usort($prefixList, 'sortByLen');
-		return implode('|', $prefixList);*/
+		return implode('|', $prefixList);
 	}
+
 	public static function formatPhoneNumber($number) {
 		$cleanNumber = preg_replace('/[^\d]/', '', $number);
 		return (strlen($cleanNumber) == 10) ? '7'.$cleanNumber : $cleanNumber;
+	}
+
+	private static function getCountryCode($phone)
+	{
+		preg_match('/^([\d]*?)([\d]{10})$/', $phone, $match);
+		//$maskList = \App::$domain->geo->country->getCode();
+		$maskList = ['7', '99'];
+		if ((!empty($match[1])) && (in_array($match[1], $maskList))) {
+			return $match[1];
+		} else {
+			throw new InvalidConfigException('Введите корректный Телефон');
+		}
 	}
 }
