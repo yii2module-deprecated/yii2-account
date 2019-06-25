@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 return [
 	'incorrect_login_or_code'=>'Нотўғри логин ёки тасдиқ кодлари',
