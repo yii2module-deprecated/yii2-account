@@ -15,8 +15,6 @@ class LoginHelper {
 
     const DEFAULT_MASK = '+9 (999) 999-99-99';
 
-    public static $regexPrefix = '[A-Z]{1,4}';
-
 	public static function getLoginByQuery(Query $query = null) {
 		$query2 = Query::forge();
 		$query2->where($query->getParam('where'));
