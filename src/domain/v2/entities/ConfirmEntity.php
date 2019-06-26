@@ -8,7 +8,7 @@ use yii2lab\domain\values\TimeValue;
 use yii2module\account\domain\v2\exceptions\ConfirmIncorrectCodeException;
 use yii2module\account\domain\v2\helpers\ConfirmHelper;
 use yii2module\account\domain\v2\helpers\LoginHelper;
-use yii2module\account\domain\v2\validators\LoginValidator;
+use yii2module\account\domain\v2\services\RegistrationService;
 
 /**
  * Class ConfirmEntity
@@ -77,7 +77,7 @@ class ConfirmEntity extends BaseEntity {
 	}
 	
 	public function setLogin($value) {
-		$this->login = LoginHelper::getPhone($value);
+		$this->login = RegistrationService::checkPrefix().LoginHelper::getPhone($value);
 	}
 	
 }

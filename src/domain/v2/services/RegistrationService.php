@@ -35,7 +35,20 @@ class RegistrationService extends BaseService implements RegistrationInterface {
 		$login = \App::$domain->account->login->normalizeLogin($login);
 		return $login;
 	}
-	
+
+	public static function checkPrefix() {
+		$partnerName = Yii::$app->request->getHeaders()->get('partner-name');
+		if (empty($partnerName)) {
+			return $prefix = null;
+		}
+		try {
+			$prefix = \App::$domain->partner->info->oneByNameRaw($partnerName)->prefix;
+			return $prefix;
+		} catch (\Exception $e) {
+			return $prefix = null;
+		}
+	}
+
 	//todo: изменить путь чтения временного аккаунта для ригистрации. Инкапсулировать все в ядро. Сейчас запрос идет на прямую.
 	public function createTempAccount($login, $email = null) {
 		$this->isHasPossibility();
@@ -44,17 +57,10 @@ class RegistrationService extends BaseService implements RegistrationInterface {
 		if($this->requiredEmail) {
 			$scenario = RegistrationForm::SCENARIO_REQUEST_WITH_EMAIL;
 		}
-        Helper::validateForm(RegistrationForm::class, $body, $scenario);
+		Helper::validateForm(RegistrationForm::class, $body, $scenario);
 		$login = $this->validateLogin($login);
-		$this->checkLoginExistsInTps($login);
+		$this->checkLoginExistsInTps($this->checkPrefix() . $login);
 		\App::$domain->account->confirm->send($login, self::CONFIRM_ACTION, $this->expire, ArrayHelper::toArray($body));
-		/*try {
-		
-		} catch(ConfirmAlreadyExistsException $e) {
-			$error = new ErrorCollection();
-			$error->add('login', 'account/confirm', 'already_sended_code {phone}', ['phone' => LoginHelper::format($login)]);
-			throw new UnprocessableEntityHttpException($error);
-		}*/
 	}
 	
 	public function checkActivationCode($login, $activation_code) {
