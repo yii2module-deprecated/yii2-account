@@ -86,6 +86,7 @@ class ConfirmService extends BaseActiveService implements ConfirmInterface
 	private function oneByLoginAndAction($login, $action)
 	{
 		$login = LoginHelper::getPhone($login);
+		$login = RegistrationService::checkPrefix().$login;
 		$this->cleanOld($login, $action);
 		return $this->repository->oneByLoginAndAction($login, $action);
 	}
@@ -100,9 +101,13 @@ class ConfirmService extends BaseActiveService implements ConfirmInterface
 	protected function createNew($login, $action, $expire, $data = null)
 	{
 		$login = LoginHelper::getPhone($login);
+		$login = RegistrationService::checkPrefix().$login;
 		$this->cleanOld($login, $action);
 		$entityArray['login'] = $login;
 		$entityArray['action'] = $action;
+		if(!empty($data['login'])) {
+			$data['login'] = $login;
+		}
 		$entityArray['data'] = $data;
 		$entityArray['expire'] = TIMESTAMP + $expire;
 		$smsCode = (YII_ENV == YII_ENV_TEST) || (YII_ENV == YII_ENV_DEV) ? '111111' : ConfirmHelper::generateCode();
