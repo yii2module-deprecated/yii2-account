@@ -72,10 +72,10 @@ class LoginService extends BaseActiveService implements LoginInterface {
 	
 	public function create($data) {
 		$data['email'] = !empty($data['email']) ? $data['email'] : 'api@wooppay.com';
-        Helper::validateForm(LoginForm::class, $data);
-
+		Helper::validateForm(LoginForm::class, $data);
+		$login = RegistrationService::checkPrefix().$data['login'];
 		try {
-			$this->repository->oneByLogin($data['login']);
+			$this->repository->oneByLogin($login);
 			$error = new ErrorCollection();
 			$error->add('login', 'account/registration', 'user_already_exists_and_activated');
 			throw new UnprocessableEntityHttpException($error);
