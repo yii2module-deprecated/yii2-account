@@ -3,19 +3,21 @@
 namespace yii2module\account\domain\v2\helpers;
 
 use Yii;
+use yii\base\InvalidConfigException;
 use yii\web\NotFoundHttpException;
 use yii2lab\domain\data\Query;
+
 
 class LoginHelper {
 
     const DEFAULT_MASK = '+9 (999) 999-99-99';
-	
+
 	public static function getLoginByQuery(Query $query = null) {
 		$query2 = Query::forge();
 		$query2->where($query->getParam('where'));
 		return \App::$domain->account->login->one($query2);
 	}
-	
+
 	/**
 	 * @param $id
 	 *
@@ -29,34 +31,36 @@ class LoginHelper {
 		} catch(NotFoundHttpException $e) {}
 		return \App::$domain->account->login->oneByLogin($id);
 	}
- 
+
 	public static function format($login, $mask = null)
 	{
-		if(!self::validate($login)) {
-			return $login;
+		$result = $login;
+		if (is_numeric($login)) {
+			if (!self::validate($login)) {
+				return $login;
+			}
+			if (empty($mask)) {
+				$mask = self::DEFAULT_MASK;
+			}
+			$result = self::formatByMask($login, $mask);
 		}
-		if(empty($mask)) {
-			$mask = self::DEFAULT_MASK;
-		}
-		$result = self::formatByMask($login, $mask);
 		return $result;
 	}
-
 	public static function parse($login)
 	{
 		$login = self::pregMatchLogin($login);
 		return self::splitLogin($login);
 	}
-	
+
 	// todo: покрыть тестом и раскидать там, где нужен только телефон (без префикса)
-	
+
 	public static function getPhone($login)
 	{
 		$login = self::pregMatchLogin($login);
 		$login = self::splitLogin($login);
 		return $login['country_code']. $login['phone'];
 	}
-	
+
 	/**
 	 * @param string $login
 	 * @return string
@@ -80,21 +84,25 @@ class LoginHelper {
 		}
 		return $result;
 	}
-	
+
 	public static function validate($login)
 	{
 		$login = self::cleanLoginOfChar($login);
 		$login = self::replaceCountryCode($login);
-		return (boolean) preg_match('/^(' . self::getPrefixExp() . ')?([+]?[\d]{1}){1}([\d]{10})$/', $login);
+		$result = true;
+		if(is_numeric($login)){
+		$result = (boolean) preg_match('/^(' . self::getPrefixExp() . ')?([+]?'.self::getCountryCode($login).'){1}([\d]{10})$/', $login);}
+
+		return $result;
 	}
-	
+
 	protected static function cleanLoginOfChar($login)
 	{
 		$login = preg_replace('/[a-zа-ЯА-Я]/','',$login);
 		$login = str_replace(['+', ' ', '-', '(', ')'], '', $login);
 		return $login;
 	}
-	
+
 	protected static function formatByMask($login, $mask)
 	{
 		$maskArray = str_split($mask, 1);
@@ -114,7 +122,7 @@ class LoginHelper {
 		}
 		return $result;
 	}
-	
+
 	protected static function replaceCountryCode($login)
 	{
 		if (preg_match('/^(' . self::getPrefixExp() . ')?87([\s\S]+)$/', $login, $match)){
@@ -122,16 +130,28 @@ class LoginHelper {
 		}
 		return $login;
 	}
-	
+
 	public static function getPrefixExp()
 	{
-		return '[A-Z]{1,3}';
-		/*$prefixList = \App::$domain->account->login->prefixList;
+		$prefixList = \App::$domain->partner->info->getPrefixes();
 		usort($prefixList, 'sortByLen');
-		return implode('|', $prefixList);*/
+		return implode('|', $prefixList);
 	}
+
 	public static function formatPhoneNumber($number) {
 		$cleanNumber = preg_replace('/[^\d]/', '', $number);
 		return (strlen($cleanNumber) == 10) ? '7'.$cleanNumber : $cleanNumber;
+	}
+
+	private static function getCountryCode($phone)
+	{
+		preg_match('/^([\d]*?)([\d]{10})$/', $phone, $match);
+		//$maskList = \App::$domain->geo->country->getCode();
+		$maskList = ['7', '99'];
+		if ((!empty($match[1])) && (in_array($match[1], $maskList))) {
+			return $match[1];
+		} else {
+			throw new InvalidConfigException('Введите корректный Телефон');
+		}
 	}
 }
