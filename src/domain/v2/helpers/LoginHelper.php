@@ -20,7 +20,7 @@ class LoginHelper {
 		$query2->where($query->getParam('where'));
 		return \App::$domain->account->login->one($query2);
 	}
-	
+
 	/**
 	 * @param $id
 	 *
@@ -54,26 +54,30 @@ class LoginHelper {
 		$login = self::pregMatchLogin($login);
 		return self::splitLogin($login);
 	}
-	
+
 	// todo: покрыть тестом и раскидать там, где нужен только телефон (без префикса)
-	
+
 	public static function getPhone($login)
 	{
 		$login = self::pregMatchLogin($login);
 		$login = self::splitLogin($login);
 		return $login['country_code']. $login['phone'];
 	}
-	
+
 	/**
 	 * @param string $login
 	 * @return string
 	 */
 	public static function pregMatchLogin($login)
 	{
-		$login = self::cleanLoginOfChar($login);
-		$login = self::replaceCountryCode($login);
+		if (is_numeric($login)) {
+			$login = self::cleanLoginOfChar($login);
+			$login = self::replaceCountryCode($login);
+		}
 		return $login;
 	}
+
+
 
 	public static function splitLogin($login)
 	{
@@ -87,7 +91,7 @@ class LoginHelper {
 		}
 		return $result;
 	}
-	
+
 	public static function validate($login)
 	{
 		$login = self::cleanLoginOfChar($login);
@@ -97,14 +101,14 @@ class LoginHelper {
 		$result = (boolean) preg_match('/^(' . self::getPrefixExp() . ')?([+]?'.self::getCountryCode($login).'){1}([\d]{10})$/', $login);}
 		return $result;
 	}
-	
+
 	protected static function cleanLoginOfChar($login)
 	{
 		$login = preg_replace('/[a-zа-ЯА-Я]/','',$login);
 		$login = str_replace(['+', ' ', '-', '(', ')'], '', $login);
 		return $login;
 	}
-	
+
 	protected static function formatByMask($login, $mask)
 	{
 		$maskArray = str_split($mask, 1);
@@ -124,7 +128,7 @@ class LoginHelper {
 		}
 		return $result;
 	}
-	
+
 	protected static function replaceCountryCode($login)
 	{
 		if (preg_match('/^(' . self::getPrefixExp() . ')?87([\s\S]+)$/', $login, $match)){
@@ -132,7 +136,7 @@ class LoginHelper {
 		}
 		return $login;
 	}
-	
+
 	public static function getPrefixExp()
 	{
 		$prefixList = \App::$domain->partner->info->getPrefixes();
