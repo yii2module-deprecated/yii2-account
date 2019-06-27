@@ -10,6 +10,7 @@ use yii2lab\domain\data\Query;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2lab\domain\helpers\ErrorCollection;
 use yii2lab\extension\console\helpers\Error;
+use yii2woop\common\domain\account\v2\enums\PrefixListEnum;
 
 class LoginHelper {
 
@@ -136,6 +137,8 @@ class LoginHelper {
 	public static function getPrefixExp()
 	{
 		$prefixList = \App::$domain->partner->info->getPrefixes();
+		$prefixListEnum = PrefixListEnum::all();
+		$prefixList = array_merge($prefixListEnum, $prefixList);
 		usort($prefixList, 'sortByLen');
 		return implode('|', $prefixList);
 	}
