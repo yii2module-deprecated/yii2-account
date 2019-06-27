@@ -34,19 +34,21 @@ class LoginHelper {
 		} catch(NotFoundHttpException $e) {}
 		return \App::$domain->account->login->oneByLogin($id);
 	}
- 
+
 	public static function format($login, $mask = null)
 	{
-		if(!self::validate($login)) {
-			return $login;
+		$result = $login;
+		if (is_numeric($login)) {
+			if (!self::validate($login)) {
+				return $login;
+			}
+			if (empty($mask)) {
+				$mask = self::DEFAULT_MASK;
+			}
+			$result = self::formatByMask($login, $mask);
 		}
-		if(empty($mask)) {
-			$mask = self::DEFAULT_MASK;
-		}
-		$result = self::formatByMask($login, $mask);
 		return $result;
 	}
-
 	public static function parse($login)
 	{
 		$login = self::pregMatchLogin($login);
@@ -90,7 +92,9 @@ class LoginHelper {
 	{
 		$login = self::cleanLoginOfChar($login);
 		$login = self::replaceCountryCode($login);
-		$result = (boolean) preg_match('/^(' . self::getPrefixExp() . ')?([+]?'.self::getCountryCode($login).'){1}([\d]{10})$/', $login);
+		$result = true;
+		if (is_numeric($login)) {
+		$result = (boolean) preg_match('/^(' . self::getPrefixExp() . ')?([+]?'.self::getCountryCode($login).'){1}([\d]{10})$/', $login);}
 		return $result;
 	}
 	
