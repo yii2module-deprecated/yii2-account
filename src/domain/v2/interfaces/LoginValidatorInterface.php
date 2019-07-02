@@ -6,5 +6,6 @@ interface LoginValidatorInterface {
 	
 	public function normalize($value) : string;
 	public function isValid($value) : bool;
+	public static function isCharInLogin($login);
 	
 }

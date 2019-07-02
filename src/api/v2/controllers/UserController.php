@@ -16,7 +16,7 @@ class UserController extends Controller
 	public function behaviors() {
 		return [
 			//'cors' => Behavior::cors(),
-			//'authenticator' => Behavior::auth(['view']),
+			'authenticator' => Behavior::auth(['view']),
 		];
 	}
 	
