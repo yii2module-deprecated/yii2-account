@@ -8,6 +8,7 @@ use yii\web\NotFoundHttpException;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2lab\domain\helpers\ErrorCollection;
 use yii2module\account\domain\v2\interfaces\LoginValidatorInterface;
+use yii2module\account\domain\v2\services\RegistrationService;
 
 class LoginPhoneValidator implements LoginValidatorInterface {
 	
@@ -36,6 +37,14 @@ class LoginPhoneValidator implements LoginValidatorInterface {
 			}
 		}
 		return true;
+	}
+
+	public static function isCharInLogin($login) {
+		if(preg_match("/^[a-zA-Z]+/", $login)){
+			return $login;
+		} else {
+			return RegistrationService::checkPrefix().$login;
+		}
 	}
 	
 }

@@ -10,6 +10,7 @@ use yii2lab\domain\data\Query;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2lab\domain\helpers\ErrorCollection;
 use yii2lab\extension\console\helpers\Error;
+use yii2module\account\domain\v2\filters\login\LoginPhoneValidator;
 use yii2woop\common\domain\account\v2\enums\PrefixListEnum;
 
 class LoginHelper {
@@ -38,18 +39,16 @@ class LoginHelper {
 
 	public static function format($login, $mask = null)
 	{
-		$result = $login;
-		if (is_numeric($login)) {
-			if (!self::validate($login)) {
-				return $login;
-			}
-			if (empty($mask)) {
-				$mask = self::DEFAULT_MASK;
-			}
-			$result = self::formatByMask($login, $mask);
+		if (!self::validate($login) || !is_numeric($login)) {
+			return $login;
 		}
+		if (empty($mask)) {
+			$mask = self::DEFAULT_MASK;
+		}
+		$result = self::formatByMask($login, $mask);
 		return $result;
 	}
+
 	public static function parse($login)
 	{
 		$login = self::pregMatchLogin($login);
@@ -71,13 +70,13 @@ class LoginHelper {
 	 */
 	public static function pregMatchLogin($login)
 	{
-		if (is_numeric($login)) {
-			$login = self::cleanLoginOfChar($login);
-			$login = self::replaceCountryCode($login);
+		$phone = self::cleanLoginOfChar($login);
+		if (is_numeric($phone)) {
+			$phone = self::replaceCountryCode($phone);
+			return $phone;
 		}
 		return $login;
 	}
-
 
 
 	public static function splitLogin($login)
@@ -93,19 +92,24 @@ class LoginHelper {
 		return $result;
 	}
 
-	public static function validate($login)
+	public static function validate(&$login)
 	{
-		$login = self::cleanLoginOfChar($login);
-		$login = self::replaceCountryCode($login);
-		$result = true;
-		if (is_numeric($login)) {
-		$result = (boolean) preg_match('/^(' . self::getPrefixExp() . ')?([+]?'.self::getCountryCode($login).'){1}([\d]{10})$/', $login);}
-		return $result;
+		$phone = self::cleanLoginOfChar($login);
+		$phone = self::replaceCountryCode($phone);
+		if (preg_match('/^(' . self::getPrefixExp() . ')?([+]?[\d]{1,3}){1}([\d]{10})$/', $phone)) {
+			return true;
+		}
+		if (!is_numeric($login)) {
+			$login = LoginPhoneValidator::isCharInLogin($login);
+			return true;
+		}
+		return false;
 	}
+
 
 	protected static function cleanLoginOfChar($login)
 	{
-		$login = preg_replace('/[a-zа-ЯА-Я]/','',$login);
+		$login = preg_replace('/[a-zа-яА-Я]/', '', $login);
 		$login = str_replace(['+', ' ', '-', '(', ')'], '', $login);
 		return $login;
 	}
