@@ -21,7 +21,17 @@ class AuthTest extends Unit
 		$this->tester->assertEntityFormat(LoginEnum::getEntityFormat(), $entity);
 		//$this->tester->assertEquals(LoginEnum::TOKEN_ADMIN, $entity->token);
 	}
-	
+
+	public function testAuthenticationWithOtp()
+	{
+		try {
+			\App::$domain->account->auth->authentication('coreadmin_otp', 'Wwwqqq111', '');
+			$this->tester->assertBad();
+		} catch(UnprocessableEntityHttpException $e) {
+			$this->tester->assertNice();
+		}
+	}
+
 	public function testAuthenticationBadPassword()
 	{
 		try {

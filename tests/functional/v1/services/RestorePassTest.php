@@ -7,28 +7,30 @@ use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2lab\test\Test\Unit;
 
 class RestorePassTest extends Unit {
-	
-	const login = '77783177384';
-	
-	const PACKAGE = 'yii2module/yii2-account';
-	
+
+	const login = '77477362300';
+
 	public function testRequest() {
-		$entity = \App::$domain->account->restorePassword->request(RestorePassTest::login);
-		$this->tester->assertEquals($entity, null);
-	}
-	
-	public function testConfirm() {
 		try {
-			\App::$domain->account->restorePassword->confirm(RestorePassTest::login, '');
+			$this->tester->assertEquals(\App::$domain->account->restorePassword->request(RestorePassTest::login), null);
 			$this->tester->assertBad();
 		} catch(UnprocessableEntityHttpException $e) {
 			$this->tester->assertNice();
 		}
 	}
-	
+
+	public function testConfirm() {
+		try {
+			\App::$domain->account->restorePassword->confirm('77051086936', '111111');
+			$this->tester->assertBad();
+		} catch(UnprocessableEntityHttpException $e) {
+			$this->tester->assertNice();
+		}
+	}
+
 	public function testCheckCode() {
 		try {
-			\App::$domain->account->restorePassword->checkActivationCode(RestorePassTest::login, '111111', 'Wwwqqq111');
+			\App::$domain->account->restorePassword->checkActivationCode('77051086936', '111111', 'Wwwqqq111');
 			$this->tester->assertBad();
 		} catch(Exception $e) {
 			$this->tester->assertNice();
