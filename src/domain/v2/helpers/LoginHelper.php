@@ -106,7 +106,6 @@ class LoginHelper {
 		return false;
 	}
 
-
 	protected static function cleanLoginOfChar($login)
 	{
 		$login = preg_replace('/[a-zа-яА-Я]/', '', $login);
