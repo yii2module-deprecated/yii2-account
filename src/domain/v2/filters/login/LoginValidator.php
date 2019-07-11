@@ -14,4 +14,9 @@ class LoginValidator implements LoginValidatorInterface {
 	public function isValid($value) : bool {
 		return LoginHelper::validate($value);
 	}
+
+	public static function isCharInLogin($login)
+	{
+		// TODO: Implement isCharInLogin() method.
+	}
 }
