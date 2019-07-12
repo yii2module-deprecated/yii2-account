@@ -99,7 +99,7 @@ class LoginHelper {
 		$login = self::replaceCountryCode($login);
 		$result = true;
 		if (is_numeric($login)) {
-		$result = (boolean) preg_match('/^(' . self::getPrefixExp() . ')?([+]?'.self::getCountryCode($login).'){1}([\d]{10})$/', $login);}
+		$result = (boolean) preg_match('/^(' . self::getPrefixExp() . ')?([+]?[\d]{1,3}){1}([\d]{10})$/', $login);}
 		return $result;
 	}
 

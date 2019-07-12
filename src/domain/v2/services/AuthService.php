@@ -56,13 +56,9 @@ class AuthService extends BaseService implements AuthInterface {
 		if(empty($ip)) {
 			$ip = ClientHelper::ip();
 		}
-		try{
-		$body = Helper::validateForm(LoginForm::class, $body);}
-		catch (InvalidConfigException $e){
-			$error = new ErrorCollection();
-			$error->add('login', 'account/auth', 'invalid_login_or_password');
-			throw new UnprocessableEntityHttpException($error);
-		}
+
+		$body = Helper::validateForm(LoginForm::class, $body);
+
 		try {
 			$loginEntity = TokenHelper::login($body, $ip, $this->tokenAuthMethods);
 			
