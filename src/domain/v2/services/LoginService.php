@@ -7,6 +7,7 @@ use yii2lab\domain\helpers\Helper;
 use yii2lab\domain\services\base\BaseActiveService;
 use yii2lab\extension\common\helpers\InstanceHelper;
 use yii2module\account\domain\v2\entities\LoginEntity;
+use yii2module\account\domain\v2\filters\login\LoginPhoneValidator;
 use yii2module\account\domain\v2\filters\login\LoginValidator;
 use yii2module\account\domain\v2\interfaces\LoginValidatorInterface;
 use yii2module\account\domain\v2\interfaces\services\LoginInterface;
@@ -30,10 +31,7 @@ class LoginService extends BaseActiveService implements LoginInterface {
 	public $defaultRole;
 	public $defaultStatus;
 	public $forbiddenStatusList;
-	
-	/** @var LoginValidatorInterface|array|string $validator */
-	public $loginValidator = LoginValidator::class;
-	
+
 	public function oneById($id, Query $query = null) {
 		try {
 			$loginEntity = parent::oneById($id, $query);
@@ -63,11 +61,11 @@ class LoginService extends BaseActiveService implements LoginInterface {
 	}
 	
 	public function isValidLogin($login) {
-		return $this->getLoginValidator()->isValid($login);
+		return $this->getLoginValidator($login)->isValid($login);
 	}
 	
 	public function normalizeLogin($login) {
-		return $this->getLoginValidator()->normalize($login);
+		return $this->getLoginValidator($login)->normalize($login);
 	}
 	
 	public function create($data) {
@@ -102,11 +100,14 @@ class LoginService extends BaseActiveService implements LoginInterface {
 	}
 	
 	/**
-	 * @return LoginValidatorInterface
+	 * @param $login
+	 * @return array|object|string|LoginValidatorInterface
 	 */
-	private function getLoginValidator() {
-		$this->loginValidator = InstanceHelper::ensure($this->loginValidator, [], LoginValidatorInterface::class);
-		return $this->loginValidator;
+	private function getLoginValidator($login) {
+		if(is_numeric($login)) {
+			return InstanceHelper::ensure(LoginPhoneValidator::class, [], LoginValidatorInterface::class);
+		} else {
+			return InstanceHelper::ensure(LoginValidator::class, [], LoginValidatorInterface::class);
+		}
 	}
-	
 }

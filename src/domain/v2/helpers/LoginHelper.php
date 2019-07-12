@@ -2,15 +2,9 @@
 
 namespace yii2module\account\domain\v2\helpers;
 
-use Yii;
 use yii\base\InvalidConfigException;
-use yii\db\Exception;
 use yii\web\NotFoundHttpException;
 use yii2lab\domain\data\Query;
-use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
-use yii2lab\domain\helpers\ErrorCollection;
-use yii2lab\extension\console\helpers\Error;
-use yii2module\account\domain\v2\filters\login\LoginPhoneValidator;
 use yii2woop\common\domain\account\v2\enums\PrefixListEnum;
 
 class LoginHelper {
@@ -97,10 +91,6 @@ class LoginHelper {
 		$phone = self::cleanLoginOfChar($login);
 		$phone = self::replaceCountryCode($phone);
 		if (preg_match('/^(' . self::getPrefixExp() . ')?([+]?[\d]{1,3}){1}([\d]{10})$/', $phone)) {
-			return true;
-		}
-		if (!is_numeric($login)) {
-			$login = LoginPhoneValidator::isCharInLogin($login);
 			return true;
 		}
 		return false;
