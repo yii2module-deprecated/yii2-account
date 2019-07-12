@@ -57,7 +57,7 @@ class AuthService extends BaseService implements AuthInterface {
 			$ip = ClientHelper::ip();
 		}
 
-		$body = Helper::validateForm(LoginForm::class, $body);}
+		$body = Helper::validateForm(LoginForm::class, $body);
 
 		try {
 			$loginEntity = TokenHelper::login($body, $ip, $this->tokenAuthMethods);
