@@ -17,12 +17,7 @@ class LoginPhoneValidator implements LoginValidatorInterface {
 	public function normalize($value) : string {
 		try {
 			$phoneInfoEntity = \App::$domain->geo->phone->parse($value);
-			$login = $phoneInfoEntity->id;
-			if(preg_match("/^[a-zA-Z]+/", $login)){
-				return $login;
-			} else {
-				return RegistrationService::checkPrefix().$login;
-			}
+			return RegistrationService::checkPrefix().$phoneInfoEntity->id;
 		} catch(NotFoundHttpException $e) {
 			$error = new ErrorCollection;
 			$error->add('login', Yii::t('account/login', 'not_valid'));

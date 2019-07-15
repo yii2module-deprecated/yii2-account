@@ -2,19 +2,20 @@
 
 namespace yii2module\account\domain\v2\services;
 
+use yii\web\NotFoundHttpException;
 use yii2lab\domain\data\Query;
+use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
+use yii2lab\domain\helpers\ErrorCollection;
 use yii2lab\domain\helpers\Helper;
 use yii2lab\domain\services\base\BaseActiveService;
 use yii2lab\extension\common\helpers\InstanceHelper;
 use yii2module\account\domain\v2\entities\LoginEntity;
 use yii2module\account\domain\v2\filters\login\LoginPhoneValidator;
 use yii2module\account\domain\v2\filters\login\LoginValidator;
+use yii2module\account\domain\v2\forms\LoginForm;
+use yii2module\account\domain\v2\helpers\LoginHelper;
 use yii2module\account\domain\v2\interfaces\LoginValidatorInterface;
 use yii2module\account\domain\v2\interfaces\services\LoginInterface;
-use yii2module\account\domain\v2\forms\LoginForm;
-use yii2lab\domain\helpers\ErrorCollection;
-use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
-use yii\web\NotFoundHttpException;
 
 /**
  * Class LoginService
@@ -98,13 +99,9 @@ class LoginService extends BaseActiveService implements LoginInterface {
 		}
 		return in_array($status, $this->forbiddenStatusList);
 	}
-	
-	/**
-	 * @param $login
-	 * @return array|object|string|LoginValidatorInterface
-	 */
+
 	private function getLoginValidator($login) {
-		if(is_numeric($login)) {
+		if(LoginHelper::validate($login)) {
 			return InstanceHelper::ensure(LoginPhoneValidator::class, [], LoginValidatorInterface::class);
 		} else {
 			return InstanceHelper::ensure(LoginValidator::class, [], LoginValidatorInterface::class);

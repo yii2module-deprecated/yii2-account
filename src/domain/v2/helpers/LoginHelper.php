@@ -2,7 +2,6 @@
 
 namespace yii2module\account\domain\v2\helpers;
 
-use yii\base\InvalidConfigException;
 use yii\web\NotFoundHttpException;
 use yii2lab\domain\data\Query;
 use yii2woop\common\domain\account\v2\enums\PrefixListEnum;
@@ -86,7 +85,7 @@ class LoginHelper {
 		return $result;
 	}
 
-	public static function validate(&$login)
+	public static function validate($login)
 	{
 		$phone = self::cleanLoginOfChar($login);
 		$phone = self::replaceCountryCode($phone);
