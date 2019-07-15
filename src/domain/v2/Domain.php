@@ -66,7 +66,6 @@ class Domain extends \yii2lab\domain\Domain {
 					'defaultRole' => AccountRoleEnum::UNKNOWN_USER,
 					'defaultStatus' => 1,
 					'forbiddenStatusList' => [0],
-					'loginValidator' => LoginValidator::class,
 				],
 				'registration' => $remoteServiceDriver, //$serviceNamespace . '\RegistrationService',
 				//'temp',
