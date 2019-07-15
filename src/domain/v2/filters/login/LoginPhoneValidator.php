@@ -11,20 +11,20 @@ use yii2module\account\domain\v2\interfaces\LoginValidatorInterface;
 use yii2module\account\domain\v2\services\RegistrationService;
 
 class LoginPhoneValidator implements LoginValidatorInterface {
-	
+
 	public $allowCountriesId;
-	
+
 	public function normalize($value) : string {
 		try {
 			$phoneInfoEntity = \App::$domain->geo->phone->parse($value);
-			return $phoneInfoEntity->id;
+			return RegistrationService::checkPrefix().$phoneInfoEntity->id;
 		} catch(NotFoundHttpException $e) {
 			$error = new ErrorCollection;
 			$error->add('login', Yii::t('account/login', 'not_valid'));
 			throw new UnprocessableEntityHttpException($error);
 		}
 	}
-	
+
 	public function isValid($value) : bool {
 		try {
 			$phoneEntity = \App::$domain->geo->phone->oneByPhone($value);
@@ -38,13 +38,4 @@ class LoginPhoneValidator implements LoginValidatorInterface {
 		}
 		return true;
 	}
-
-	public static function isCharInLogin($login) {
-		if(preg_match("/^[a-zA-Z]+/", $login)){
-			return $login;
-		} else {
-			return RegistrationService::checkPrefix().$login;
-		}
-	}
-	
 }
