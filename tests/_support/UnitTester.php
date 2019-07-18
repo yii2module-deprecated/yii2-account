@@ -1,5 +1,5 @@
 <?php
-
+namespace yii2module\account;
 /**
  * Inherited Methods
  * @method void wantToTest($text)

@@ -1,3 +1,4 @@
+namespace: "yii2module\\account"
 paths:
     tests: tests
     log: tests/_output
