@@ -8,7 +8,7 @@ use yii2module\account\domain\v2\filters\login\LoginPhoneValidator;
 $config = [
 	'lang' => 'yii2module\lang\domain\Domain',
 	'rbac' => 'yii2lab\rbac\domain\Domain',
-	'geo' => \yii2woop\common\domain\geo\helpers\DomainHelper::config(),
+	'geo' => 'yii2lab\geo\domain\Domain',
 	'account' => \yii2woop\common\domain\account\v2\helpers\DomainHelper::config([
 		'services' => [
 			'login' => [
