@@ -17,6 +17,8 @@ class m170512_090948_create_user_registration_table extends Migration
 			'activation_code' => $this->integer(6),
 			'ip' => $this->string(16),
 			'created_at' => $this->timestamp(),
+			'create_time' => $this->timestamp(),
+
 		];
 	}
 

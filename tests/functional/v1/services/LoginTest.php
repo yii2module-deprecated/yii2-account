@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\functional\v1\services;
+namespace  yii2module\account\tests\functional\v1\services;
 
 use yii2lab\test\helpers\DataHelper;
 use yii2lab\test\Test\Unit;
@@ -8,7 +8,7 @@ use yii\web\NotFoundHttpException;
 use yii2lab\domain\BaseEntity;
 use yii2lab\domain\data\Query;
 use yii2module\account\domain\v2\entities\LoginEntity;
-use tests\functional\v1\enums\LoginEnum;
+use yii2module\account\tests\functional\v1\enums\LoginEnum;
 
 class LoginTest extends Unit
 {

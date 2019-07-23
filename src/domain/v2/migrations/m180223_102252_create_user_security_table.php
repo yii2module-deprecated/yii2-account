@@ -18,7 +18,7 @@ class m180223_102252_create_user_security_table extends Migration {
 	{
 		return [
 			'id' => $this->integer(11)->notNull(),
-			'email' => $this->string(255)->notNull(),
+			'email' => $this->string(255),
 			'auth_key' => $this->string(64)->notNull(),
 			'password_hash' => $this->string(255)->notNull(),
 		];

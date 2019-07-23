@@ -1,12 +1,12 @@
 <?php
 
-namespace tests\functional\v1\services;
+namespace  yii2module\account\tests\functional\v1\services;
 
+use yii2lab\rbac\domain\entities\AssignmentEntity;
 use yii2lab\test\Test\Unit;
 use Yii;
 use yii2lab\domain\data\Query;
-use tests\functional\v1\enums\LoginEnum;
-use yii2module\account\domain\v2\entities\AssignmentEntity;
+use yii2module\account\tests\functional\v1\enums\LoginEnum;
 
 class AssignmentTest extends Unit
 {
@@ -15,6 +15,7 @@ class AssignmentTest extends Unit
 	{
 		/** @var AssignmentEntity[] $collection */
 		$query = Query::forge();
+
 		$query->where('user_id', LoginEnum::ID_ADMIN);
 		$collection = \App::$domain->rbac->assignment->all($query);
 		$this->tester->assertCollection([

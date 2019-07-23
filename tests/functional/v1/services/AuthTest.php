@@ -1,14 +1,14 @@
 <?php
 
-namespace tests\functional\v1\services;
+namespace  yii2module\account\tests\functional\v1\services;
 
 use yii2lab\test\Test\Unit;
-use tests\functional\v1\enums\LoginEnum;
 use yii\web\ForbiddenHttpException;
 use yii\web\UnauthorizedHttpException;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2module\account\domain\v2\entities\LoginEntity;
 use yii2module\account\domain\v2\helpers\TestAuthHelper;
+use yii2module\account\tests\functional\v1\enums\LoginEnum;
 
 class AuthTest extends Unit
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\functional\v1\services;
+namespace  yii2module\account\tests\functional\v1\services;
 
 use yii2lab\test\Test\Unit;
 use Yii;

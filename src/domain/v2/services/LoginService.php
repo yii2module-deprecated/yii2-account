@@ -35,6 +35,7 @@ class LoginService extends BaseActiveService implements LoginInterface {
 
 	public function oneById($id, Query $query = null) {
 		try {
+
 			$loginEntity = parent::oneById($id, $query);
 		} catch(NotFoundHttpException $e) {
 			if($this->domain->oauth->isEnabled()) {
