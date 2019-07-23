@@ -9,11 +9,9 @@ $config = [
 	'lang' => 'yii2module\lang\domain\Domain',
 	'rbac' => 'yii2lab\rbac\domain\Domain',
 	'geo' => 'yii2lab\geo\domain\Domain',
+	'partner' => 'yii2woop\partner\domain\Domain',
 	'account' => \yii2woop\common\domain\account\v2\helpers\DomainHelper::config([
 		'services' => [
-			'login' => [
-				'loginValidator' => LoginPhoneValidator::class,
-			],
 			'registration' => [
 				'expire' => TimeEnum::SECOND_PER_MINUTE * 3,
 			],
