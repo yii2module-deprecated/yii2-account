@@ -63,9 +63,9 @@ class LoginHelper {
 	 */
 	public static function pregMatchLogin($login)
 	{
-		$value = self::cleanLoginOfChar($login);
-		if (is_numeric($value)) {
-			$phone = self::replaceCountryCode($value);
+		$phone = self::cleanLoginOfChar($login);
+		if (is_numeric($phone) || preg_match('/^(' . self::getPrefixExp() . ')?[\d]{1,3}([\s\S]+)$/', $phone)) {
+			$phone = self::replaceCountryCode($phone);
 			return $phone;
 		}
 		return $login;
