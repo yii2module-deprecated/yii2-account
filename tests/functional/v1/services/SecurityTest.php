@@ -17,15 +17,15 @@ class SecurityTest extends Unit
 		$this->tester->haveFixtures([
 			[
 				'class' => UserFixture::class,
-				'dataFile' => '@vendor/yii2lab/yii2-test/src/fixtures/data/user.php'
+				'dataFile' => '@vendor/yii2module/yii2-account/src/domain/v2/fixtures/data/user.php'
 			],
 			[
 				'class' => UserAssignmentFixture::class,
-				'dataFile' => '@vendor/yii2lab/yii2-test/src/fixtures/data/user_assignment.php'
+				'dataFile' => '@vendor/yii2module/yii2-account/src/domain/v2/fixtures/data/user_assignment.php'
 			],
 			[
 				'class' => UserSecurityFixture::class,
-				'dataFile' => '@vendor/yii2lab/yii2-test/src/fixtures/data/user_security.php'
+				'dataFile' => '@vendor/yii2module/yii2-account/src/domain/v2/fixtures/data/user_security.php'
 			],
 		]);
 	}

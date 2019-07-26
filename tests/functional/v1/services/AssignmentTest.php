@@ -5,6 +5,7 @@ namespace  yii2module\account\tests\functional\v1\services;
 use yii2lab\rbac\domain\entities\AssignmentEntity;
 use yii2lab\test\fixtures\UserAssignmentFixture;
 use yii2lab\test\fixtures\UserFixture;
+use yii2lab\test\fixtures\UserSecurityFixture;
 use yii2lab\test\Test\Unit;
 use Yii;
 use yii2lab\domain\data\Query;
@@ -13,18 +14,22 @@ use yii2module\account\tests\functional\v1\enums\LoginEnum;
 class AssignmentTest extends Unit
 {
 	public function _before()
-	{
-		$this->tester->haveFixtures([
-			[
-				'class' => UserFixture::class,
-				'dataFile' => '@vendor/yii2lab/yii2-test/src/fixtures/data/user.php'
-			],
-			[
-				'class' => UserAssignmentFixture::class,
-				'dataFile' => '@vendor/yii2lab/yii2-test/src/fixtures/data/user_assignment.php'
-			],
-		]);
-	}
+{
+	$this->tester->haveFixtures([
+		[
+			'class' => UserFixture::class,
+			'dataFile' => '@vendor/yii2module/yii2-account/src/domain/v2/fixtures/data/user.php'
+		],
+		[
+			'class' => UserAssignmentFixture::class,
+			'dataFile' => '@vendor/yii2module/yii2-account/src/domain/v2/fixtures/data/user_assignment.php'
+		],
+		[
+			'class' => UserSecurityFixture::class,
+			'dataFile' => '@vendor/yii2module/yii2-account/src/domain/v2/fixtures/data/user_security.php'
+		],
+	]);
+}
 
 	public function testAll()
 	{

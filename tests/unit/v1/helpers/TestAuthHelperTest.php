@@ -4,6 +4,7 @@ namespace tests\unit\v1\helpers;
 
 use yii2lab\test\fixtures\UserAssignmentFixture;
 use yii2lab\test\fixtures\UserFixture;
+use yii2lab\test\fixtures\UserSecurityFixture;
 use yii2lab\test\Test\Unit;
 use Yii;
 use yii2module\account\domain\v2\entities\LoginEntity;
@@ -12,16 +13,19 @@ use yii2module\account\tests\functional\v1\enums\LoginEnum;
 
 class TestAuthHelperTest extends Unit
 {
-	public function _before()
-	{
+	protected function _before() {
 		$this->tester->haveFixtures([
 			[
 				'class' => UserFixture::class,
-				'dataFile' => '@vendor/yii2lab/yii2-test/src/fixtures/data/user.php'
+				'dataFile' => '@vendor/yii2module/yii2-account/src/domain/v2/fixtures/data/user.php'
 			],
 			[
 				'class' => UserAssignmentFixture::class,
-				'dataFile' => '@vendor/yii2lab/yii2-test/src/fixtures/data/user_assignment.php'
+				'dataFile' => '@vendor/yii2module/yii2-account/src/domain/v2/fixtures/data/user_assignment.php'
+			],
+			[
+				'class' => UserSecurityFixture::class,
+				'dataFile' => '@vendor/yii2module/yii2-account/src/domain/v2/fixtures/data/user_security.php'
 			],
 		]);
 	}

@@ -2,6 +2,10 @@
 
 namespace  yii2module\account\tests\functional\v1\services;
 
+use yii2lab\test\fixtures\UserAssignmentFixture;
+use yii2lab\test\fixtures\UserFixture;
+use yii2lab\test\fixtures\UserSecurityFixture;
+use yii2lab\test\fixtures\UserTokenFixture;
 use yii2lab\test\Test\Unit;
 use Yii;
 use yii\web\NotFoundHttpException;
@@ -20,8 +24,26 @@ class TokenTest extends Unit
 	protected function _before() {
 		parent::_before();
 		\App::$domain->account->token->deleteAll();
+
+		$this->tester->haveFixtures([
+			[
+				'class' => UserFixture::class,
+				'dataFile' => '@vendor/yii2module/yii2-account/src/domain/v2/fixtures/data/user.php'
+			],
+			[
+				'class' => UserAssignmentFixture::class,
+				'dataFile' => '@vendor/yii2module/yii2-account/src/domain/v2/fixtures/data/user_assignment.php'
+			],
+			[
+				'class' => UserSecurityFixture::class,
+				'dataFile' => '@vendor/yii2module/yii2-account/src/domain/v2/fixtures/data/user_security.php'
+			],
+			[
+				'class' => UserTokenFixture::class,
+				'dataFile' => '@vendor/yii2module/yii2-account/src/domain/v2/fixtures/data/user_token.php'
+			],
+		]);
 	}
-	
 	public function testForgeNotFoundLogin() {
 		try {
 			\App::$domain->account->token->forge(999999, self::IP);
