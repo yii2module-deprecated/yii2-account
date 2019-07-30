@@ -48,12 +48,7 @@ class RestorePasswordForm extends Model {
 	}
 
 	public function getValidator() {
-		if(is_array($this->login)) {
-			$login = $this->login['login'];
-		} else {
-			$login = $this->login;
-		}
-		if(LoginHelper::validate($login)) {
+		if(LoginHelper::validate($this->login)) {
 			return LoginPhoneValidator::class;
 		} else {
 			return LoginValidator::class;

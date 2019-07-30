@@ -21,9 +21,8 @@ class RestorePasswordService extends CoreBaseService implements RestorePasswordI
 	public $tokenExpire;
 	
 	public function request($login, $mail = null) {
-		$body = compact(['login']);
-		Helper::validateForm(RestorePasswordForm::class, $body, RestorePasswordForm::SCENARIO_REQUEST);
-		$this->repository->post('request', $body['login']);
+		Helper::validateForm(RestorePasswordForm::class, $login, RestorePasswordForm::SCENARIO_REQUEST);
+		$this->repository->post('request', $login);
 	}
 
 	public function checkActivationCode($login, $activation_code, $password) {
