@@ -14,5 +14,5 @@ return [
 	'error.otp' => 'Noto\'g\'ri sinxronlash kiritildi',
 	'activation_code' => 'Активация коди',
 	
-	'login_not_found' => 'Фойдаланувчи топилмади',
+	'login_not_found' => 'Foydalanuvchi topilmadi',
 ];
