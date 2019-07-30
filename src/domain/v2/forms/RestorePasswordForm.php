@@ -3,6 +3,8 @@
 namespace yii2module\account\domain\v2\forms;
 
 use Yii;
+use yii2module\account\domain\v2\helpers\LoginHelper;
+use yii2module\account\domain\v2\filters\login\LoginPhoneValidator;
 use yii2module\account\domain\v2\validators\LoginValidator;
 use yii2lab\domain\base\Model;
 
@@ -20,9 +22,7 @@ class RestorePasswordForm extends Model {
 		return [
 			[['login', 'password', 'activation_code'], 'trim'],
 			[['login', 'password', 'activation_code'], 'required'],
-			['login', LoginValidator::class],
-//			[['activation_code'], 'integer'],
-//			[['activation_code'], 'string', 'length' => 6],
+			['login', 'getValidator'],
 			[['password'], 'string', 'min' => 4],
 		];
 	}
@@ -46,5 +46,12 @@ class RestorePasswordForm extends Model {
 			self::SCENARIO_CONFIRM => ['login', 'activation_code', 'password'],
 		];
 	}
-	
+
+	public function getValidator() {
+		if(LoginHelper::validate($this->login)) {
+			return LoginPhoneValidator::class;
+		} else {
+			return LoginValidator::class;
+		}
+	}
 }

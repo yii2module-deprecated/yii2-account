@@ -17,13 +17,13 @@ use yii2module\account\domain\v2\interfaces\services\RestorePasswordInterface;
  */
 class RestorePasswordService extends CoreBaseService implements RestorePasswordInterface {
 	
-	public $point = 'auth/restore-password';
+	public $point = 'restore-password';
 	public $tokenExpire;
 	
 	public function request($login, $mail = null) {
-		$body = compact(['login']);
-		Helper::validateForm(RestorePasswordForm::class, $body, RestorePasswordForm::SCENARIO_REQUEST);
-		$this->repository->post('request', $body);
+		Helper::validateForm(RestorePasswordForm::class, $login, RestorePasswordForm::SCENARIO_REQUEST);
+		$data = $this->repository->post('request', $login);
+		return $data->data;
 	}
 
 	public function checkActivationCode($login, $activation_code, $password) {
