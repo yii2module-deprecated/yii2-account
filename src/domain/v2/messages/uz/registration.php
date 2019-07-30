@@ -23,7 +23,7 @@ return [
 	'login_not_valid' => 'Логин учун нотўғри формат',
 	'invalid_activation_code' => 'Нотўғри активация коди',
 	'temp_user_not_found' => 'Фойдаланувчининг вақтинча аккаунти топилмади',
-	'user_already_exists_and_activated' => 'Фойдаланувчи рўйхатдан ўтган ва активация қилинган',
+	'user_already_exists_and_activated' => 'Foydalanuvchi ro‘yxatdan o‘tgan va aktivasiya qilingan',
 	'user_already_exists_but_not_activation' => 'Сизнинг телефон рақамингизга СМС орқали активация коди аввал жўнатилган',
 	'user_dont_create_by_unknown_reason' => 'Фойдаланувчи яратилмади, кейинроқ синаб кўринг',
 	'user_create_success' => 'Сиз рўйхатдан муваффақиятли ўтдингиз',

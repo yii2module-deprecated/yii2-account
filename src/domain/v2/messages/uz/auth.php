@@ -34,7 +34,7 @@ return [
 	
 	//'not_found_confirm' => 'Сўров топилмади. Аутентификация учун биринчи қадамни босинг',
 	//'not_found_account' => 'Фойдаланувчи топилмади. Аутентификация учун биринчи қадамни босинг',
-	'invalid_login_or_password' => 'Нотўғри фойдаланувчи ёки парол',
+	'invalid_login_or_password' => 'Noto‘g‘ri foydalanuvchi yoki parol',
 	
 	'token_type_not_found {actual_types}' => 'Токен нотўғри кўринишда. Токен турлари: {actual_types}',
 	'empty_token_type_list' => 'Мумкин бўлган токен турлари рўйхати бўш',
