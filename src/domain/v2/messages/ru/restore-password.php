@@ -22,7 +22,8 @@ return [
 	'invalid_activation_code' => 'Неверный код активации.',
 	'email_template_body' => 'Хеш %reset_hash%, для логина %login%',
 	'email_template_subject' => 'Восстановление пароля',
-	
+	'too_weak_password' => 'Слишком простой пароль',
+
 	'invalid_code' => 'Некорректный код',
 	'invalid_sms' => 'Неверный СМС-код',
 	'too_many_attempts' => 'Слишком много попыток',

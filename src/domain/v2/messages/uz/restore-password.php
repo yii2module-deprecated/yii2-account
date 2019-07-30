@@ -14,11 +14,18 @@ return [
 	'new_password_saved_success' => 'Сизнинг янги паролингиз муваффақиятли сақланди.',
 	
 	'no_user_with_email' => 'Кўрсатилган электрон почта бўйича фойдаланувчи топилмади.',
+	'empty_login' => 'Login bo’sh bo’lishi mumkin emas',
 	
 	'password_reset_expire {min}' => 'Сизга активация коди аввал жўнатилган. {min} дақиқадан сўнг такроран сўров юборишингиз мумкин',
 	'restore_password_sms {activation_code}' => 'Паролни қайта тиклаш. Активация коди: {activation_code}',
 	'not_found_request' => 'Паролни тиклаш учун сўров топилмади.',
 	'invalid_activation_code' => 'Нотўғри активация коди.',
 	'email_template_body' => 'Хеш %reset_hash%, логин учун %login%',
-	'email_template_subject' => 'Паролни қайта тиклаш'
+	'email_template_subject' => 'Паролни қайта тиклаш',
+	'too_weak_password' => 'Parol juda oddiy',
+
+	'invalid_code' => 'Noto’g’ri kod',
+	'invalid_sms' => 'Noto’g’ri SMS-kod',
+	'too_many_attempts' => 'Haddan ortiq urinish',
+	'must_fill_field' => 'activation code maydonchasini to’ldiring',
 ];

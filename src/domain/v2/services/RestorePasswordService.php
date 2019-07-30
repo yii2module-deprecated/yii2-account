@@ -14,6 +14,7 @@ use yii2module\account\domain\v2\interfaces\services\RestorePasswordInterface;
 use yii2woop\generated\exception\tps\CallCounterExceededException;
 use yii2woop\generated\exception\tps\InvalidPackageStructureException;
 use yii2woop\generated\exception\tps\PasswordResetHashExpiredException;
+use yii2woop\generated\exception\tps\TooWeakPasswordException;
 use yii2woop\generated\exception\tps\WrongConfirmationCodeException;
 use yii2woop\generated\transport\TpsCommands;
 use yii2woop\partner\domain\entities\InfoEntity;
@@ -66,6 +67,10 @@ class RestorePasswordService extends BaseService implements RestorePasswordInter
 		} catch(InvalidPackageStructureException $e) {
 			$error = new ErrorCollection();
 			$error->add('password', 'account/restore-password', 'enter_new_password');
+			throw new UnprocessableEntityHttpException($error);
+		} catch(TooWeakPasswordException $e) {
+			$error = new ErrorCollection();
+			$error->add('password', 'account/restore-password', 'too_weak_password');
 			throw new UnprocessableEntityHttpException($error);
 		}
 	}

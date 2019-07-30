@@ -2,5 +2,5 @@
 
 return [
 	'title' => 'Аккаунт',
-	'not_valid' => 'Аккаунт учун нотўғри формат',
+	'not_valid' => 'Akkaunt uchun noto‘g‘ri format',
 ];
