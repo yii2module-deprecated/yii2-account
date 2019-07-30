@@ -29,6 +29,7 @@ use yii2module\account\domain\v2\filters\token\DefaultFilter;
  * @property-read \yii2module\account\domain\v2\interfaces\services\JwtInterface $jwt
  * @property-read \yii2module\account\domain\v2\interfaces\services\ActivityInterface $activity
  * @property-read \yii2module\account\domain\v2\interfaces\services\OauthInterface $oauth
+ * @property-read \yii2woop\common\domain\account\v2\interfaces\repositories\FireUserInterface $fireUser
  */
 class Domain extends \yii2lab\domain\Domain {
 	
