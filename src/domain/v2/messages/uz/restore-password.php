@@ -20,5 +20,10 @@ return [
 	'not_found_request' => 'Паролни тиклаш учун сўров топилмади.',
 	'invalid_activation_code' => 'Нотўғри активация коди.',
 	'email_template_body' => 'Хеш %reset_hash%, логин учун %login%',
-	'email_template_subject' => 'Паролни қайта тиклаш'
+	'email_template_subject' => 'Паролни қайта тиклаш',
+
+	'invalid_code' => 'Kod noto‘g‘ri',
+	'invalid_sms' => 'SMS kod noto\'g\'ri',
+	'too_many_attempts' => 'Juda ko‘p urinish',
+	'must_fill_field' => 'Faollashtirish kodini to\'ldirishingiz kerak',
 ];
