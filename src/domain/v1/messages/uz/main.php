@@ -10,7 +10,7 @@ return [
 	'password' => 'Парол',
 	'password_repeat' => 'Паролни қайтариш',
 	'role' => 'Рол',
-	'activation_code' => 'Активация коди',
+	'activation_code' => 'SMS kodi',
 	
 	'role_not_exists' => 'Рол мавжуд эмас',
 	'role_not_accessible' => 'Ролга рухсатингиз йўқ',
