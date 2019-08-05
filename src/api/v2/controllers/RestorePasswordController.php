@@ -3,12 +3,14 @@
 namespace yii2module\account\api\v2\controllers;
 
 use Yii;
+
 use yii2lab\rest\domain\rest\Controller;
+use yii\web\Response;
 
 class RestorePasswordController extends Controller
 {
 	public $service = 'account.restorePassword';
-	
+
 	/**
 	 * @inheritdoc
 	 */
@@ -20,7 +22,7 @@ class RestorePasswordController extends Controller
 			'confirm' => ['POST'],
 		];
 	}
-	
+
 	/**
 	 * @inheritdoc
 	 */
@@ -44,7 +46,10 @@ class RestorePasswordController extends Controller
 	public function actionRequest() {
 		$body = Yii::$app->request->getBodyParams();
 		$entity = \App::$domain->account->restorePassword->request($body);
-		return $entity;
+		if($entity){
+			return $entity;
+		}
+		Yii::$app->response->format = Response::FORMAT_RAW;
 	}
 
 }
