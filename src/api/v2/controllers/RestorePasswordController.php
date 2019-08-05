@@ -44,7 +44,9 @@ class RestorePasswordController extends Controller
 	public function actionRequest() {
 		$body = Yii::$app->request->getBodyParams();
 		$entity = \App::$domain->account->restorePassword->request($body);
-		return $entity;
+		if($entity){
+			return $entity;
+		}
 	}
 
 }
