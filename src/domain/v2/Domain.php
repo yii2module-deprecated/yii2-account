@@ -50,7 +50,7 @@ class Domain extends \yii2lab\domain\Domain {
 				'token' => Driver::ACTIVE_RECORD,
                 'jwt' => 'jwt',
 				'activity' => Driver::ACTIVE_RECORD,
-				'fireUser' => $this->primaryDriver
+				'fireUser' => Driver::ACTIVE_RECORD
 			],
 			'services' => [
 				'auth' => [
