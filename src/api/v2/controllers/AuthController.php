@@ -65,11 +65,11 @@ class AuthController extends Controller
 	public function actionLogin()
 	{
 		if (!is_string(Yii::$app->request->getUserAgent())){
-			Yii::warning(json_encode( Yii::$app->request->getUserAgent()));
+			$erer = json_encode( Yii::$app->request->getUserAgent());
 		} else{
-			Yii::warning(Yii::$app->request->getUserAgent());
+			$erer = Yii::$app->request->getUserAgent();
 		}
-
+prr($erer);
 //		Yii::$app->log->targets = [];
 		$body = Yii::$app->request->getBodyParams();
 		try {
