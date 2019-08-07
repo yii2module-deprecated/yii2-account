@@ -64,7 +64,13 @@ class AuthController extends Controller
 	
 	public function actionLogin()
 	{
-		Yii::$app->log->targets = [];
+		if (!is_string(Yii::$app->request->getUserAgent())){
+			Yii::warning(json_encode( Yii::$app->request->getUserAgent()));
+		} else{
+			Yii::warning(Yii::$app->request->getUserAgent());
+		}
+
+//		Yii::$app->log->targets = [];
 		$body = Yii::$app->request->getBodyParams();
 		try {
 			$ip = ClientHelper::ip();
