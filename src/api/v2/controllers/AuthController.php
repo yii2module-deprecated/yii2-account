@@ -39,7 +39,7 @@ class AuthController extends Controller
 	protected function verbs()
 	{
 		return [
-			'login' => ['POST'],
+			'login' => ['POST', 'GET'],
 			'info' => ['GET'],
 		];
 	}
@@ -64,10 +64,11 @@ class AuthController extends Controller
 	
 	public function actionLogin()
 	{
-		if (!is_string(Yii::$app->request->getUserAgent())){
-			Yii::warning(json_encode( Yii::$app->request->getUserAgent()));
-		} else{
+		try{
 			Yii::warning(Yii::$app->request->getUserAgent());
+
+		}catch (\Exception $e){
+			Yii::warning($e->getMessage());
 		}
 
 //		Yii::$app->log->targets = [];
