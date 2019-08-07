@@ -39,7 +39,7 @@ class AuthController extends Controller
 	protected function verbs()
 	{
 		return [
-			'login' => ['POST', 'GET'],
+			'login' => ['POST'],
 			'info' => ['GET'],
 		];
 	}
@@ -64,8 +64,6 @@ class AuthController extends Controller
 	
 	public function actionLogin()
 	{
-
-
 		Yii::$app->log->targets = [];
 		$body = Yii::$app->request->getBodyParams();
 		try {
