@@ -12,6 +12,7 @@ use yii2module\account\domain\v2\exceptions\ConfirmIncorrectCodeException;
 use yii2module\account\domain\v2\helpers\ConfirmHelper;
 use yii2module\account\domain\v2\helpers\LoginHelper;
 use yii2module\account\domain\v2\interfaces\services\ConfirmInterface;
+use yii2woop\partner\domain\helpers\PartnerHelper;
 
 /**
  * Class ConfirmService
@@ -86,7 +87,7 @@ class ConfirmService extends BaseActiveService implements ConfirmInterface
 	private function oneByLoginAndAction($login, $action)
 	{
 		$login = LoginHelper::getPhone($login);
-		$login = RegistrationService::checkPrefix().$login;
+		$login = PartnerHelper::checkPrefix().$login;
 		$this->cleanOld($login, $action);
 		return $this->repository->oneByLoginAndAction($login, $action);
 	}
@@ -101,7 +102,7 @@ class ConfirmService extends BaseActiveService implements ConfirmInterface
 	protected function createNew($login, $action, $expire, $data = null)
 	{
 		$login = LoginHelper::getPhone($login);
-		$login = RegistrationService::checkPrefix().$login;
+		$login = PartnerHelper::checkPrefix().$login;
 		$this->cleanOld($login, $action);
 		$entityArray['login'] = $login;
 		$entityArray['action'] = $action;

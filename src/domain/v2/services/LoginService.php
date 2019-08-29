@@ -16,6 +16,7 @@ use yii2module\account\domain\v2\forms\LoginForm;
 use yii2module\account\domain\v2\helpers\LoginHelper;
 use yii2module\account\domain\v2\interfaces\LoginValidatorInterface;
 use yii2module\account\domain\v2\interfaces\services\LoginInterface;
+use yii2woop\partner\domain\helpers\PartnerHelper;
 
 /**
  * Class LoginService
@@ -73,7 +74,7 @@ class LoginService extends BaseActiveService implements LoginInterface {
 	public function create($data) {
 		$data['email'] = !empty($data['email']) ? $data['email'] : 'api@wooppay.com';
 		Helper::validateForm(LoginForm::class, $data);
-		$login = RegistrationService::checkPrefix().$data['login'];
+		$login = PartnerHelper::checkPrefix().$data['login'];
 		try {
 			$this->repository->oneByLogin($login);
 			$error = new ErrorCollection();
