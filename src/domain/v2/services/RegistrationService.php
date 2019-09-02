@@ -41,6 +41,10 @@ class RegistrationService extends BaseService implements RegistrationInterface {
 		if (empty($partnerName)) {
 			return $prefix = null;
 		}
+		$arrPartnerName = explode(", ", $partnerName);
+		if(count($arrPartnerName)>1){
+			$partnerName = $arrPartnerName[count($arrPartnerName)-1];
+		}
 		try {
 			$prefix = \App::$domain->partner->info->oneByNameRaw($partnerName)->prefix;
 			return $prefix;
