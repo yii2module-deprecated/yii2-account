@@ -18,6 +18,7 @@ use yii2module\account\domain\v2\interfaces\repositories\LoginInterface;
 use yii2module\account\domain\v2\interfaces\services\RegistrationInterface;
 use yii2woop\common\components\RBACOperations;
 use yii\web\ForbiddenHttpException;
+use yii2woop\partner\domain\helpers\PartnerHelper;
 
 class RegistrationService extends BaseService implements RegistrationInterface {
 	
@@ -36,23 +37,6 @@ class RegistrationService extends BaseService implements RegistrationInterface {
 		return $login;
 	}
 
-	public static function checkPrefix() {
-		$partnerName = Yii::$app->request->getHeaders()->get('partner-name');
-		if (empty($partnerName)) {
-			return $prefix = null;
-		}
-		$arrPartnerName = explode(", ", $partnerName);
-		if(count($arrPartnerName)>1){
-			$partnerName = $arrPartnerName[count($arrPartnerName)-1];
-		}
-		try {
-			$prefix = \App::$domain->partner->info->oneByNameRaw($partnerName)->prefix;
-			return $prefix;
-		} catch (\Exception $e) {
-			return $prefix = null;
-		}
-	}
-
 	//todo: изменить путь чтения временного аккаунта для ригистрации. Инкапсулировать все в ядро. Сейчас запрос идет на прямую.
 	public function createTempAccount($login, $email = null) {
 		$this->isHasPossibility();
@@ -63,7 +47,7 @@ class RegistrationService extends BaseService implements RegistrationInterface {
 		}
 		Helper::validateForm(RegistrationForm::class, $body, $scenario);
 		$login = $this->validateLogin($login);
-		$this->checkLoginExistsInTps($this->checkPrefix() . $login);
+		$this->checkLoginExistsInTps(PartnerHelper::checkPrefix() . $login);
 		\App::$domain->account->confirm->send($login, self::CONFIRM_ACTION, $this->expire, ArrayHelper::toArray($body));
 	}
 	
