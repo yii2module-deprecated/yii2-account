@@ -2,6 +2,12 @@ description: "Аутентификация"
 post:
     description: "Получение токена"
     is: !include /../../../vendor/yii2lab/yii2-rest/src/domain/docs/is/post200.raml
+    headers:
+        ip-address:
+            description: Подмена ip-адреса
+            required: false
+            type: string
+            example: "172.31.21.8"
     body:
         application/json:
             example: !include example/post-request-body.json
