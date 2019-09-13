@@ -14,6 +14,6 @@ return [
 	'error.otp' => 'Введен неверный ОТП',
 	'empty.otp' => 'Необходимо ввести ОТП',
 	'activation_code' => 'Код активации',
-	
+	'url' => 'URL',
 	'login_not_found' => 'Пользователь не найден',
 ];

@@ -13,15 +13,18 @@ class RestorePasswordForm extends Model {
 	public $login;
 	public $activation_code;
 	public $password;
+	public $email;
+	public $url;
 	
 	const SCENARIO_REQUEST = 'request';
 	const SCENARIO_CHECK = 'check';
 	const SCENARIO_CONFIRM = 'confirm';
-	
-	public function rules() {
+	const SCENARIO_REQUEST_PARTNER ='request-partner';
+
+    public function rules() {
 		return [
-			[['login', 'password', 'activation_code'], 'trim'],
-			[['login', 'password', 'activation_code'], 'required'],
+			[['login', 'password', 'activation_code', 'email', 'url'], 'trim'],
+			[['login', 'password', 'activation_code', 'email', 'url'], 'required'],
 			['login', 'getValidator'],
 			[['password'], 'string', 'min' => 4],
 		];
@@ -33,9 +36,11 @@ class RestorePasswordForm extends Model {
 	public function attributeLabels()
 	{
 		return [
-			'login' 		=> Yii::t('account/main', 'login'),
-			'password' 		=> Yii::t('account/main', 'password'),
-			'activation_code' 		=> Yii::t('account/main', 'activation_code'),
+			'login' => Yii::t('account/main', 'login'),
+			'password' => Yii::t('account/main', 'password'),
+			'activation_code' => Yii::t('account/main', 'activation_code'),
+            'email' => Yii::t('account/main', 'email'),
+            'url' => Yii::t('account/main', 'url')
 		];
 	}
 	
@@ -44,6 +49,7 @@ class RestorePasswordForm extends Model {
 			self::SCENARIO_REQUEST => ['login'],
 			self::SCENARIO_CHECK => ['login', 'activation_code'],
 			self::SCENARIO_CONFIRM => ['login', 'activation_code', 'password'],
+            self::SCENARIO_REQUEST_PARTNER => ['login', 'email', 'url']
 		];
 	}
 

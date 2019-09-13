@@ -10,6 +10,7 @@ return [
 	"{$version}/registration/<action:(create-account|activate-account|set-password)>" => "account/registration/<action>",
 
 	"{$version}/restore-password/<action:(request|check-code|confirm)>" => "account/restore-password/<action>",
+    "{$version}/restore-password/request-partner" => "account/restore-password/request-by-partner",
 
 	"{$version}/security/<action:(password|email)>" => "account/security/<action>",
 

@@ -8,4 +8,6 @@ interface RestorePasswordInterface {
 	public function checkActivationCode($login, $activation_code, $password);
 	public function confirm($login, $activation_code);
 
+    public function requestByPartner(array $body);
+
 }

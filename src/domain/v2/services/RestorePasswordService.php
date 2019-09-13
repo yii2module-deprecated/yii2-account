@@ -43,6 +43,13 @@ class RestorePasswordService extends BaseService implements RestorePasswordInter
 		return $restore;
 	}
 
+    public function requestByPartner($body) {
+        $form = new RestorePasswordForm();
+        $form->setAttributes(Helper::validateForm(RestorePasswordForm::class, $body, RestorePasswordForm::SCENARIO_REQUEST_PARTNER), false);
+        $this->validateLogin($form->login);
+        return $this->repository->requestNewPasswordByPartner($form->login, $form->email, $form->url);
+    }
+
 	/**
 	 * @param $login
 	 * @param $activation_code
