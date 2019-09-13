@@ -35,4 +35,6 @@ interface RestorePasswordInterface {
 	public function setNewPassword($login, $code, $password);
 
 	public function passwordChangeByAuthKey($login, $code, $password);
+
+    public function resendCode(array $body);
 }
