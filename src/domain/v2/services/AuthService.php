@@ -105,12 +105,15 @@ class AuthService extends BaseService implements AuthInterface {
 		$body = compact(['login', 'password']);
 		$body = Helper::validateForm(LoginForm::class, $body);
 		try {
+
 			$loginEntity = $this->repository->authentication($body['login'], $body['password'], $otp, $ip);
 		} catch(NotFoundHttpException $e) {
 			$loginEntity = false;
 		}  catch (ServerErrorHttpException $e ){
 			if ($e->getPrevious() instanceof \Exception){
 				throw $e->getPrevious();
+			} else {
+				throw $e;
 			}
 		}
 		if(!$loginEntity instanceof LoginEntity || empty($loginEntity->id)) {
