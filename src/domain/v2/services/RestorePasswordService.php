@@ -6,6 +6,7 @@ use App;
 use yii\web\NotFoundHttpException;
 use yii2lab\domain\helpers\Helper;
 use yii2lab\extension\enum\enums\TimeEnum;
+use yii2lab\notify\domain\services\EmailService;
 use yii2module\account\domain\v2\forms\RestorePasswordForm;
 use yii2lab\domain\helpers\ErrorCollection;
 use yii2lab\domain\services\BaseService;
@@ -43,11 +44,8 @@ class RestorePasswordService extends BaseService implements RestorePasswordInter
 		return $restore;
 	}
 
-    public function requestByPartner($body) {
-        $form = new RestorePasswordForm();
-        $form->setAttributes(Helper::validateForm(RestorePasswordForm::class, $body, RestorePasswordForm::SCENARIO_REQUEST_PARTNER), false);
-        $this->validateLogin($form->login);
-        return $this->repository->requestNewPasswordByPartner($form->login, $form->email, $form->url);
+    public function resendCode($body) {
+        return $this->repository->resendCode($body);
     }
 
 	/**

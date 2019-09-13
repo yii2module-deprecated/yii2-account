@@ -19,7 +19,7 @@ class RestorePasswordForm extends Model {
 	const SCENARIO_REQUEST = 'request';
 	const SCENARIO_CHECK = 'check';
 	const SCENARIO_CONFIRM = 'confirm';
-	const SCENARIO_REQUEST_PARTNER ='request-partner';
+	const SCENARIO_RESEND_CODE ='resend-code';
 
     public function rules() {
 		return [
@@ -49,7 +49,7 @@ class RestorePasswordForm extends Model {
 			self::SCENARIO_REQUEST => ['login'],
 			self::SCENARIO_CHECK => ['login', 'activation_code'],
 			self::SCENARIO_CONFIRM => ['login', 'activation_code', 'password'],
-            self::SCENARIO_REQUEST_PARTNER => ['login', 'email', 'url']
+            self::SCENARIO_RESEND_CODE => ['login', 'email', 'url']
 		];
 	}
 

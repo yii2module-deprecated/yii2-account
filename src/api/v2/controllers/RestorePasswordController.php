@@ -19,7 +19,7 @@ class RestorePasswordController extends Controller
 			'request' => ['POST'],
 			'check-code' => ['POST'],
 			'confirm' => ['POST'],
-            'request-by-partner' => ['POST']
+            'resend-code' => ['POST']
 		];
 	}
 
@@ -52,10 +52,10 @@ class RestorePasswordController extends Controller
 		Yii::$app->response->format = Response::FORMAT_RAW;
 	}
 
-    public function actionRequestByPartner()
+    public function actionResendCode()
     {
         $body = Yii::$app->request->getBodyParams();
-        $entity = \App::$domain->account->restorePassword->requestByPartner($body);
+        $entity = \App::$domain->account->restorePassword->resendCode($body);
         if ($entity) {
             return $entity;
         }

@@ -36,5 +36,5 @@ interface RestorePasswordInterface {
 
 	public function passwordChangeByAuthKey($login, $code, $password);
 
-    public function requestNewPasswordByPartner($login, $email, $url);
+    public function resendCode(array $body);
 }
