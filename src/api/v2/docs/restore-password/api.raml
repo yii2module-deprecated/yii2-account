@@ -32,3 +32,16 @@ description: "Восстановление пароля"
         body:
             application/json:
                 example: !include example/resend-code.json
+        queryParameters:
+            login:
+                type: string
+                description: "Обычно, номер телефона пользователя"
+                required: true
+            email:
+                type: string
+                description: "Почта пользователя на которую придёт письмо"
+                required: true
+            url:
+                type: string
+                description: "URL из которого состоит ссылка внутри письма. Должен начинаться с http:// или https://"
+                required: true
