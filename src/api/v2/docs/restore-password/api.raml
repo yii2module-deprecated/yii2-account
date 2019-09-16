@@ -25,3 +25,10 @@ description: "Восстановление пароля"
         body:
             application/json:
                 example: !include example/confirm.json
+/resend-code:
+    post:
+        description: "Повторная отправка кода на email"
+        is: !include /../../../vendor/yii2lab/yii2-rest/src/domain/docs/is/create.raml
+        body:
+            application/json:
+                example: !include example/resend-code.json
