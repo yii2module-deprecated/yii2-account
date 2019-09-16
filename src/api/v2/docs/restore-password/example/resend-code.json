@@ -1,0 +1,5 @@
+{
+  "login": "{{string}}",
+  "email": "{{string}}",
+  "url": "{{string}}"
+}
