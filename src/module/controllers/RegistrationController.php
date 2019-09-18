@@ -13,9 +13,7 @@ use yii2lab\navigation\domain\widgets\Alert;
 
 class RegistrationController extends Controller
 {
-	
-	public $defaultAction = 'create';
-	
+
 	/**
 	 * @inheritdoc
 	 */
@@ -24,29 +22,7 @@ class RegistrationController extends Controller
 			'access' => Behavior::access('?'),
 		];
 	}
-	
-	/**
-	 * Signs user up.
-	 *
-	 * @return mixed
-	 */
-	public function actionCreate()
-	{
-		$model = new RegistrationForm();
-		$model->scenario = RegistrationForm::SCENARIO_CHECK;
-		$callback = function($model) {
-			\App::$domain->account->registration->activateAccount($model->login, $model->activation_code);
-			$session['login'] = $model->login;
-			$session['activation_code'] = $model->activation_code;
-			Yii::$app->session->set('registration', $session);
-			return $this->redirect(['/user/registration/set-password']);
-		};
-		$this->validateForm($model,$callback);
-		return $this->render('create', [
-			'model' => $model,
-		]);
-	}
-	
+
 	public function actionSetPassword()
 	{
 		$session = Yii::$app->session->get('registration');
@@ -71,7 +47,7 @@ class RegistrationController extends Controller
 			'login' => $session['login'],
 		]);
 	}
-	
+
 	private function validateForm(Model $form, $callback) {
 		$body = Yii::$app->request->post();
 		$isValid = $form->load($body) && $form->validate();

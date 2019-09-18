@@ -15,9 +15,7 @@ class RestorePasswordController extends Controller
 {
 	
 	const SESSION_KEY = 'restore-password';
-	
-	public $defaultAction = 'request';
-	
+
 	/**
 	 * @inheritdoc
 	 */
@@ -27,25 +25,7 @@ class RestorePasswordController extends Controller
 			'access' => Behavior::access('?'),
 		];
 	}
-	
-	public function actionRequest() {
-		$model = new RestorePasswordForm();
-		$model->setScenario(RestorePasswordForm::SCENARIO_REQUEST);
-		if(Yii::$app->request->isPost) {
-			$body = Yii::$app->request->post('RestorePasswordForm');
-			$model->setAttributes($body, false);
-			try {
-				\App::$domain->account->restorePassword->request($model->login);
-				$session['login'] = $model->login;
-				Yii::$app->session->set(self::SESSION_KEY, $session);
-				return $this->redirect(['/user/restore-password/check']);
-			} catch (UnprocessableEntityHttpException $e){
-				$model->addErrorsFromException($e);
-			}
-		}
-		return $this->render('request', ['model' => $model]);
-	}
-	
+
 	public function actionCheck() {
 		$model = new RestorePasswordForm();
 		$model->setScenario(RestorePasswordForm::SCENARIO_CHECK);

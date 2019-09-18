@@ -33,7 +33,3 @@ use yii2module\account\domain\v2\forms\LoginForm;
 	</div>
 	
 <?php ActiveForm::end(); ?>
-
-<?= Html::a(Yii::t('account/auth', 'register_new_user'), ['/user/registration']) ?>
-    <br/>
-<?= Html::a(Yii::t('account/auth', 'i_forgot_my_password'), ['/user/restore-password']) ?>
