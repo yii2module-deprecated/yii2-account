@@ -33,7 +33,6 @@ class m180223_102252_create_user_security_table extends Migration {
 			'CASCADE',
 			'CASCADE'
 		);
-		$this->myCreateIndexUnique(['auth_key']);
 		$this->myCreateIndexUnique(['id']);
 	}
 

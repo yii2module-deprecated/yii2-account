@@ -57,4 +57,10 @@ return [
 		'auth_key' => 'CUc6h7DyU07Lbru0QWu4-jb0Tiz15qWQZZ8IIix0sq5XO6-nWbtmImx93aTq4Cg9',
 		'password_hash' => $passwordHash,
 	],
+	[
+		'id' => 381999,
+		//'email' => null,
+		'auth_key' => 'CUc6h7DyU07Lbru0QWu4-jb0Tiz15qWQZZ8IIix0sq5XO6-nWbtmImx93aTq4Cg9',
+		'password_hash' => $passwordHash,
+	],
 ];

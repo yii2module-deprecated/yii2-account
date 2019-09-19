@@ -106,4 +106,15 @@ return UserFixture::generateAll([
 			'active' => 121447,
 		],
 	],
+	[
+		'id' => 381999,
+		'login' => '998901232211',
+		'username' => 'user 5',
+		'role' => 'rUnknownUser',
+		'password_hash' => $passwordHash,
+		'balance' => [
+			'blocked' => 528932,
+			'active' => 121447,
+		],
+	],
 ]);
