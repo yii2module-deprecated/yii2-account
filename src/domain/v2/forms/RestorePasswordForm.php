@@ -24,7 +24,7 @@ class RestorePasswordForm extends Model {
     public function rules() {
 		return [
 			[['login', 'password', 'activation_code', 'email', 'url'], 'trim'],
-			[['login', 'password', 'activation_code', 'email', 'url'], 'required'],
+			[['login', 'password', 'activation_code',  'url'], 'required'],
 			['login', 'getValidator'],
 			[['password'], 'string', 'min' => 4],
 		];
