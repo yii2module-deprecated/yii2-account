@@ -38,4 +38,10 @@ class RestorePasswordService extends CoreBaseService implements RestorePasswordI
 		$this->repository->post('confirm', $body);
 	}
 
+	public function resendCode($login, $email, $url)
+	{
+		$body = compact(['login', 'email', 'url']);
+		Helper::validateForm(RestorePasswordForm::class, $body, RestorePasswordForm::SCENARIO_RESEND_CODE);
+		$this->repository->post('resend-code', $body);
+	}
 }

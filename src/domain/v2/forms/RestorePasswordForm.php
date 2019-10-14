@@ -46,7 +46,7 @@ class RestorePasswordForm extends Model {
 	
 	public function scenarios() {
 		return [
-			self::SCENARIO_REQUEST => ['login'],
+			self::SCENARIO_REQUEST => ['login', 'email'],
 			self::SCENARIO_CHECK => ['login', 'activation_code'],
 			self::SCENARIO_CONFIRM => ['login', 'activation_code', 'password'],
             self::SCENARIO_RESEND_CODE => ['login', 'email', 'url']
@@ -59,5 +59,15 @@ class RestorePasswordForm extends Model {
 		} else {
 			return LoginValidator::class;
 		}
+	}
+	/**
+	 * @param mixed $url
+	 */
+	public function setUrl($url): void
+	{
+		$link = $url . '/site/confirmKey' . '/key/_reset_hash_' . '/login/_login_';
+		$link = str_replace('_reset_hash_', '%reset_hash%', $link);
+		$link = str_replace('_login_', '%login%', $link);
+		$this->url = $link;
 	}
 }

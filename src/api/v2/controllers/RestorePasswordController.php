@@ -3,8 +3,10 @@
 namespace yii2module\account\api\v2\controllers;
 
 use Yii;
-use yii2lab\rest\domain\rest\Controller;
 use yii\web\Response;
+use yii2lab\domain\helpers\Helper;
+use yii2lab\rest\domain\rest\Controller;
+use yii2module\account\domain\v2\forms\RestorePasswordForm;
 
 class RestorePasswordController extends Controller
 {
@@ -19,14 +21,15 @@ class RestorePasswordController extends Controller
 			'request' => ['POST'],
 			'check-code' => ['POST'],
 			'confirm' => ['POST'],
-            'resend-code' => ['POST']
+			'resend-code' => ['POST']
 		];
 	}
 
 	/**
 	 * @inheritdoc
 	 */
-	public function actions() {
+	public function actions()
+	{
 		return [
 			'check-code' => [
 				'class' => 'yii2lab\domain\rest\UniAction',
@@ -43,22 +46,27 @@ class RestorePasswordController extends Controller
 		];
 	}
 
-	public function actionRequest() {
+	public function actionRequest()
+	{
 		$body = Yii::$app->request->getBodyParams();
-		$entity = \App::$domain->account->restorePassword->request($body);
-		if($entity){
+		$form = new RestorePasswordForm();
+		$form->setAttributes(Helper::validateForm(RestorePasswordForm::class, $body, RestorePasswordForm::SCENARIO_REQUEST), false);
+		$entity = \App::$domain->account->restorePassword->request($form->login, $form->email);
+		if ($entity) {
 			return $entity;
 		}
 		Yii::$app->response->format = Response::FORMAT_RAW;
 	}
 
-    public function actionResendCode()
-    {
-        $body = Yii::$app->request->getBodyParams();
-        $entity = \App::$domain->account->restorePassword->resendCode($body);
-        if ($entity) {
-            return $entity;
-        }
-        Yii::$app->response->format = Response::FORMAT_RAW;
-    }
+	public function actionResendCode()
+	{
+		$body = Yii::$app->request->getBodyParams();
+		$form = new RestorePasswordForm();
+		$form->setAttributes(Helper::validateForm(RestorePasswordForm::class, $body, RestorePasswordForm::SCENARIO_RESEND_CODE), false);
+		$entity = \App::$domain->account->restorePassword->resendCode($form->login, $form->email, $form->url);
+		if ($entity) {
+			return $entity;
+		}
+		Yii::$app->response->format = Response::FORMAT_RAW;
+	}
 }

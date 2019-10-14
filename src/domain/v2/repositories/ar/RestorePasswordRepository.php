@@ -32,4 +32,9 @@ class RestorePasswordRepository extends BaseRepository implements RestorePasswor
 	public function passwordChangeByAuthKey($login, $code, $password) {
 		// TODO: Implement passwordChangeByAuthKey() method.
 	}
+
+	public function resendCode($login, $email, $url)
+	{
+		// TODO: Implement resendCode() method.
+	}
 }
