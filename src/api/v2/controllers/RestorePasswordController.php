@@ -58,15 +58,5 @@ class RestorePasswordController extends Controller
 		Yii::$app->response->format = Response::FORMAT_RAW;
 	}
 
-	public function actionResendCode()
-	{
-		$body = Yii::$app->request->getBodyParams();
-		$form = new RestorePasswordForm();
-		$form->setAttributes(Helper::validateForm(RestorePasswordForm::class, $body, RestorePasswordForm::SCENARIO_RESEND_CODE), false);
-		$entity = \App::$domain->account->restorePassword->resendCode($form->login, $form->email, $form->url);
-		if ($entity) {
-			return $entity;
-		}
-		Yii::$app->response->format = Response::FORMAT_RAW;
-	}
+
 }
