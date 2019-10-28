@@ -61,7 +61,7 @@ class AppIdentityService extends BaseActiveService implements AppIdentityInterfa
 
 		$this->update($appIdentityEntity);
 		return [
-			'key' => $appIdentityEntity->key
+			'app_hash' => $appIdentityEntity->key
 		];
 	}
 

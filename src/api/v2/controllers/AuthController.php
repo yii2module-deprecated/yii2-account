@@ -97,8 +97,8 @@ class AuthController extends Controller
 			} elseif (!empty($body['parent_login'])){
 				$parentLogin = $body['parent_login'];
 			}
-			if(!empty($body['key'])){
-				\App::$domain->account->appIdentity->checkKey($body['login'], $body['key']);
+			if(!empty($body['app_hash'])){
+				\App::$domain->account->appIdentity->checkKey($body['login'], $body['app_hash']);
 			}
 			$entity = \App::$domain->account->authPseudo->authentication($body['login'], $address, $body['email'], $parentLogin);
 			return $entity;
