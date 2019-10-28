@@ -14,4 +14,5 @@ use yii2lab\domain\interfaces\services\CrudInterface;
  */
 interface AppIdentityInterface extends CrudInterface {
 
+	public function checkKey($login, $key);
 }

@@ -42,7 +42,7 @@ class AppIdentityService extends BaseActiveService implements AppIdentityInterfa
 	public function smsCheck($login, $smsCode)
 	{
 
-		if($this->isKeyExist($login)){
+		if ($this->isKeyExist($login)) {
 			Yii::$app->response->setStatusCode(204);
 			return;
 		};
@@ -76,11 +76,29 @@ class AppIdentityService extends BaseActiveService implements AppIdentityInterfa
 		}
 		return true;
 	}
+
 	private function isKeyExist($login)
 	{
 		$query = Query::forge();
 		$query->where(['login' => $login]);
 		$appIdentityEntity = App::$domain->account->appIdentity->one($query);
 		return !empty($appIdentityEntity->key);
+	}
+
+	public function checkKey($login, $key)
+	{
+		$appIdentityRequest = new AppIdentityEntity();
+		$appIdentityRequest->load(['login' => $login, 'key' => $key]);
+
+		$query = Query::forge();
+		$query->where(['login' => $appIdentityRequest->getLogin()]);
+		$appIdentityEntity = App::$domain->account->appIdentity->one($query);
+		if($appIdentityEntity->getKey() !== $appIdentityRequest->getKey()){
+			$errors = new ErrorCollection();
+			$errors->add('login', Yii::t('account/appIdentity', 'wrong_key'));
+			throw new UnprocessableEntityHttpException($errors);
+		}
+
+		// TODO: Implement checkKey() method.
 	}
 }

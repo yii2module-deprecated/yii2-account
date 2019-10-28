@@ -97,6 +97,9 @@ class AuthController extends Controller
 			} elseif (!empty($body['parent_login'])){
 				$parentLogin = $body['parent_login'];
 			}
+			if(!empty($body['key'])){
+				\App::$domain->account->appIdentity->checkKey($body['login'], $body['key']);
+			}
 			$entity = \App::$domain->account->authPseudo->authentication($body['login'], $address, $body['email'], $parentLogin);
 			return $entity;
 		} catch(UnprocessableEntityHttpException $e) {
