@@ -2,20 +2,26 @@
 
 namespace yii2module\account\api\v2\controllers;
 
-use yii2lab\rest\domain\rest\Controller;
+use App;
+use Yii;
+use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2lab\extension\web\helpers\Behavior;
+use yii2lab\rest\domain\rest\Controller;
 use yii2module\account\api\v2\actions\registration\CreateAccountAction;
+use yii2module\account\domain\v2\entities\AppIdentityEntity;
+
 
 class RegistrationController extends Controller
 {
 	public $service = 'account.registration';
-	
-	public function behaviors() {
+
+	public function behaviors()
+	{
 		return [
 			'cors' => Behavior::cors(),
 		];
 	}
-	
+
 	/**
 	 * @inheritdoc
 	 */
@@ -25,13 +31,15 @@ class RegistrationController extends Controller
 			'create-account' => ['POST'],
 			'activate-account' => ['POST'],
 			'set-password' => ['POST'],
+			'pseudo' => ['POST'],
 		];
 	}
-	
+
 	/**
 	 * @inheritdoc
 	 */
-	public function actions() {
+	public function actions()
+	{
 		return [
 			'create-account' => [
 				'class' => CreateAccountAction::class,
@@ -52,6 +60,18 @@ class RegistrationController extends Controller
 				'serviceMethodParams' => ['login', 'activation_code', 'password'],
 			],
 		];
+	}
+
+	public function actionPseudo()
+	{
+		$body = Yii::$app->request->getBodyParams();
+		$appIdentityEntity = new AppIdentityEntity();
+		$appIdentityEntity->load($body);
+		if(!empty($appIdentityEntity->sms_code)){
+			return App::$domain->account->appIdentity->smsCheck($appIdentityEntity->login, $appIdentityEntity->sms_code);;
+		}
+		App::$domain->account->appIdentity->sendSms($body);
+		return;
 	}
 
 }

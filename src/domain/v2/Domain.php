@@ -20,6 +20,7 @@ use yii2module\account\domain\v2\filters\token\DefaultFilter;
  * @property-read \yii2module\account\domain\v2\interfaces\services\RegistrationInterface $registration
  * @property-read \yii2module\account\domain\v2\interfaces\services\TempInterface $temp
  * @property-read \yii2module\account\domain\v2\interfaces\services\RestorePasswordInterface $restorePassword
+ * @property-read \yii2module\account\domain\v2\interfaces\services\AppIdentityInterface $appIdentity
  * @property-read \yii2module\account\domain\v2\interfaces\services\SecurityInterface $security
  * @property-read \yii2module\account\domain\v2\interfaces\services\TestInterface $test
  * @property-read \yii2module\account\domain\v2\interfaces\services\RbacInterface $rbac
@@ -39,6 +40,7 @@ class Domain extends \yii2lab\domain\Domain {
 		return [
 			'repositories' => [
 				'auth' => $this->primaryDriver,
+				'appIdentity' => Driver::ACTIVE_RECORD,
 				'login' => $this->primaryDriver,
 				//'temp' => Driver::ACTIVE_RECORD,
 				'restorePassword' => $this->primaryDriver,
@@ -53,6 +55,7 @@ class Domain extends \yii2lab\domain\Domain {
 				'fireUser' => Driver::ACTIVE_RECORD
 			],
 			'services' => [
+				'appIdentity',
 				'auth' => [
 					'rememberExpire' => TimeEnum::SECOND_PER_YEAR,
 					'tokenAuthMethods' => [
