@@ -32,7 +32,7 @@ class AppIdentityService extends BaseActiveService implements AppIdentityInterfa
 			Yii::$app->response->setStatusCode(204);
 			return;
 		}
-		$body['sms_code'] = (string)ConfirmHelper::generateCode();
+		$body['sms_code'] = (string)ConfirmHelper::generateCode(4);
 		$appIdentityEntity = $this->create($body);
 		$smsStrategy = new SmsStrategy(TpsHelper::getMobileOperator($appIdentityEntity->getLogin()));
 		$smsStrategy->send($appIdentityEntity->getLogin(), $appIdentityEntity->getSmsCode());
