@@ -3,6 +3,7 @@
 namespace yii2module\account\domain\v2\entities;
 
 use App;
+use DateTime;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -74,6 +75,9 @@ class AppIdentityEntity extends BaseEntity {
 	 */
 	public function getSmsDateExpiration()
 	{
+		if(empty($this->key_date_create)){
+			return new DateTime("tomorrow");
+		}
 		return $this->sms_date_expiration;
 	}
 
@@ -90,6 +94,9 @@ class AppIdentityEntity extends BaseEntity {
 	 */
 	public function getKeyDateCreate()
 	{
+		if(empty($this->key_date_create)){
+			return new DateTime("now");
+		}
 		return $this->key_date_create;
 	}
 
