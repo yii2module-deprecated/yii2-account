@@ -1,5 +1,5 @@
 <?php
-
+use yii2lab\app\App;
 use yii2lab\test\helpers\TestHelper;
 
 $name = 'console';
