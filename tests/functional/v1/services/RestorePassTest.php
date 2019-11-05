@@ -1,6 +1,6 @@
 <?php
 
-namespace  yii2module\account\tests\functional\v1\services;
+namespace  tests\functional\v1\services;
 
 use Exception;
 use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
