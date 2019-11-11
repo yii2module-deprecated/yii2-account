@@ -25,24 +25,6 @@ class TokenTest extends Unit
 		parent::_before();
 		\App::$domain->account->token->deleteAll();
 
-		$this->tester->haveFixtures([
-			[
-				'class' => UserFixture::class,
-				'dataFile' => '@vendor/yii2module/yii2-account/src/domain/v2/fixtures/data/user.php'
-			],
-			[
-				'class' => UserAssignmentFixture::class,
-				'dataFile' => '@vendor/yii2module/yii2-account/src/domain/v2/fixtures/data/user_assignment.php'
-			],
-			[
-				'class' => UserSecurityFixture::class,
-				'dataFile' => '@vendor/yii2module/yii2-account/src/domain/v2/fixtures/data/user_security.php'
-			],
-			[
-				'class' => UserTokenFixture::class,
-				'dataFile' => '@vendor/yii2module/yii2-account/src/domain/v2/fixtures/data/user_token.php'
-			],
-		]);
 	}
 	public function testForgeNotFoundLogin() {
 		try {

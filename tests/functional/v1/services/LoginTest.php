@@ -17,23 +17,7 @@ class LoginTest extends Unit
 {
 	const PACKAGE = 'yii2module/yii2-account';
 
-	public function _before()
-	{
-		$this->tester->haveFixtures([
-			[
-				'class' => UserFixture::class,
-				'dataFile' => '@vendor/yii2module/yii2-account/src/domain/v2/fixtures/data/user.php'
-			],
-			[
-				'class' => UserAssignmentFixture::class,
-				'dataFile' => '@vendor/yii2module/yii2-account/src/domain/v2/fixtures/data/user_assignment.php'
-			],
-			[
-				'class' => UserSecurityFixture::class,
-				'dataFile' => '@vendor/yii2module/yii2-account/src/domain/v2/fixtures/data/user_security.php'
-			],
-		]);
-	}
+
 
 	public function testOneByLogin()
 	{

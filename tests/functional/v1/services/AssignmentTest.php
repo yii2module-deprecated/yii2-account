@@ -1,35 +1,17 @@
 <?php
 
-namespace  tests\functional\v1\services;
+namespace tests\functional\v1\services;
 
-use yii2lab\rbac\domain\entities\AssignmentEntity;
-use yii2lab\test\fixtures\UserAssignmentFixture;
-use yii2lab\test\fixtures\UserFixture;
-use yii2lab\test\fixtures\UserSecurityFixture;
-use yii2lab\test\Test\Unit;
 use Yii;
 use yii2lab\domain\data\Query;
+use yii2lab\rbac\domain\entities\AssignmentEntity;
+use yii2lab\test\fixtures\UserAssignmentFixture;
+use yii2lab\test\Test\Unit;
 use yii2module\account\tests\functional\v1\enums\LoginEnum;
 
 class AssignmentTest extends Unit
 {
-	public function _before()
-{
-	$this->tester->haveFixtures([
-		[
-			'class' => UserFixture::class,
-			'dataFile' => '@vendor/yii2module/yii2-account/src/domain/v2/fixtures/data/user.php'
-		],
-		[
-			'class' => UserAssignmentFixture::class,
-			'dataFile' => '@vendor/yii2module/yii2-account/src/domain/v2/fixtures/data/user_assignment.php'
-		],
-		[
-			'class' => UserSecurityFixture::class,
-			'dataFile' => '@vendor/yii2module/yii2-account/src/domain/v2/fixtures/data/user_security.php'
-		],
-	]);
-}
+
 
 	public function testAll()
 	{
@@ -46,7 +28,7 @@ class AssignmentTest extends Unit
 		], $collection, true);
 		$this->tester->assertCount(1, $collection);
 	}
-	
+
 	public function testAll2()
 	{
 		/** @var AssignmentEntity[] $collection */
@@ -65,7 +47,7 @@ class AssignmentTest extends Unit
 		], $collection, true);
 		$this->tester->assertCount(2, $collection);
 	}
-	
+
 	public function testAllAssignments()
 	{
 		/** @var AssignmentEntity[] $collection */
@@ -84,22 +66,22 @@ class AssignmentTest extends Unit
 		], $collection);
 		$this->tester->assertCount(2, $collection);
 	}
-	
+
 	public function testIsHasRole()
 	{
 		$isHas = \App::$domain->rbac->assignment->isHasRole(LoginEnum::ID_USER_2, 'rUnknownUser');
 		$this->tester->assertTrue($isHas);
-		
+
 		$isHas = \App::$domain->rbac->assignment->isHasRole(LoginEnum::ID_USER_2, 'rResmiUnknownUser');
 		$this->tester->assertTrue($isHas);
 	}
-	
+
 	public function testIsHasRoleNegative()
 	{
 		$isHas = \App::$domain->rbac->assignment->isHasRole(LoginEnum::ID_USER_2, 'rAdministrator');
 		$this->tester->assertFalse($isHas);
 	}
-	
+
 	public function testAllUserIdsByRole()
 	{
 		$ids = \App::$domain->rbac->assignment->getUserIdsByRole('rUnknownUser');
@@ -111,12 +93,12 @@ class AssignmentTest extends Unit
 			381074,
 			381075,
 		], $ids);
-		
+
 		$ids = \App::$domain->rbac->assignment->getUserIdsByRole('rAdministrator');
 		$this->tester->assertEquals([
 			0 => 381949,
 			1 => 381076,
 		], $ids);
 	}
-	
+
 }
