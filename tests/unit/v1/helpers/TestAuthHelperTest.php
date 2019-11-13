@@ -13,22 +13,7 @@ use yii2module\account\tests\functional\v1\enums\LoginEnum;
 
 class TestAuthHelperTest extends Unit
 {
-	protected function _before() {
-		$this->tester->haveFixtures([
-			[
-				'class' => UserFixture::class,
-				'dataFile' => '@vendor/yii2module/yii2-account/src/domain/v2/fixtures/data/user.php'
-			],
-			[
-				'class' => UserAssignmentFixture::class,
-				'dataFile' => '@vendor/yii2module/yii2-account/src/domain/v2/fixtures/data/user_assignment.php'
-			],
-			[
-				'class' => UserSecurityFixture::class,
-				'dataFile' => '@vendor/yii2module/yii2-account/src/domain/v2/fixtures/data/user_security.php'
-			],
-		]);
-	}
+
 	public function testAuthById()
 	{
 		TestAuthHelper::authById(LoginEnum::ID_ADMIN);

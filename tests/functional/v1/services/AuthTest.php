@@ -44,7 +44,7 @@ class AuthTest extends Unit
 			$this->tester->assertUnprocessableEntityHttpException(['password' => 'Incorrect login or password'], $e);
 		}
 	}
-	
+
 	public function testAuthenticationNotFoundUser()
 	{
 		try {
