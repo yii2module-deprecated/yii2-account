@@ -111,7 +111,7 @@ class ConfirmService extends BaseActiveService implements ConfirmInterface
 		}
 		$entityArray['data'] = $data;
 		$entityArray['expire'] = TIMESTAMP + $expire;
-		$smsCode = (YII_ENV == YII_ENV_TEST) || (YII_ENV == YII_ENV_DEV) ? '111111' : ConfirmHelper::generateCode();
+		$smsCode = (YII_ENV == YII_ENV_TEST) || (YII_ENV == YII_ENV_DEV) || (YII_ENV == YII_ENV_PRETEST) ? '111111' : ConfirmHelper::generateCode();
 		$entityArray['code'] = $smsCode;
 		if($this->isHas($login, $action)) {
 			throw new ConfirmAlreadyExistsException();
