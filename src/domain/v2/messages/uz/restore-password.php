@@ -1,31 +1,31 @@
 <?php
 
 return [
-	'title' => 'Паролни бекор қилиш',
-	'request_text' => 'Сиз кўрсатган телефон рақамига бир марталик СМС коди аккаунт учун берилган доимий кодни бекор қилиш учун юборилди',
-	'check_text {0}' => '{0} рақамига СМС код жўнатилди',
+	'title' => 'Parolni bekor qilish',
+	'request_text' => 'Siz ko‘rsatgan telefon raqamiga bir martalik SMS kodi akkaunt uchun berilgan doimiy kodni bekor qilish uchun yuborildi',
+	'check_text {0}' => '{0} raqamiga SMS kodi jo‘natildi',
 	
-	'request_action' => 'Паролни бекор қилиш',
-	'save_password_action' => 'Паролни сақлаш',
-	'enter_new_password' => 'Илтимос, янги паролни киритинг',
+	'request_action' => 'Parolni bekor qilish',
+	'save_password_action' => 'Parolni saqlash',
+	'enter_new_password' => 'Iltimos, yangi parolni kiriting',
 	
-	'send_request_success' => 'Почтангизни текшириб кўринг. Биз сизга паролни қайта тиклаш йўриқномасини жўнатдик.',
-	'send_request_error' => 'Узр, паролингизни бекор қила олмадик',
-	'new_password_saved_success' => 'Сизнинг янги паролингиз муваффақиятли сақланди.',
+	'send_request_success' => 'Pochtangizni tekshirib ko‘ring. Biz sizga parolni qayta tiklash yo‘riqnomasini jo‘natdik.',
+	'send_request_error' => 'Uzr, parolingizni bekor qilish imkoni bo‘lmadi.',
+	'new_password_saved_success' => 'Sizning yangi parolingiz muvaffaqiyatli saqlandi.',
 	
-	'no_user_with_email' => 'Кўрсатилган электрон почта бўйича фойдаланувчи топилмади.',
-	'empty_login' => 'Login bo’sh bo’lishi mumkin emas',
+	'no_user_with_email' => 'Ko‘rsatilgan elektron pochta bo‘yicha foydalanuvchi topilmadi.',
+	'empty_login' => 'Login bo‘sh bo‘lishi mumkin emas',
 	
-	'password_reset_expire {min}' => 'Сизга активация коди аввал жўнатилган. {min} дақиқадан сўнг такроран сўров юборишингиз мумкин',
-	'restore_password_sms {activation_code}' => 'Паролни қайта тиклаш. Активация коди: {activation_code}',
-	'not_found_request' => 'Паролни тиклаш учун сўров топилмади.',
-	'invalid_activation_code' => 'Нотўғри активация коди.',
-	'email_template_body' => 'Хеш %reset_hash%, логин учун %login%',
-	'email_template_subject' => 'Паролни қайта тиклаш',
+	'password_reset_expire {min}' => 'Sizga aktivatsiya kodi avval jo‘natilgan. {min} daqiqadan so‘ng takroran so‘rov yuborishingiz mumkin.',
+	'restore_password_sms {activation_code}' => 'Parolni qayta tiklash. Aktivatsiya kodi:: {activation_code}',
+	'not_found_request' => 'Parolni tiklash uchun so‘rov topilmadi.',
+	'invalid_activation_code' => 'Noto‘g‘ri aktivatsiya kodi',
+	'email_template_body' => 'Xesh %reset_hash%, login uchun %login%',
+	'email_template_subject' => 'Parolni qayta tiklash',
 	'too_weak_password' => 'Parol juda oddiy',
 
-	'invalid_code' => 'Noto’g’ri kod',
-	'invalid_sms' => 'Noto’g’ri SMS-kod',
+	'invalid_code' => 'Noto‘g‘ri kod',
+	'invalid_sms' => 'Noto‘g‘ri SMS-kod',
 	'too_many_attempts' => 'Haddan ortiq urinish',
-	'must_fill_field' => 'activation code maydonchasini to’ldiring',
+	'must_fill_field' => 'activation code maydonchasini to‘ldiring',
 ];

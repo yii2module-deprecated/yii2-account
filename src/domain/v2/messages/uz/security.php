@@ -1,14 +1,14 @@
 <?php
 
 return [
-	'title' => 'Хавфсизлик',
+	'title' => 'Xavfsizlik',
 	
-	'email' => 'Почта',
-	'password' => 'Парол',
+	'email' => 'Pochta',
+	'password' => 'Parol',
 	
-	'email_changed_success'=>'Почта муваффақиятли ўзгартирилди',
-	'password_changed_success'=>'Парол муваффақиятли ўзгартирилди',
+	'email_changed_success' => 'Pochta muvaffaqiyatli o‘zgartirildi',
+	'password_changed_success' => 'Parol muvaffaqiyatli o‘zgartirildi',
 	
-	'new_password_repeat' => 'Янги паролни тасдиқланг',
-	'new_password'=>'Янги парол',
+	'new_password_repeat' => 'Yangi parolni tasdiqlang',
+	'new_password' => 'Yangi parol',
 ];

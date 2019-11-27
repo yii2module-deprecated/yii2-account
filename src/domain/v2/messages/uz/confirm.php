@@ -1,9 +1,9 @@
 <?php
 
 return [
-	'incorrect_login_or_code'=>'Нотўғри логин ёки тасдиқ кодлари',
-	'already_sended_code {phone}' => 'Тасдиқ коди ушбу рақамга жўнатилди: {phone}',
-	'confirmation_code {code}' => 'Тасдиқ коди: {code}',
+	'incorrect_login_or_code' => 'Noto‘g‘ri login yoki tasdiq kodi',
+	'already_sended_code {phone}' => 'Tasdiq kodi ushbu raqamga jo‘natildi: {phone}',
+	'confirmation_code {code}' => 'Tasdiq kodi: {code}',
 	'incorrect_code' => 'Noto‘g‘ri tasdiq kodi',
-	'not_be_activated' => 'Сўров активация қилинмаган',
+	'not_be_activated' => 'So‘rov aktivatsiya qilinmagan',
 ];
