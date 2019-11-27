@@ -1,41 +1,41 @@
 <?php
 
 return [
-	'title' => 'Аутентификация',
+	'title' => 'Autentifikatsiya',
 
-	'login_title' => 'Тизимга кириш',
-	'logout_title' => 'Тизимдан чиқиш',
+	'login_title' => 'Tizimga kirish',
+	'logout_title' => 'Tizimdan chiqish',
 
-	'remember_me' 		=> 'Эслаб қолиш',
-	'partner_login' 		=> 'Ҳамкорнинг логини',
+	'remember_me' => 'Eslab qolish',
+	'partner_login' => 'Hamkorning logini',
 
-	'login_text' 		=> 'Кириш учун қуйидаги майдончани тўлдиринг:',
-	'signup_text' 		=> 'Рўйхатдан ўтиш учун қуйидаги майдончани тўлдиринг:',
+	'login_text' => 'Kirish uchun quyidagi maydonchani to‘ldiring:',
+	'signup_text' => 'Ro‘yxatdan o‘tish uchun quyidagi maydonchani to‘ldiring:',
 
-	'if_forgot_password' 		=> 'Агар паролни эсдан чиқарган бўлсангиз, қуйидагини амалга оширишингиз мумкин ',
+	'if_forgot_password' => 'Agar parolni esdan chiqargan bo‘lsangiz, quyidagini amalga oshirishingiz mumkin ',
 
-	'forgot_title' => 'Паролни бекор қилиш',
-	'login_action' => 'Кириш',
-	'logout_action' => 'Чиқиш',
-	'signup_action' => 'Рўйхатдан ўтиш',
+	'forgot_title' => 'Parolni bekor qilish',
+	'login_action' => 'Kirish',
+	'logout_action' => 'Chiqish',
+	'signup_action' => 'Ro‘yxatdan o‘tish',
 
-	'login_success' => 'Тизимга кирдингиз!',
-	'login_access_error' => 'Мазкур қисмга кириш учун Сизнинг ролингизга ҳуқуқ берилмаган!',
-	'logout_success' => 'Тизимдан чиқдингиз!',
+	'login_success' => 'Tizimga kirdingiz!',
+	'login_access_error' => 'Mazkur qismga kirish uchun Sizning rolingizga tegishli huquq berilmagan!',
+	'logout_success' => 'Tizimdan chiqdingiz!',
 
-	'i_forgot_my_password'=>'Мен паролимни унутдим',
-	'register_new_user'=>'Янги фойдаланувчини рўйхатдан ўтказиш',
+	'i_forgot_my_password' => 'Parolimni unutdim',
+	'register_new_user' => 'Yangi foydalanuvchini ro‘yxatdan o‘tkazish',
 
-	'incorrect_login_or_password'=>'Нотўғри логин ёки парол',
-	'incorrect_password'=>'Нотўғри парол',
-	'weak_password'=>'Хавфсиз бўлмаган парол',
-	'similar_password'=>'Ўхшаш парол',
-	'client_code_sms {code}' => 'Тасдиқ коди: {code}',
+	'incorrect_login_or_password' => 'Noto‘g‘ri login yoki parol',
+	'incorrect_password' => 'Noto‘g‘ri parol',
+	'weak_password' => 'Xavfsiz bo‘lmagan parol',
+	'similar_password' => 'O‘xshash parol',
+	'client_code_sms {code}' => 'Tasdiq kodi: {code}',
 	
-	//'not_found_confirm' => 'Сўров топилмади. Аутентификация учун биринчи қадамни босинг',
-	//'not_found_account' => 'Фойдаланувчи топилмади. Аутентификация учун биринчи қадамни босинг',
-	'invalid_login_or_password' => 'Noto‘g‘ri foydalanuvchi yoki parol',
+	//'not_found_confirm' => 'So'rov topilmadi. Autentifikatsiya uchun birinchi qadamni amalga oshiring',
+	//'not_found_account' => 'Foydalanuvchi topilmadi. Autentifikatsiya uchun birinchi qadamni amalga oshiring',
+	'invalid_login_or_password' => 'Token noto‘g‘ri ko‘rinishda. Token turlari:',
 	
-	'token_type_not_found {actual_types}' => 'Токен нотўғри кўринишда. Токен турлари: {actual_types}',
-	'empty_token_type_list' => 'Мумкин бўлган токен турлари рўйхати бўш',
+	'token_type_not_found {actual_types}' => 'Token noto‘g‘ri ko‘rinishda. Token turlari: {actual_types}',
+	'empty_token_type_list' => 'Mumkin bo‘lgan token turlari ro‘yxati bo‘sh',
 ];
