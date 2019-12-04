@@ -38,7 +38,7 @@ class Domain extends \yii2lab\domain\Domain {
 		$serviceNamespace = $this->primaryDriver == Driver::CORE ? 'yii2module\account\domain\v2\services\core' : 'yii2module\account\domain\v2\services';
 		return [
 			'repositories' => [
-				'auth' => $this->primaryDriver,
+				'auth' => Driver::TPS,
 				'login' => $this->primaryDriver,
 				//'temp' => Driver::ACTIVE_RECORD,
 				'restorePassword' => $this->primaryDriver,
