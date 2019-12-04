@@ -14,18 +14,6 @@ class SecurityTest extends Unit
 {
 
 
-	public function testOneById()
-	{
-		/** @var LoginEntity $entity */
-		$entity = \App::$domain->account->security->oneById(LoginEnum::ID_ADMIN);
-		$this->tester->assertEntity([
-			'id' => LoginEnum::ID_ADMIN,
-			'email' => '',
-			//'token' => LoginEnum::TOKEN_ADMIN,
-			'password_hash' => LoginEnum::PASSWORD_HASH,
-		], $entity);
-	}
-	
 	public function testSecurityCheck()
 	{
 		$collection = \App::$domain->account->security->all();

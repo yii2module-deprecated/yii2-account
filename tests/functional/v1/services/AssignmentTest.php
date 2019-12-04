@@ -55,16 +55,16 @@ class AssignmentTest extends Unit
 		/** @var AssignmentEntity[] $collection */
 		$collection = \App::$domain->rbac->assignment->getAssignments(LoginEnum::ID_USER_2);
 		$this->tester->assertEquals([
-			'rUnknownUser' => new yii\rbac\Assignment([
+			'rUnknownUser' => [
 				'userId' => LoginEnum::ID_USER_2,
 				'roleName' => 'rUnknownUser',
 				'createdAt' => '1486774821',
-			]),
-			'rResmiUnknownUser' => new yii\rbac\Assignment([
+			],
+			'rResmiUnknownUser' => [
 				'userId' => LoginEnum::ID_USER_2,
 				'roleName' => 'rResmiUnknownUser',
 				'createdAt' => '1486774821',
-			]),
+			],
 		], ArrayHelper::toArray($collection));
 		$this->tester->assertCount(2, $collection);
 	}

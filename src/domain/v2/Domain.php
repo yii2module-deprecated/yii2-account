@@ -39,10 +39,10 @@ class Domain extends \yii2lab\domain\Domain {
 		return [
 			'repositories' => [
 				'auth' => Driver::TPS,
-				'login' => $this->primaryDriver,
+				'login' => Driver::TPS,
 				//'temp' => Driver::ACTIVE_RECORD,
-				'restorePassword' => $this->primaryDriver,
-				'security' => $this->primaryDriver,
+				'restorePassword' => Driver::TPS,
+				'security' => Driver::TPS,
 				'test' => Driver::FILEDB,
 				//'rbac' => Driver::MEMORY,
 				'confirm' => Driver::ACTIVE_RECORD,
