@@ -3,6 +3,7 @@
 namespace tests\functional\v1\services;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii2lab\domain\data\Query;
 use yii2lab\rbac\domain\entities\AssignmentEntity;
 use yii2lab\test\fixtures\UserAssignmentFixture;
@@ -20,12 +21,13 @@ class AssignmentTest extends Unit
 
 		$query->where('user_id', LoginEnum::ID_ADMIN);
 		$collection = \App::$domain->rbac->assignment->all($query);
-		$this->tester->assertCollection([
+		$this->tester->assertEquals([
 			[
 				'user_id' => LoginEnum::ID_ADMIN,
 				'item_name' => 'rAdministrator',
 			],
-		], $collection, true);
+		], ArrayHelper::toArray($collection));
+
 		$this->tester->assertCount(1, $collection);
 	}
 
@@ -35,7 +37,7 @@ class AssignmentTest extends Unit
 		$query = Query::forge();
 		$query->where('user_id', LoginEnum::ID_USER_2);
 		$collection = \App::$domain->rbac->assignment->all($query);
-		$this->tester->assertCollection([
+		$this->tester->assertEquals([
 			[
 				'user_id' => LoginEnum::ID_USER_2,
 				'item_name' => 'rUnknownUser',
@@ -44,7 +46,7 @@ class AssignmentTest extends Unit
 				'user_id' => LoginEnum::ID_USER_2,
 				'item_name' => 'rResmiUnknownUser',
 			],
-		], $collection, true);
+		], ArrayHelper::toArray($collection), true);
 		$this->tester->assertCount(2, $collection);
 	}
 
@@ -63,7 +65,7 @@ class AssignmentTest extends Unit
 				'roleName' => 'rResmiUnknownUser',
 				'createdAt' => '1486774821',
 			]),
-		], $collection);
+		], ArrayHelper::toArray($collection));
 		$this->tester->assertCount(2, $collection);
 	}
 

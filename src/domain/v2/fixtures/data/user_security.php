@@ -6,7 +6,7 @@ return [
 	[
 		'id' => 381949,
 		//'email' => null,
-		'auth_key' => '4f6bbd8ea39e34f2f2d432a961be2a6a',
+		'auth_key' => 'CUc6h7DyU07Lbru0QWu4-jb0Tiz15qWQZZ8IIix0sq5XO6-nWbtmImx93aTq4Cg2',
 		'password_hash' => $passwordHash,
 	],
 	[
