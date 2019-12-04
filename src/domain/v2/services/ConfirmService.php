@@ -12,6 +12,7 @@ use yii2module\account\domain\v2\exceptions\ConfirmIncorrectCodeException;
 use yii2module\account\domain\v2\helpers\ConfirmHelper;
 use yii2module\account\domain\v2\helpers\LoginHelper;
 use yii2module\account\domain\v2\interfaces\services\ConfirmInterface;
+use yii2woop\notify\domain\v1\exceptions\SmsTimeLimitException;
 use yii2woop\partner\domain\helpers\PartnerHelper;
 
 /**
