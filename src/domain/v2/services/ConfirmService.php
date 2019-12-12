@@ -5,13 +5,13 @@ namespace yii2module\account\domain\v2\services;
 use Yii;
 use yii\web\NotFoundHttpException;
 use yii2lab\domain\services\base\BaseActiveService;
-use yii2lab\notify\domain\exceptions\SmsTimeLimitException;
 use yii2module\account\domain\v2\entities\ConfirmEntity;
 use yii2module\account\domain\v2\exceptions\ConfirmAlreadyExistsException;
 use yii2module\account\domain\v2\exceptions\ConfirmIncorrectCodeException;
 use yii2module\account\domain\v2\helpers\ConfirmHelper;
 use yii2module\account\domain\v2\helpers\LoginHelper;
 use yii2module\account\domain\v2\interfaces\services\ConfirmInterface;
+use yii2woop\notify\domain\v1\exceptions\SmsTimeLimitException;
 use yii2woop\partner\domain\helpers\PartnerHelper;
 
 /**

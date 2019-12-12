@@ -12,6 +12,7 @@ use yii2lab\domain\exceptions\UnprocessableEntityHttpException;
 use yii2module\account\domain\v2\entities\LoginEntity;
 use yii2module\account\domain\v2\helpers\TestAuthHelper;
 use yii2module\account\tests\functional\v1\enums\LoginEnum;
+use yii2woop\generated\exception\tps\SubjectOtpRequiredException;
 
 class AuthTest extends Unit
 {
@@ -30,7 +31,7 @@ class AuthTest extends Unit
 		try {
 			\App::$domain->account->auth->authentication('coreadmin_otp', 'Wwwqqq111', '');
 			$this->tester->assertBad();
-		} catch(UnprocessableEntityHttpException $e) {
+		} catch(SubjectOtpRequiredException $e) {
 			$this->tester->assertNice();
 		}
 	}
@@ -41,7 +42,7 @@ class AuthTest extends Unit
 			\App::$domain->account->auth->authentication(LoginEnum::LOGIN_ADMIN, LoginEnum::PASSWORD_INCORRECT);
 			$this->tester->assertBad();
 		} catch(UnprocessableEntityHttpException $e) {
-			$this->tester->assertUnprocessableEntityHttpException(['password' => 'Incorrect login or password'], $e);
+			$this->tester->assertUnprocessableEntityHttpException(['password' => 'Invalid login or password'], $e);
 		}
 	}
 
@@ -51,7 +52,7 @@ class AuthTest extends Unit
 			\App::$domain->account->auth->authentication(LoginEnum::LOGIN_NOT_EXISTS, LoginEnum::PASSWORD);
 			$this->tester->assertBad();
 		} catch(UnprocessableEntityHttpException $e) {
-			$this->tester->assertUnprocessableEntityHttpException(['password' => 'Incorrect login or password'], $e);
+			$this->tester->assertUnprocessableEntityHttpException(['password' => 'Invalid login or password'], $e);
 		}
 	}
 	

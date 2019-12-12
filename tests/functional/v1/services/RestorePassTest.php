@@ -12,10 +12,10 @@ class RestorePassTest extends Unit {
 
 	public function testRequest() {
 		try {
-			$this->tester->assertEquals(\App::$domain->account->restorePassword->request(RestorePassTest::login), null);
-			$this->tester->assertBad();
-		} catch(UnprocessableEntityHttpException $e) {
+			$this->tester->assertEquals(\App::$domain->account->restorePassword->request(RestorePassTest::login), ['type'=> 'email']);
 			$this->tester->assertNice();
+		} catch(UnprocessableEntityHttpException $e) {
+			$this->tester->assertBad();
 		}
 	}
 

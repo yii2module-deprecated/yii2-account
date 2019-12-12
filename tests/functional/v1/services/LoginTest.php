@@ -2,6 +2,7 @@
 
 namespace  tests\functional\v1\services;
 
+use yii\helpers\ArrayHelper;
 use yii2lab\test\fixtures\UserAssignmentFixture;
 use yii2lab\test\fixtures\UserFixture;
 use yii2lab\test\fixtures\UserSecurityFixture;
@@ -42,9 +43,9 @@ class LoginTest extends Unit
 		$entity = \App::$domain->account->login->oneById(LoginEnum::ID_ADMIN, $query);
 		
 		$oo = [
-			'id' => '381949',
+			'id' => 381949,
 			'login' => '77771111111',
-			'status' => '1',
+			'status' => 1,
 			'roles' => [
 				'rAdministrator',
 			],
@@ -52,8 +53,7 @@ class LoginTest extends Unit
 				'rAdministrator',
 			],*/
 			//'token' => LoginEnum::TOKEN_ADMIN,
-			'email' => '',
-			'created_at' => '2018-03-28 21:00:13',
+			'email' => 'amubarak@wooppay.com',
 		];
 		
 		$this->tester->assertEntity($oo, $entity);
@@ -79,14 +79,5 @@ class LoginTest extends Unit
 		}
 	}
 	
-	public function testAll()
-	{
-		/** @var BaseEntity[] $collection */
-		$query = Query::forge();
-		$collection = \App::$domain->account->login->all($query);
-		
-		$expect = DataHelper::loadForTest(self::PACKAGE, __METHOD__, $collection);
-		$this->tester->assertCollection($expect, $collection, true);
-	}
-	
+
 }
