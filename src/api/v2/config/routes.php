@@ -18,4 +18,7 @@ return [
 
 	
 	"{$version}/firebase/register-user" => "account/fire/register-user",
+	// ----------------- User module -----------------
+
+	"{$version}/auth/pseudo" => 'account/auth/pseudo',
 ];
