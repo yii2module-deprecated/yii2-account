@@ -1,6 +1,6 @@
 <?php
 
-namespace  tests\functional\v1\services;
+namespace  tests\functional\v1\oldTest;
 
 use yii2lab\test\fixtures\UserAssignmentFixture;
 use yii2lab\test\fixtures\UserFixture;

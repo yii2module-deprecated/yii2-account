@@ -4,6 +4,8 @@ namespace yii2module\account\domain\v2\services;
 
 use yii2lab\extension\web\helpers\ClientHelper;
 use yii2lab\extension\yii\helpers\ArrayHelper;
+use yii2module\account\domain\v2\behaviors\ReturnCreateFilter;
+use yii2module\account\domain\v2\behaviors\UserActivityFilter;
 use yii2module\account\domain\v2\interfaces\services\ActivityInterface;
 use yii2lab\domain\services\base\BaseActiveService;
 
@@ -18,7 +20,17 @@ use yii2lab\domain\services\base\BaseActiveService;
 class ActivityService extends BaseActiveService implements ActivityInterface {
 
 	public $sources;
-	
+
+
+	public function behaviors() {
+		return [
+			[
+				'class' => ReturnCreateFilter::class,
+				'methods' => ['create'],
+			],
+		];
+	}
+
 	public function create($data) {
 		if(!self::isEnabled($data)) {
 			return null;
