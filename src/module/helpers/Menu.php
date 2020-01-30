@@ -6,7 +6,6 @@ use Yii;
 use yii2lab\extension\menu\interfaces\MenuInterface;
 use yii2lab\extension\yii\helpers\Html;
 use yii2module\account\domain\v2\helpers\LoginHelper;
-use yii2module\profile\domain\v2\entities\PersonEntity;
 use yii2module\profile\widget\Avatar;
 
 class Menu implements MenuInterface {
@@ -44,17 +43,9 @@ class Menu implements MenuInterface {
 	}
 	
 	public static function getUseName() {
-		$title = null;
-		if(\App::$domain->has('profile')) {
-			/** @var PersonEntity $personEntity */
-			$personEntity = \App::$domain->profile->person->getSelf();
-			$title = $personEntity->title;
-		}
-		if(!$title) {
-			$title = \App::$domain->account->auth->identity->login;
-			if(LoginHelper::validate($title)) {
-				$title = LoginHelper::format($title);
-			}
+		$title = \App::$domain->account->auth->identity->login;
+		if (LoginHelper::validate($title)) {
+			$title = LoginHelper::format($title);
 		}
 		return $title;
 	}

@@ -2,5 +2,5 @@
 
 return [
 	'title' => 'OAuth',
-	'login_text' => 'Ижтимоий тармоқ орқали авторизация қилиш',
+	'login_text' => 'Ijtimoiy tarmoq orqali aktivatsiya qilish',
 ];

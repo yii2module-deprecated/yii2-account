@@ -5,13 +5,13 @@ namespace yii2module\account\domain\v2\services;
 use Yii;
 use yii\web\NotFoundHttpException;
 use yii2lab\domain\services\base\BaseActiveService;
-use yii2lab\notify\domain\exceptions\SmsTimeLimitException;
 use yii2module\account\domain\v2\entities\ConfirmEntity;
 use yii2module\account\domain\v2\exceptions\ConfirmAlreadyExistsException;
 use yii2module\account\domain\v2\exceptions\ConfirmIncorrectCodeException;
 use yii2module\account\domain\v2\helpers\ConfirmHelper;
 use yii2module\account\domain\v2\helpers\LoginHelper;
 use yii2module\account\domain\v2\interfaces\services\ConfirmInterface;
+use yii2woop\notify\domain\v1\exceptions\SmsTimeLimitException;
 use yii2woop\partner\domain\helpers\PartnerHelper;
 
 /**
@@ -111,7 +111,7 @@ class ConfirmService extends BaseActiveService implements ConfirmInterface
 		}
 		$entityArray['data'] = $data;
 		$entityArray['expire'] = TIMESTAMP + $expire;
-		$smsCode = (YII_ENV == YII_ENV_TEST) || (YII_ENV == YII_ENV_DEV) ? '111111' : ConfirmHelper::generateCode();
+		$smsCode = (YII_ENV == YII_ENV_TEST) || (YII_ENV == YII_ENV_DEV) || (YII_ENV == YII_ENV_PRETEST) ? '111111' : ConfirmHelper::generateCode();
 		$entityArray['code'] = $smsCode;
 		if($this->isHas($login, $action)) {
 			throw new ConfirmAlreadyExistsException();
