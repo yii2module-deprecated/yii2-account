@@ -2,6 +2,8 @@
 
 namespace  tests\functional\v1\services;
 
+use yii2lab\domain\helpers\DomainHelper;
+use yii2lab\extension\enum\enums\TimeEnum;
 use yii2lab\test\fixtures\UserAssignmentFixture;
 use yii2lab\test\fixtures\UserFixture;
 use yii2lab\test\fixtures\UserSecurityFixture;
@@ -20,7 +22,6 @@ class ActivityServiceTest extends Unit
 	const USER_ID_2 = 381949;
 	const INVALID_TOKEN = 'invalid_token';
 	const INVALID_IP = '111.111.111.111';
-	
 
 	public function testForgeNotFoundLogin() {
 		$body = [

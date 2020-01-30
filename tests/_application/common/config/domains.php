@@ -3,7 +3,6 @@
 use yii\helpers\ArrayHelper;
 use yii2lab\extension\enum\enums\TimeEnum;
 use yii2lab\test\helpers\TestHelper;
-use yii2module\account\domain\v2\filters\login\LoginPhoneValidator;
 
 $config = [
 	'lang' => 'yii2module\lang\domain\Domain',
@@ -15,6 +14,16 @@ $config = [
 			'registration' => [
 				'expire' => TimeEnum::SECOND_PER_MINUTE * 3,
 			],
+			'activity' => [
+				'sources' => [
+					'account.auth',
+					'account.registration',
+					'operation.custom',
+					'operation.payment',
+					'operation.transfer',
+					'operation.balance',
+				],
+			]
 		],
 	]),
 ];

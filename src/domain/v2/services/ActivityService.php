@@ -43,7 +43,10 @@ class ActivityService extends BaseActiveService implements ActivityInterface {
 	}
 	
 	private function isEnabled($data) {
-		if(empty($this->sources)) {
+		if(YII_ENV_TEST){
+			return true;
+		}
+		if(empty($this->sources) ) {
 			return false;
 		}
 		$map = [
